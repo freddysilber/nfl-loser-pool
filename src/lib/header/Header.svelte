@@ -6,6 +6,7 @@
 <header>
 	<div class="corner">
 		<a href="https://kit.svelte.dev">
+			<!-- <img src="https://images.g2crowd.com/uploads/product/image/social_landscape/social_landscape_5daa66323ec035555304b5a66b252bfc/cloud-coach.png" alt="SvelteKit" /> -->
 			<img src={logo} alt="SvelteKit" />
 		</a>
 	</div>
@@ -16,8 +17,10 @@
 		</svg>
 		<ul>
 			<li class:active={$page.path === '/'}><a sveltekit:prefetch href="/">Home</a></li>
-			<li class:active={$page.path === '/about'}><a sveltekit:prefetch href="/about">About</a></li>
+			<!-- <li class:active={$page.path === '/about'}><a sveltekit:prefetch href="/about">About</a></li> -->
 			<li class:active={$page.path === '/todos'}><a sveltekit:prefetch href="/todos">Todos</a></li>
+			<li class:active={$page.path === '/admin'}><a sveltekit:prefetch href="/admin">Admin</a></li>
+			<li class:active={$page.path === '/rules'}><a sveltekit:prefetch href="/rules">Rules</a></li>
 			<li class:active={$page.path === '/game'}><a sveltekit:prefetch href="/game">Game</a></li>
 		</ul>
 		<svg viewBox="0 0 2 3" aria-hidden="true">

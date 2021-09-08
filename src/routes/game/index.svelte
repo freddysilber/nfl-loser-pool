@@ -1,12 +1,21 @@
 <script lang="ts">
 	import Prize from "$lib/prize/Prize.svelte";
+	import ScoreLegend from "$lib/score-legend/ScoreLegend.svelte";
 
 	const weeks = [...Array(19).keys()];
 	const players = ["Freddy", "Lydia", "Jay", "Carmen"];
 </script>
 
-<div class="game-container">
-	<Prize />
+<svelte:head>
+	<title>Game</title>
+</svelte:head>
+
+<div>
+	<h1>4th Annual Cloud Coach NFL Looser Pool</h1>
+	<div class="game-header">
+		<Prize  />
+		<ScoreLegend/>
+	</div>
 
 	<table>
 		<tr>
@@ -20,7 +29,7 @@
 			<tr>
 				<td>{player}</td>
 				{#each weeks as week}
-					<td>{week + 1}</td>
+					<td/>
 				{/each}
 				<td/>
 			</tr>
@@ -29,10 +38,11 @@
 </div>
 
 <style>
-	/* div.game-container {
-		border: 1px solid black;
-		border-radius: 5px;
-	} */
+	div.game-header {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 0.25rem;
+	}
 
 	table {
 		border-collapse: collapse;
@@ -45,8 +55,4 @@
 		text-align: left;
 		padding: 8px;
 	}
-
-	/* tr:nth-child(even) {
-		background-color: #dddddd;
-	} */
 </style>
