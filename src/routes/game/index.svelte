@@ -1,8 +1,8 @@
 <script lang="ts">
 	import Prize from "$lib/prize/Prize.svelte";
 
-	let weeks: number[] = [...Array(19).keys()];
-	let players = ["Freddy", "Lydia", "Jay", "Carmen"];
+	const weeks = [...Array(19).keys()];
+	const players = ["Freddy", "Lydia", "Jay", "Carmen"];
 </script>
 
 <div class="game-container">
@@ -14,6 +14,7 @@
 			{#each weeks as week}
 				<th>Week {week + 1}</th>
 			{/each}
+			<th>Points</th>
 		</tr>
 		{#each players as player}
 			<tr>
@@ -21,31 +22,31 @@
 				{#each weeks as week}
 					<td>{week + 1}</td>
 				{/each}
+				<td/>
 			</tr>
 		{/each}
 	</table>
 </div>
 
 <style>
-	div.game-container {
+	/* div.game-container {
 		border: 1px solid black;
 		border-radius: 5px;
-	}
+	} */
 
 	table {
-		font-family: arial, sans-serif;
 		border-collapse: collapse;
 		width: 100%;
 	}
 
 	td,
 	th {
-		border: 1px solid #dddddd;
+		border: 1px solid #aaaaaa;
 		text-align: left;
 		padding: 8px;
 	}
 
-	tr:nth-child(even) {
+	/* tr:nth-child(even) {
 		background-color: #dddddd;
-	}
+	} */
 </style>
