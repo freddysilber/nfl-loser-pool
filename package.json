@@ -1,6 +1,11 @@
 {
-  "name": "~TODO~",
+  "name": "nfl-looser-pool",
   "version": "0.0.1",
+  "author": {
+    "name": "Freddy Silber",
+    "email": "freddy.silber@gmail.com",
+    "url": "https://github.com/freddysilber"
+  },
   "scripts": {
     "dev": "svelte-kit dev",
     "build": "svelte-kit build",
