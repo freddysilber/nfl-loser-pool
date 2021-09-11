@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Prize from "$lib/prize/Prize.svelte";
 	import ScoreLegend from "$lib/score-legend/ScoreLegend.svelte";
-
+	const scheduleUrl = 'https://www.google.com/search?q=nfl+schedule&rlz=1C1CHBF_enUS851US854&oq=nfl+schedule&aqs=chrome.0.69i59i131i433i512j0i131i433i512l4j0i433i512j0i131i433i512l2j0i433i512j0i131i433i512.2480j1j4&sourceid=chrome&ie=UTF-8#sie=lg;/g/11nym9rnk6;6;/m/059yj;mt;fp;1;;';
 	const weeks = [...Array(19).keys()];
 	const players = ["Freddy", "Lydia", "Jay", "Carmen"];
 </script>
@@ -13,6 +13,7 @@
 <div>
 	<h1>4th Annual Cloud Coach NFL Looser Pool</h1>
 	<div class="game-header">
+		<h3 class="schedule-link"><a href={scheduleUrl} target="_blank">Schedule</a></h3>
 		<Prize  />
 		<ScoreLegend/>
 	</div>
@@ -54,5 +55,11 @@
 		border: 1px solid #aaaaaa;
 		text-align: left;
 		padding: 8px;
+	}
+
+	.schedule-link {
+		display: flex;
+		flex-direction: column;
+		align-self: center;
 	}
 </style>
