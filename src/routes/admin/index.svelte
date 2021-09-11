@@ -36,6 +36,8 @@
 	{#each values as number}
 		{#if number % 2 === 0}
 			<p>{number} is even!!!</p>
+		{:else if number == 1}
+			<p>{number} is exactly one</p>
 		{:else}
 			<p>{number} is not even...</p>
 		{/if}
