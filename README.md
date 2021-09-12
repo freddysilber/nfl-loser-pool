@@ -50,9 +50,9 @@ npm run build
 
 ```
 	"cookie": "^0.4.1",
-    "firebase": "^9.0.2",
-    "rxfire": "^6.0.1",
-    "rxjs": "^7.3.0"
+	"firebase": "^9.0.2",
+	"rxfire": "^6.0.1",
+	"rxjs": "^7.3.0"
 ```
 
 > These were added as dependencies in order to setup firebase and reactive development with this Svelte application
