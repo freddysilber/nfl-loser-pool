@@ -14,7 +14,8 @@
 	<h1>4th Annual Cloud Coach NFL Looser Pool</h1>
 	<div class="game-header">
 		<h3 class="schedule-link"><a href={scheduleUrl} target="_blank">Schedule</a></h3>
-		<Prize  />
+		<Prize {...players} />
+		<!-- <Prize test="some random testing variable" /> -->
 		<ScoreLegend/>
 	</div>
 
