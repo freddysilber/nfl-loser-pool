@@ -12,7 +12,7 @@
 </script>
 
 <svelte:head>
-	<title>Game</title>
+	<title>NFL Looser Pool</title>
 </svelte:head>
 
 <div>
