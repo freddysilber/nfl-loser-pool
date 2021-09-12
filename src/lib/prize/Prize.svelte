@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let test: string;
+	export let message: string;
 	export let cash: number;
 	export let prizeType: string;
 
@@ -9,7 +9,7 @@
 <h1>Prize: ${cash} {prizeType}<slot></slot>!</h1>
 
 {#if showSampleProp}
-	<p>{test}</p>
+	<p>{message}</p>
 {/if}
 
 <style>
