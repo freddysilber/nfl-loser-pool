@@ -1,8 +1,11 @@
 <script lang="ts">
 	import Prize from "$lib/prize/Prize.svelte";
 	import ScoreLegend from "$lib/score-legend/ScoreLegend.svelte";
+	import WeekPicker from "$lib/week-picker/WeekPicker.svelte";
+
+	const WEEKS = 19;
 	const scheduleUrl = 'https://www.google.com/search?q=nfl+schedule&rlz=1C1CHBF_enUS851US854&oq=nfl+schedule&aqs=chrome.0.69i59i131i433i512j0i131i433i512l4j0i433i512j0i131i433i512l2j0i433i512j0i131i433i512.2480j1j4&sourceid=chrome&ie=UTF-8#sie=lg;/g/11nym9rnk6;6;/m/059yj;mt;fp;1;;';
-	const weeks = [...Array(19).keys()];
+	const weeks = [...Array(WEEKS).keys()];
 	const players = ["Freddy", "Lydia", "Jay", "Carmen"];
 </script>
 
@@ -14,8 +17,10 @@
 	<h1>4th Annual Cloud Coach NFL Looser Pool</h1>
 	<div class="game-header">
 		<h3 class="schedule-link"><a href={scheduleUrl} target="_blank">Schedule</a></h3>
-		<Prize {...players} />
-		<!-- <Prize test="some random testing variable" /> -->
+		<!-- Should be able to use a spread operator to send props to the child components -->
+		<!-- <Prize {...test} /> -->
+		
+		<Prize test="some random prop is being passed in!!!" cash={100} prizeType="Gift Card"/>
 		<ScoreLegend/>
 	</div>
 
@@ -27,11 +32,14 @@
 			{/each}
 			<th>Points</th>
 		</tr>
+
 		{#each players as player}
 			<tr>
 				<td>{player}</td>
 				{#each weeks as week}
-					<td/>
+					<td>
+						<WeekPicker week={week}/>
+					</td>
 				{/each}
 				<td/>
 			</tr>
