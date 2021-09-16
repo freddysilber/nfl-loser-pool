@@ -8,7 +8,11 @@
 
 	const scheduleUrl = 'https://www.google.com/search?q=nfl+schedule&rlz=1C1CHBF_enUS851US854&oq=nfl+schedule&aqs=chrome.0.69i59i131i433i512j0i131i433i512l4j0i433i512j0i131i433i512l2j0i433i512j0i131i433i512.2480j1j4&sourceid=chrome&ie=UTF-8#sie=lg;/g/11nym9rnk6;6;/m/059yj;mt;fp;1;;';
 	const weeks = [...Array(WEEKS).keys()];
-	const players = ["Freddy", "Lydia", "Jay", "Carmen"];
+	const players = ['Freddy', 'Lydia', 'Jay', 'Carmen'];
+
+	function selectTeam(event) {
+		console.log(event);
+	}
 </script>
 
 <svelte:head>
@@ -40,7 +44,7 @@
 				<td>{player}</td>
 				{#each weeks as week}
 					<td>
-						<WeekPicker week={week}/>
+						<WeekPicker week={week} player={player} on:selectTeam={selectTeam}/>
 					</td>
 				{/each}
 				<td/>
