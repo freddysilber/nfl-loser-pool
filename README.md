@@ -1,8 +1,12 @@
 # create-svelte
 
-## Todo List
+## Description
 
--   Firebase setup
+A simple game you can play to compete against a team of people for the biggest loosing team of the NFL season.
+
+## Todo List/ Ideas
+
+-   Firebase setup?
 
 ## Getting Started
 
