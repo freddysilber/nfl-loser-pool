@@ -1,5 +1,5 @@
 <script lang="ts">
-	import axios from 'axios';
+	// import axios from 'axios';
 	import Prize from "$lib/prize/Prize.svelte";
 	import ScoreLegend from "$lib/score-legend/ScoreLegend.svelte";
 	import WeekPicker from "$lib/week-picker/WeekPicker.svelte";
@@ -14,24 +14,6 @@
 	function selectTeam(event) {
 		console.log(event);
 	}
-
-	// function getNFLTeams() {
-	// 	const options: any = {
-	// 	method: 'GET',
-	// 	url: 'https://sportspage-feeds.p.rapidapi.com/odds',
-	// 	params: {gameId: '<REQUIRED>'},
-	// 	headers: {
-	// 		'x-rapidapi-host': 'sportspage-feeds.p.rapidapi.com',
-	// 		'x-rapidapi-key': '1b3d9e46b6mshfee9751b44509ebp1b904djsn5e5d468a0778'
-	// 	}
-	// 	};
-
-	// 	axios.request(options).then(function (response) {
-	// 		console.log(response.data);
-	// 	}).catch(function (error) {
-	// 		console.error(error);
-	// 	});
-	// }
 </script>
 
 <svelte:head>
