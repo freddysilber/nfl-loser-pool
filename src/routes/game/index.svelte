@@ -1,8 +1,8 @@
 <script lang="ts">
-	// import axios from 'axios';
-	import Prize from "$lib/prize/Prize.svelte";
-	import ScoreLegend from "$lib/score-legend/ScoreLegend.svelte";
-	import WeekPicker from "$lib/week-picker/WeekPicker.svelte";
+	import axios from 'axios';
+	import Prize from '$lib/prize/Prize.svelte';
+	import ScoreLegend from '$lib/score-legend/ScoreLegend.svelte';
+	import WeekPicker from '$lib/week-picker/WeekPicker.svelte';
 
 	const WEEKS = 19;
 	const GAME_YEAR = 4;
@@ -14,6 +14,32 @@
 	function selectTeam(event) {
 		console.log(event);
 	}
+
+	function getUsers() {
+		axios
+			.get('http://localhost:8080/api/user')
+			.then((r) => {
+				console.log(r);
+			})
+			.catch((e) => {
+				console.error(e);
+			});
+	}
+
+	function newUser() {
+		axios
+			.post('http://localhost:8080/api/newuser', JSON.stringify({
+				name: 'gopher',
+				age: 25,
+				location: 'India'
+			}))
+			.then((r) => {
+				console.log(r);
+			})
+			.catch((e) => {
+				console.error(e);
+			});
+	}
 </script>
 
 <svelte:head>
@@ -23,13 +49,14 @@
 <div>
 	<h1>{GAME_YEAR}th Annual Cloud Coach NFL Looser Pool</h1>
 	<div class="game-header">
-		{getNFLTeams()}
+		<button on:click={getUsers}>Get Users</button>
+		<button on:click={newUser}>New User</button>
 		<h3 class="schedule-link"><a href={scheduleUrl} target="_blank">Schedule</a></h3>
 		<!-- Should be able to use a spread operator to send props to the child components -->
 		<!-- <Prize {...test} /> -->
-		
-		<Prize message="some random prop is being passed in!!!" cash={100} prizeType="Gift Card"/>
-		<ScoreLegend/>
+
+		<Prize message="some random prop is being passed in!!!" cash={100} prizeType="Gift Card" />
+		<ScoreLegend />
 	</div>
 
 	<table>
@@ -46,10 +73,10 @@
 				<td>{player}</td>
 				{#each weeks as week}
 					<td>
-						<WeekPicker week={week} player={player} on:selectTeam={selectTeam}/>
+						<WeekPicker {week} {player} on:selectTeam={selectTeam} />
 					</td>
 				{/each}
-				<td/>
+				<td />
 			</tr>
 		{/each}
 	</table>
