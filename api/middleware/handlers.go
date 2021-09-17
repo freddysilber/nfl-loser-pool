@@ -61,11 +61,8 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
     w.Header().Set("Access-Control-Allow-Methods", "POST")
     w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 
-	fmt.Println(w.Header())
-
     // create an empty user of type models.User
     var user models.User
-	fmt.Println(user)
     // decode the json request to user
     err := json.NewDecoder(r.Body).Decode(&user)
 
