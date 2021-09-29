@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fly } from 'svelte/transition';
 	import axios from 'axios';
 	import Prize from '$lib/prize/Prize.svelte';
 	import ScoreLegend from '$lib/score-legend/ScoreLegend.svelte';
@@ -63,7 +64,7 @@
 </svelte:head>
 
 <div>
-	<h1>{GAME_YEAR}th Annual Cloud Coach NFL Looser Pool</h1>
+	<h1 in:fly={{ x: 1000, duration: 1000}} out:fly={{ x: -500, duration: 1000}}>{GAME_YEAR}th Annual Cloud Coach NFL Looser Pool</h1>
 	<div class="game-header">
 		<button on:click={getUsers}>Get Users</button>
 		<button on:click={getUser}>Get User</button>
