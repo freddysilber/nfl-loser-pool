@@ -40,7 +40,7 @@
 <!-- <input type="text"> -->
 
 <style>
-	button {
+	/* button {
 		min-width: max-content;
-	}
+	} */
 </style>

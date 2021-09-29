@@ -99,7 +99,7 @@
 		margin-bottom: 0.25rem;
 	}
 
-	table {
+	/* table {
 		border-collapse: collapse;
 		width: 100%;
 	}
@@ -109,7 +109,7 @@
 		border: 1px solid #aaaaaa;
 		text-align: left;
 		padding: 8px;
-	}
+	} */
 
 	.schedule-link {
 		display: flex;
