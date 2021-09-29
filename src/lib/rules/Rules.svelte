@@ -3,9 +3,9 @@
 	<ol>
 		<li><b>You can only vote for each team ONCE</b></li>
 		<li>You are voting for who you think will <b>LOSE</b> (1 point)</li>
-		<li>Your vote MUST be in every <b>THURSDAY</b> by 6pm MST</li>
-		<li>Honor system. Please don't piggy back someone else's vote just because they are winning. Thanks!</li>
-		<li>FOR 1 EXTRA POINT: Indicate if you think your team will lose by more than 7+ or less than 7- points</li>
+		<li>Your vote MUST be in every <b>THURSDAY</b> by <b>6pm MST</b>... or before kick off on the Thursday night game</li>
+		<li>Honor system: Please don't piggy back someone else's vote just because they are winning. Thanks!</li>
+		<li><b>FOR 1 EXTRA POINT</b>: Indicate if you think your team will lose by more than <b>+/- 7</b> points</li>
 	</ol>
 </div>
 

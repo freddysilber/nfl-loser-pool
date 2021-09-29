@@ -8,7 +8,8 @@
 	const WEEKS = 19;
 	const GAME_YEAR = 4;
 
-	const scheduleUrl = 'https://www.google.com/search?q=nfl+schedule&rlz=1C1CHBF_enUS851US854&oq=nfl+schedule&aqs=chrome.0.69i59i131i433i512j0i131i433i512l4j0i433i512j0i131i433i512l2j0i433i512j0i131i433i512.2480j1j4&sourceid=chrome&ie=UTF-8#sie=lg;/g/11nym9rnk6;6;/m/059yj;mt;fp;1;;';
+	const scheduleUrl =
+		'https://www.google.com/search?q=nfl+schedule&rlz=1C1CHBF_enUS851US854&oq=nfl+schedule&aqs=chrome.0.69i59i131i433i512j0i131i433i512l4j0i433i512j0i131i433i512l2j0i433i512j0i131i433i512.2480j1j4&sourceid=chrome&ie=UTF-8#sie=lg;/g/11nym9rnk6;6;/m/059yj;mt;fp;1;;';
 	const weeks = [...Array(WEEKS).keys()];
 	const players = ['Freddy', 'Lydia', 'Jay', 'Carmen'];
 
@@ -29,11 +30,14 @@
 
 	function newUser() {
 		axios
-			.post('http://localhost:8080/api/newuser', JSON.stringify({
-				name: 'gopher',
-				age: 25,
-				location: 'India'
-			}))
+			.post(
+				'http://localhost:8080/api/newuser',
+				JSON.stringify({
+					name: 'gopher',
+					age: 25,
+					location: 'India'
+				})
+			)
 			.then((r) => {
 				console.log(r);
 			})
@@ -43,19 +47,25 @@
 	}
 
 	function getUser() {
-		axios.get('http://localhost:8080/api/user/1').then(user =>{
-			console.log(user);
-		}).catch(error=>{
-			console.error(error);
-		});
+		axios
+			.get('http://localhost:8080/api/user/1')
+			.then((user) => {
+				console.log(user);
+			})
+			.catch((error) => {
+				console.error(error);
+			});
 	}
 
-	function deleteUser(){
-		axios.delete('http://localhost:8080/api/deleteuser/1').then(user =>{
-			console.log(user);
-		}).catch(error=>{
-			console.error(error);
-		});
+	function deleteUser() {
+		axios
+			.delete('http://localhost:8080/api/deleteuser/1')
+			.then((user) => {
+				console.log(user);
+			})
+			.catch((error) => {
+				console.error(error);
+			});
 	}
 </script>
 
@@ -64,7 +74,7 @@
 </svelte:head>
 
 <div>
-	<h1 in:fly={{ x: 1000, duration: 1000}} out:fly={{ x: -500, duration: 1000}}>{GAME_YEAR}th Annual Cloud Coach NFL Looser Pool</h1>
+	<h1 in:fly={{ x: 1000, duration: 1000 }} out:fly={{ x: -1000, duration: 1000 }}>{GAME_YEAR}th Annual Cloud Coach NFL Looser Pool</h1>
 	<div class="game-header">
 		<button on:click={getUsers}>Get Users</button>
 		<button on:click={getUser}>Get User</button>
