@@ -4,6 +4,7 @@
 	import Prize from '$lib/prize/Prize.svelte';
 	import ScoreLegend from '$lib/score-legend/ScoreLegend.svelte';
 	import WeekPicker from '$lib/week-picker/WeekPicker.svelte';
+	import GameBoard from '$lib/game-board/GameBoard.svelte';
 
 	const WEEKS = 19;
 	const GAME_YEAR = 4;
@@ -88,6 +89,7 @@
 		<ScoreLegend />
 	</div>
 
+	<GameBoard {weeks} {players}/>
 	<table>
 		<tr>
 			<th />
