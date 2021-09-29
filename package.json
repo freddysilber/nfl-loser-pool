@@ -23,7 +23,6 @@
     "@types/cookie": "^0.4.0",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
-    "@sveltejs/adapter-vercel": "next",
     "eslint": "^7.22.0",
     "eslint-plugin-svelte3": "^3.2.0",
     "husky": "^7.0.2",
