@@ -3,7 +3,7 @@
 
 	export let weeks: number[];
 	// export let selectTeam
-	export let players;
+	export let players : string[];
 </script>
 
 <table>
