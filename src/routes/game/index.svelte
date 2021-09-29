@@ -89,28 +89,7 @@
 		<ScoreLegend />
 	</div>
 
-	<GameBoard {weeks} {players}/>
-	<table>
-		<tr>
-			<th />
-			{#each weeks as week}
-				<th>Week {week + 1}</th>
-			{/each}
-			<th>Points</th>
-		</tr>
-
-		{#each players as player}
-			<tr>
-				<td>{player}</td>
-				{#each weeks as week}
-					<td>
-						<WeekPicker {week} {player} on:selectTeam={selectTeam} />
-					</td>
-				{/each}
-				<td />
-			</tr>
-		{/each}
-	</table>
+	<GameBoard {weeks} {players} />
 </div>
 
 <style>
