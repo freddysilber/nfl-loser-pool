@@ -6,6 +6,8 @@
 	import WeekPicker from '$lib/week-picker/WeekPicker.svelte';
 	import GameBoard from '$lib/game-board/GameBoard.svelte';
 
+	let currentPlayerName: string = 'Freddy';
+
 	const WEEKS = 19;
 	const GAME_YEAR = 4;
 

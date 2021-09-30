@@ -17,11 +17,13 @@
 
 	{#each players as player}
 		<tr>
-			<td>{player}</td>
+			<td>
+				<!-- PLayers and the row they play on need to be important.... so make them very big -->
+				<h1>{player}</h1>
+			</td>
 			{#each weeks as week}
 				<td>
 					<WeekPicker {week} {player} />
-					<!-- <WeekPicker {week} {player} on:selectTeam={selectTeam} /> -->
 				</td>
 			{/each}
 			<td />
