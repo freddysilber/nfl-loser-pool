@@ -13,6 +13,7 @@
 <section>
 	<!-- Need to either make the 'game' route the default, or redirect from '/' to '/game' -->
 	<h1>What's up guys!? Let's start loosing some games...</h1>
+	<h2>Click the link below to get to the game.</h2>
 	<a sveltekit:prefetch href="/game">Get to the game</a>
 	<!-- <h1>
 		<div class="welcome">
