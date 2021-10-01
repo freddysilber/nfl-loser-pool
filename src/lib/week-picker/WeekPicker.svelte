@@ -34,7 +34,7 @@
 
 <!-- <button on:click={openSelectUserModal}>{label} ▼</button> -->
 <select on:change={handleSelect}>
-	<option>Pick a team...</option>
+	<option>{ label.charAt(0).toUpperCase() + label.slice(1) } a team...</option>
 	{#each teams as team}
 		<option>{team}</option>
 	{/each}
