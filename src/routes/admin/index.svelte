@@ -21,7 +21,7 @@
 
 	let rando: number = Math.random();
 
-	function setRando(event) {
+	function setRando(event: MouseEvent) {
 		console.log(event);
 		rando = Math.random();
 	}
