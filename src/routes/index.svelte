@@ -1,4 +1,6 @@
 <script context="module" lang="ts">
+	import { page } from '$app/stores';
+
 	export const prerender = true;
 </script>
 
@@ -11,7 +13,10 @@
 </svelte:head>
 
 <section>
-	<h1>
+	<!-- Need to either make the 'game' route the default, or redirect from '/' to '/game' -->
+	<h1>What's up guys!? Let's start loosing some games...</h1>
+	<a sveltekit:prefetch href="/game">Get to the game</a>
+	<!-- <h1>
 		<div class="welcome">
 			<picture>
 				<source srcset="svelte-welcome.webp" type="image/webp" />
@@ -26,7 +31,7 @@
 		try editing <strong>src/routes/index.svelte</strong>
 	</h2>
 
-	<Counter />
+	<Counter /> -->
 </section>
 
 <style>

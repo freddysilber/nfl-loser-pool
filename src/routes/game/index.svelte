@@ -79,10 +79,10 @@
 <div>
 	<h1 in:fly={{ x: 1000, duration: 1000 }} out:fly={{ x: -1000, duration: 1000 }}>{GAME_YEAR}th Annual Cloud Coach NFL Looser Pool</h1>
 	<div class="game-header">
-		<button on:click={getUsers}>Get Users</button>
+		<!-- <button on:click={getUsers}>Get Users</button>
 		<button on:click={getUser}>Get User</button>
 		<button on:click={newUser}>New User</button>
-		<button on:click={deleteUser}>Delete User</button>
+		<button on:click={deleteUser}>Delete User</button> -->
 		<h3 class="schedule-link"><a href={scheduleUrl} target="_blank">Schedule</a></h3>
 		<!-- Should be able to use a spread operator to send props to the child components -->
 		<!-- <Prize {...test} /> -->
