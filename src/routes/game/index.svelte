@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
-	import axios from 'axios';
+	// import axios from 'axios';
 	import Prize from '$lib/prize/Prize.svelte';
 	import ScoreLegend from '$lib/score-legend/ScoreLegend.svelte';
-	import WeekPicker from '$lib/week-picker/WeekPicker.svelte';
+	// import WeekPicker from '$lib/week-picker/WeekPicker.svelte';
 	import GameBoard from '$lib/game-board/GameBoard.svelte';
 
-	let currentPlayerName: string = 'Freddy';
+	// let currentPlayerName: string = 'Freddy';
 
 	const WEEKS = 19;
 	const GAME_YEAR = 4;
@@ -16,60 +16,60 @@
 	const weeks = [...Array(WEEKS).keys()];
 	const players = ['Freddy', 'Lydia', 'Jay', 'Carmen'];
 
-	function selectTeam(event) {
-		console.log(event);
-	}
+	// function selectTeam(event) {
+	// 	console.log(event);
+	// }
 
-	function getUsers() {
-		axios
-			.get('http://localhost:8080/api/user')
-			.then((r) => {
-				console.log(r);
-			})
-			.catch((e) => {
-				console.error(e);
-			});
-	}
+	// function getUsers() {
+	// 	axios
+	// 		.get('http://localhost:8080/api/user')
+	// 		.then((r) => {
+	// 			console.log(r);
+	// 		})
+	// 		.catch((e) => {
+	// 			console.error(e);
+	// 		});
+	// }
 
-	function newUser() {
-		axios
-			.post(
-				'http://localhost:8080/api/newuser',
-				JSON.stringify({
-					name: 'gopher',
-					age: 25,
-					location: 'India'
-				})
-			)
-			.then((r) => {
-				console.log(r);
-			})
-			.catch((e) => {
-				console.error(e);
-			});
-	}
+	// function newUser() {
+	// 	axios
+	// 		.post(
+	// 			'http://localhost:8080/api/newuser',
+	// 			JSON.stringify({
+	// 				name: 'gopher',
+	// 				age: 25,
+	// 				location: 'India'
+	// 			})
+	// 		)
+	// 		.then((r) => {
+	// 			console.log(r);
+	// 		})
+	// 		.catch((e) => {
+	// 			console.error(e);
+	// 		});
+	// }
 
-	function getUser() {
-		axios
-			.get('http://localhost:8080/api/user/1')
-			.then((user) => {
-				console.log(user);
-			})
-			.catch((error) => {
-				console.error(error);
-			});
-	}
+	// function getUser() {
+	// 	axios
+	// 		.get('http://localhost:8080/api/user/1')
+	// 		.then((user) => {
+	// 			console.log(user);
+	// 		})
+	// 		.catch((error) => {
+	// 			console.error(error);
+	// 		});
+	// }
 
-	function deleteUser() {
-		axios
-			.delete('http://localhost:8080/api/deleteuser/1')
-			.then((user) => {
-				console.log(user);
-			})
-			.catch((error) => {
-				console.error(error);
-			});
-	}
+	// function deleteUser() {
+	// 	axios
+	// 		.delete('http://localhost:8080/api/deleteuser/1')
+	// 		.then((user) => {
+	// 			console.log(user);
+	// 		})
+	// 		.catch((error) => {
+	// 			console.error(error);
+	// 		});
+	// }
 </script>
 
 <svelte:head>

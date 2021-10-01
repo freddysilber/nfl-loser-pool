@@ -64,20 +64,3 @@ npm run build
 ```
 
 > You can preview the built app with `npm run preview`, regardless of whether you installed an adapter. This should _not_ be used to serve your app in production.
-
-## Dev Steps
-
--   Step 1: Spin up a new Svelte app
-
-## Code Notes
-
-```
-	"cookie": "^0.4.1",
-	"firebase": "^9.0.2",
-	"rxfire": "^6.0.1",
-	"rxjs": "^7.3.0"
-```
-
-> These were added as dependencies in order to setup firebase and reactive development with this Svelte application. We can remove these deps if we are no longer using them... let's keep an eye on the tools we're using and get rid of them whenever seems necessary!
-
-//

@@ -34,7 +34,7 @@
 
 <!-- <button on:click={openSelectUserModal}>{label} ▼</button> -->
 <select on:change={handleSelect}>
-	<option>Pick a team...</option>
+	<option>{ label } a team...</option>
 	{#each teams as team}
 		<option>{team}</option>
 	{/each}

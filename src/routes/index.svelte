@@ -46,7 +46,7 @@
 		width: 100%;
 	}
 
-	.welcome {
+	/* .welcome {
 		position: relative;
 		width: 100%;
 		height: 0;
@@ -59,5 +59,5 @@
 		height: 100%;
 		top: 0;
 		display: block;
-	}
+	} */
 </style>
