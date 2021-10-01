@@ -73,11 +73,6 @@ npm run build
 
 ```
 	"cookie": "^0.4.1",
-	"firebase": "^9.0.2",
 	"rxfire": "^6.0.1",
 	"rxjs": "^7.3.0"
 ```
-
-> These were added as dependencies in order to setup firebase and reactive development with this Svelte application. We can remove these deps if we are no longer using them... let's keep an eye on the tools we're using and get rid of them whenever seems necessary!
-
-//
