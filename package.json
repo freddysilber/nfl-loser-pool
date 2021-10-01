@@ -40,8 +40,6 @@
     "@fontsource/fira-mono": "^4.2.2",
     "@lukeed/uuid": "^2.0.0",
     "axios": "^0.21.4",
-    "cookie": "^0.4.1",
-    "rxfire": "^6.0.1",
     "rxjs": "^7.3.0"
   }
 }
