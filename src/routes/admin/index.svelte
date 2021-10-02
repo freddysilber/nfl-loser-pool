@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { fade, fly } from "svelte/transition";
 
-	export let myName = "Freddy"; // This can be passed down from a parent component because it is marked with the 'export' keyword
+	export let myName = "Freddy";
 
 	let values: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 19];
 
@@ -17,7 +17,7 @@
 
 	let promiseValue = delay(2000);
 
-	$: thinggy = Math.random(); // This is a variable that reacts/ updates whenever the component changes (???)
+	$: thinggy = Math.random();
 
 	let rando: number = Math.random();
 

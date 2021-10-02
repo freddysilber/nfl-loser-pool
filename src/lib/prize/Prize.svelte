@@ -1,14 +1,13 @@
 <script lang="ts">
-	export let message: string;
+	export let message: string; // Optional message prop
+	export let showMessage: boolean;
 	export let cash: number;
 	export let prizeType: string;
-
-	const showSampleProp: boolean = false;
 </script>
 
 <h1>Prize: ${cash} {prizeType}<slot></slot>!</h1>
 
-{#if showSampleProp}
+{#if showMessage}
 	<p>{message}</p>
 {/if}
 
