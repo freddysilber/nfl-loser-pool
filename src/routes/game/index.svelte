@@ -18,8 +18,15 @@
 	{GAME_YEAR}th Annual Cloud Coach NFL Looser Pool
 </h1>
 <div class="game-header">
-	<h3 class="schedule-link"><a href={scheduleUrl} target="_blank">Schedule</a></h3>
-	<Prize message="some random prop is being passed in!!!" showMessage={false} cash={100} prizeType="Gift Card" />
+	<h3 class="schedule-link">
+		<a href={scheduleUrl} target="_blank">Schedule</a>
+	</h3>
+	<Prize 
+		message="some random prop is being passed in!!!" 
+		showMessage={false} 
+		cash={100} 
+		prizeType="Gift Card" 
+	/>
 	<ScoreLegend />
 </div>
 
