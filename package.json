@@ -1,15 +1,11 @@
 {
   "name": "nfl-looser-pool",
   "version": "0.0.1",
-  "author": {
-    "name": "Freddy Silber",
-    "email": "freddy.silber@gmail.com",
-    "url": "https://github.com/freddysilber"
-  },
+  "author": "Freddy Silber <freddy.silber@gmail.com> (https://github.com/freddysilber)",
   "license": "UNLICENSED",
   "repository": {
     "type": "git",
-    "url": "https://github.com/freddysilber/nfl-looser-pool"
+    "url": "git+https://github.com/freddysilber/nfl-looser-pool.git"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
@@ -47,5 +43,11 @@
     "axios": "^0.23.0",
     "cookie": "^0.4.1",
     "rxjs": "^7.4.0"
-  }
+  },
+  "description": "## Description",
+  "bugs": {
+    "url": "https://github.com/freddysilber/nfl-looser-pool/issues"
+  },
+  "homepage": "https://github.com/freddysilber/nfl-looser-pool#readme",
+  "main": "index.js"
 }
