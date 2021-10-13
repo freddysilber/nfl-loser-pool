@@ -6,6 +6,11 @@
     "email": "freddy.silber@gmail.com",
     "url": "https://github.com/freddysilber"
   },
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/freddysilber/nfl-looser-pool"
+  },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
   },
