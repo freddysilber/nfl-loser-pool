@@ -19,7 +19,7 @@ body {
 	min-height: 100vh;
 	margin: 0;
 	background-color: var(--primary-color);
-	background: linear-gradient(180deg, var(--primary-color) 0%, var(--secondary-color) 10.45%, var(--tertiary-color) 41.35%);
+	/* background: linear-gradient(180deg, var(--primary-color) 0%, var(--secondary-color) 10.45%, var(--tertiary-color) 41.35%); */
 }
 
 body::before {
@@ -92,13 +92,15 @@ button:focus:not(:focus-visible) {
 
 @media (min-width: 720px) {
 	h1 {
-		font-size: 2.4rem;
+		/* font-size: 2.4rem; */
+		font-size: 1rem;
 	}
 }
 
 select {
-	font-size: 1.5em;
-	padding: 1.5rem;
+	font-size: 1em;
+	height: 2.5rem;
+	padding: 0.25rem;
 	background-color: #444;
 	color: white;
 	border-radius: 0.5rem;

@@ -13,7 +13,7 @@
 <section>
 	<!-- Need to either make the 'game' route the default, or redirect from '/' to '/game' -->
 	<h1>What's up guys!? Let's start loosing some games...</h1>
-	<a sveltekit:prefetch href="/game">Get to the game</a>
+	<a sveltekit:prefetch href="/game">Get to the game... or use the nav bar at the top</a>
 	<!-- <h1>
 		<div class="welcome">
 			<picture>
@@ -43,6 +43,7 @@
 
 	h1 {
 		width: 100%;
+		font-size: 2em;
 	}
 
 	/* .welcome {
