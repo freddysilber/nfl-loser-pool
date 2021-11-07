@@ -1,5 +1,0 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
-# Runs the 'lint-staged' hook on commit to format code with prettier
-npx lint-staged
