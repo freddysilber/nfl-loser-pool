@@ -24,7 +24,7 @@
 	<h1>What's up guys!? Let's start loosing some games...</h1>
 	<a sveltekit:prefetch href="/game">Get to the game... or use the nav bar at the top</a>
 
-	<button on:click={fetchItems}>Fetch Items</button>
+	<!-- <button on:click={fetchItems}>Fetch Items</button> -->
 	<!-- <h1>
 		<div class="welcome">
 			<picture>
