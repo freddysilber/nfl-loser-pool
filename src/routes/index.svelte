@@ -2,6 +2,7 @@
 	import axios from 'axios';
 	import { ENV } from '$lib/env'
 	export const prerender = true;
+	// test
 	
 	function fetchItems() {
 		console.log('fetching items')
