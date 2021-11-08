@@ -26,6 +26,8 @@
 	<a sveltekit:prefetch href="/game"
 		>Get to the game... or use the nav bar at the top</a
 	>
+	<a sveltekit:prefetch href="/login">Login</a>
+	<a sveltekit:prefetch href="/sign-up">Sign Up</a>
 
 	<button on:click={fetchItems}>Fetch Items</button>
 	<!-- <h1>
