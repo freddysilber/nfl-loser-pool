@@ -11,15 +11,19 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Sign Up</title>
+</svelte:head>
+
 <div class="form-container">
 	<h1>Sign Up</h1>
 	<form on:submit|preventDefault={handleSubmit} method="post">
 		<!-- Username -->
 		<label for="username">Username</label>
-		<input id="username" type="text" bind:value={$user.username} />
+		<input id="username" type="text" autocomplete="username" bind:value={$user.username} />
 		<!-- Password -->
 		<label for="password">Password</label>
-		<input id="password" type="password" bind:value={$user.password} />
+		<input id="password" type="password" autocomplete="current-password" bind:value={$user.password} />
 		<!-- Submit -->
 		<button type="submit">Login</button>
 	</form>
