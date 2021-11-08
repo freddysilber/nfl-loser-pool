@@ -1,13 +1,14 @@
 <script context="module" lang="ts">
-	import axios from 'axios';
-	import { ENV } from '$lib/env'
+	import axios from "axios";
+	import { ENV } from "$lib/env";
+
 	export const prerender = true;
-	
+
 	function fetchItems() {
-		console.log('fetching items')
-		axios.get(`${ENV.api}/items`).then(items =>{
-			console.log(items)
-		})
+		console.log("fetching items");
+		axios.get(`${ENV.api}/items`).then((items) => {
+			console.log(items);
+		});
 	}
 </script>
 
@@ -22,9 +23,11 @@
 <section>
 	<!-- Need to either make the 'game' route the default, or redirect from '/' to '/game' -->
 	<h1>What's up guys!? Let's start loosing some games...</h1>
-	<a sveltekit:prefetch href="/game">Get to the game... or use the nav bar at the top</a>
+	<a sveltekit:prefetch href="/game"
+		>Get to the game... or use the nav bar at the top</a
+	>
 
-	<!-- <button on:click={fetchItems}>Fetch Items</button> -->
+	<button on:click={fetchItems}>Fetch Items</button>
 	<!-- <h1>
 		<div class="welcome">
 			<picture>
