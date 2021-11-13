@@ -1,8 +1,13 @@
 <script context="module" lang="ts">
 	import axios from "axios";
 	import { ENV } from "$lib/env";
+	import { writable } from "svelte/store";
 
 	export const prerender = true;
+
+	export const item = writable({
+		name: "Tiago Vilas Boas",
+	});
 
 	function fetchItems() {
 		console.log("fetching items");
@@ -12,9 +17,17 @@
 	}
 </script>
 
-<!-- <script lang="ts">
-	import Counter from '$lib/Counter.svelte';
-</script> -->
+<script lang="ts">
+	// import Counter from '$lib/Counter.svelte';
+
+	function handleSubmit(event: any){
+		console.log(event);
+		console.log($item, $item.name);
+		axios.post(`${ENV.api}/items`, { name: $item.name }).then(response =>{
+			console.log(response);
+		});
+	}
+</script>
 
 <svelte:head>
 	<title>Home</title>
@@ -30,6 +43,15 @@
 	<a sveltekit:prefetch href="/sign-up">Sign Up</a>
 
 	<button on:click={fetchItems}>Fetch Items</button>
+
+	<h1>Sign Up</h1>
+	<form on:submit|preventDefault={handleSubmit} method="post">
+		<!-- Username -->
+		<label for="name">Name</label>
+		<input id="name" type="text" autocomplete="name" bind:value={$item.name} />
+		<!-- Submit -->
+		<button type="submit">Create Item</button>
+	</form>
 	<!-- <h1>
 		<div class="welcome">
 			<picture>
