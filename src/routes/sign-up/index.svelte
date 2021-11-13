@@ -17,7 +17,7 @@
 	function handleSubmit(event) {
 		console.log("handle submit", event, $user);
 		if ($user.password === $user.confirmPassword) {
-			axios.post(`${ENV.api}/users`, $user).then((response) => {
+			axios.post(`${ENV.api}/users/signup`, $user).then((response) => {
 				console.log(response);
 			});
 		} else {

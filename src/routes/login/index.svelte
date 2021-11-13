@@ -1,4 +1,8 @@
 <script>
+	import { ENV } from "$lib/env";
+
+	import axios from "axios";
+
 	import { writable } from "svelte/store";
 
 	export const user = writable({
@@ -8,6 +12,9 @@
 
 	function handleSubmit(event) {
 		console.log("handle submit", event, $user);
+		axios.post(`${ENV.api}/users/login`, $user).then((response) => {
+			console.log(response);
+		});
 	}
 </script>
 
