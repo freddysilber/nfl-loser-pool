@@ -23,7 +23,7 @@
 	function handleSubmit(event: any){
 		console.log(event);
 		console.log($item, $item.name);
-		axios.post(`${ENV.api}/items`, { name: $item.name }).then(response =>{
+		axios.post(`${ENV.api}/items`, $item).then(response =>{
 			console.log(response);
 		});
 	}

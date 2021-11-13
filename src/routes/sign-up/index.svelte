@@ -1,13 +1,20 @@
 <script>
+import { ENV } from "$lib/env";
+
+import axios from "axios";
+
 	import { writable } from "svelte/store";
 
 	export const user = writable({
 		username: "Tiago Vilas Boas",
-		password: "",
+		// password: "",
 	});
 
 	function handleSubmit(event) {
 		console.log("handle submit", event, $user);
+		axios.post(`${ENV.api}/users`, $user).then(response =>{
+			console.log(response)
+		})
 	}
 </script>
 
@@ -22,8 +29,8 @@
 		<label for="username">Username</label>
 		<input id="username" type="text" autocomplete="username" bind:value={$user.username} />
 		<!-- Password -->
-		<label for="password">Password</label>
-		<input id="password" type="password" autocomplete="current-password" bind:value={$user.password} />
+		<!-- <label for="password">Password</label>
+		<input id="password" type="password" autocomplete="current-password" bind:value={$user.password} /> -->
 		<!-- Submit -->
 		<button type="submit">Login</button>
 	</form>
