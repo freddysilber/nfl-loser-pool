@@ -2,7 +2,7 @@
 	import { writable } from "svelte/store";
 
 	export const user = writable({
-		username: "Tiago Vilas Boas",
+		username: "",
 		password: "",
 	});
 
@@ -20,10 +20,23 @@
 	<form on:submit|preventDefault={handleSubmit} method="post">
 		<!-- Username -->
 		<label for="username">Username</label>
-		<input id="username" type="text" autocomplete="username" bind:value={$user.username} />
+		<input
+			id="username"
+			type="text"
+			autocomplete="username"
+			bind:value={$user.username}
+			placeholder="Enter your username"
+			required
+		/>
 		<!-- Password -->
 		<label for="password">Password</label>
-		<input id="password" type="password" autocomplete="current-password" bind:value={$user.password} />
+		<input
+			id="password"
+			type="password"
+			autocomplete="current-password"
+			bind:value={$user.password}
+			required
+		/>
 		<!-- Submit -->
 		<button type="submit">Login</button>
 	</form>
@@ -38,12 +51,5 @@
 	form {
 		display: flex;
 		flex-direction: column;
-	}
-
-	input,
-	button {
-		margin-bottom: 1rem;
-		border-radius: 5px;
-		padding: 0.25rem;
 	}
 </style>

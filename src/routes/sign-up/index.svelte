@@ -1,20 +1,28 @@
 <script>
-import { ENV } from "$lib/env";
+	import { ENV } from "$lib/env";
 
-import axios from "axios";
+	import axios from "axios";
 
 	import { writable } from "svelte/store";
 
 	export const user = writable({
-		username: "Tiago Vilas Boas",
-		// password: "",
+		firstName: "",
+		lastName: "",
+		username: "",
+		// email: "",
+		password: "",
+		confirmPassword: "",
 	});
 
 	function handleSubmit(event) {
 		console.log("handle submit", event, $user);
-		axios.post(`${ENV.api}/users`, $user).then(response =>{
-			console.log(response)
-		})
+		if ($user.password === $user.confirmPassword) {
+			axios.post(`${ENV.api}/users`, $user).then((response) => {
+				console.log(response);
+			});
+		} else {
+			alert("Passwords must be the same");
+		}
 	}
 </script>
 
@@ -25,12 +33,50 @@ import axios from "axios";
 <div class="form-container">
 	<h1>Sign Up</h1>
 	<form on:submit|preventDefault={handleSubmit} method="post">
+		<!-- First Name -->
+		<label for="first-name">First Name</label>
+		<input
+			id="first-name"
+			type="text"
+			bind:value={$user.firstName}
+			required
+		/>
+		<!-- Last Name -->
+		<label for="last-name">Last Name</label>
+		<input
+			id="last-name"
+			type="text"
+			bind:value={$user.lastName}
+			required
+		/>
 		<!-- Username -->
 		<label for="username">Username</label>
-		<input id="username" type="text" autocomplete="username" bind:value={$user.username} />
+		<input
+			id="username"
+			type="text"
+			autocomplete="username"
+			bind:value={$user.username}
+			placeholder="Choose a username"
+			required
+		/>
 		<!-- Password -->
-		<!-- <label for="password">Password</label>
-		<input id="password" type="password" autocomplete="current-password" bind:value={$user.password} /> -->
+		<label for="password">Password</label>
+		<input
+			id="password"
+			type="password"
+			autocomplete="current-password"
+			bind:value={$user.password}
+			required
+		/>
+		<!-- Confirm Password -->
+		<label for="confirm-password">Confirm Password</label>
+		<input
+			id="confirm-password"
+			type="password"
+			autocomplete="current-password"
+			bind:value={$user.confirmPassword}
+			required
+		/>
 		<!-- Submit -->
 		<button type="submit">Login</button>
 	</form>
@@ -45,12 +91,5 @@ import axios from "axios";
 	form {
 		display: flex;
 		flex-direction: column;
-	}
-
-	input,
-	button {
-		margin-bottom: 1rem;
-		border-radius: 5px;
-		padding: 0.25rem;
 	}
 </style>
