@@ -1,19 +1,26 @@
-<script>
+<script lang="ts">
 	import { ENV } from "$lib/env";
-
-	import axios from "axios";
-
+	import axios, { AxiosResponse } from "axios";
 	import { writable } from "svelte/store";
+
+	let showLoginError: boolean = false;
 
 	export const user = writable({
 		username: "",
 		password: "",
 	});
 
-	function handleSubmit(event) {
-		console.log("handle submit", event, $user);
-		axios.post(`${ENV.api}/users/login`, $user).then((response) => {
-			console.log(response);
+	function loginUser(event: any) {
+		console.log({
+			what: 'loginUser',
+			event,
+			user: $user,
+		});
+
+		axios.post(`${ENV.api}/users/login`, $user).then((response: AxiosResponse<unknown, any>) => {
+			console.log('response from post login', response);
+		}).catch((error: any) => {
+			showLoginError = true;
 		});
 	}
 </script>
@@ -23,8 +30,12 @@
 </svelte:head>
 
 <div class="form-container">
+	{#if showLoginError}
+		<p style="color: red;">Login Failed. Please Make sure your username and password are correct!</p>
+	{/if}
+
 	<h1>Login</h1>
-	<form on:submit|preventDefault={handleSubmit} method="post">
+	<form on:submit|preventDefault={loginUser} method="post">
 		<!-- Username -->
 		<label for="username">Username</label>
 		<input
