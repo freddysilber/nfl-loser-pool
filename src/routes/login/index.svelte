@@ -31,7 +31,7 @@
 
 <div class="form-container">
 	{#if showLoginError}
-		<p style="color: red;">Login Failed. Please Make sure your username and password are correct!</p>
+		<p class="error">Login Failed. Please Make sure your username and password are correct!</p>
 	{/if}
 
 	<h1>Login</h1>
@@ -69,5 +69,10 @@
 	form {
 		display: flex;
 		flex-direction: column;
+	}
+
+	p.error {
+		/* TODO: Change this color */
+		color: rgb(250, 104, 104);
 	}
 </style>
