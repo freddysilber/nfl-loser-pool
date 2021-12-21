@@ -6,6 +6,12 @@ A simple game you can play to compete against a team of people for the biggest l
 
 ## Getting Started
 
+You need to set up a ```.env``` with the following contents:
+```bash
+# You can use this port or whatever port you desire... I used this one becuase this is what the native api is set up for
+VITE_DEV_API=http://localhost:8080
+```
+
 ### Developing
 
 Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
