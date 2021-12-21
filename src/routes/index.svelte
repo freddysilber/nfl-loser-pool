@@ -6,7 +6,7 @@
 	export const prerender = true;
 
 	export const item = writable({
-		name: "Tiago Vilas Boas",
+		name: `Random Item: ${Math.floor(Math.random() * 100)}`,
 	});
 
 	function fetchItems() {

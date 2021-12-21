@@ -1,19 +1,31 @@
 <script lang="ts">
-	import Header from '$lib/header/Header.svelte';
-	import '../app.css';
+	import Header from "$lib/header/Header.svelte";
+	import "../app.css";
+
+	let isAuthenticated: boolean = true;
 </script>
 
 <Header />
 
 <main>
-	<slot />
+	{#if isAuthenticated}
+		<slot />
+	{:else}
+		<p class="unauthorized">Your not signed in!</p>
+	{/if}
 </main>
 
 <footer>
-	<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
+	<p>
+		visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit
+	</p>
 </footer>
 
 <style>
+	p.unauthorized {
+		text-align: center;
+	}
+
 	main {
 		flex: 1;
 		display: flex;
