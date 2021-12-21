@@ -4,7 +4,7 @@
 
 A simple game you can play to compete against a team of people for the biggest loosing team of the NFL season.
 
-## Getting Started
+### Getting Started
 
 1. You need to set up a ```.env``` with the following contents:
 ```bash
