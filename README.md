@@ -14,7 +14,7 @@ VITE_DEV_API=http://localhost:8080
 
 ### Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Once you've created a project and installed dependencies with `npm install` (or `npm install` or `yarn`), start a development server:
 
 -   Make sure to start the [api]('https://github.com/freddysilber/nfl-looser-pool-api') first!
 
