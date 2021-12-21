@@ -27,6 +27,13 @@
 			console.log(response);
 		});
 	}
+
+	function updateItem(event: any) {
+		console.log('UPDATE EVENT', event)
+		axios.put(`${ENV.api}/item${1}`, $item).then(response => {
+			console.log('response????', response);
+		})
+	}
 </script>
 
 <svelte:head>
@@ -44,13 +51,21 @@
 
 	<button on:click={fetchItems}>Fetch Items</button>
 
-	<h1>Sign Up</h1>
+	<h1>Create a random 'Item'</h1>
 	<form on:submit|preventDefault={handleSubmit} method="post">
 		<!-- Username -->
 		<label for="name">Name</label>
 		<input id="name" type="text" autocomplete="name" bind:value={$item.name} />
 		<!-- Submit -->
 		<button type="submit">Create Item</button>
+	</form>
+
+	<form on:submit|preventDefault={updateItem} method="post">
+			<!-- Username -->
+		<label for="name">Name</label>
+		<input id="name" type="text" autocomplete="name" bind:value={$item.name} />
+		<!-- Submit -->
+		<button type="submit">Update Item?</button>
 	</form>
 	<!-- <h1>
 		<div class="welcome">
