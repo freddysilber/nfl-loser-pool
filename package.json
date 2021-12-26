@@ -2,7 +2,7 @@
   "name": "nfl-looser-pool",
   "version": "0.0.1",
   "author": "Freddy Silber <freddy.silber@gmail.com> (https://github.com/freddysilber)",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/freddysilber/nfl-looser-pool.git"
@@ -36,7 +36,7 @@
     "axios": "^0.24.0",
     "cookie": "^0.4.1"
   },
-  "description": "## Description",
+  "description": "UI for NFL Looser Pool Game",
   "bugs": {
     "url": "https://github.com/freddysilber/nfl-looser-pool/issues"
   },
