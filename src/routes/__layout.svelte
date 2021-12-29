@@ -52,6 +52,7 @@
 	{#if $session.authenticated}
 		{$session.profile.name} - {$session.profile.username}
 	{/if}
+	<slot/>
 </main>
 
 <footer>
