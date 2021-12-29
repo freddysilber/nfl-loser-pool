@@ -6,4 +6,4 @@
 	<title>Sign Up</title>
 </svelte:head>
 
-<AuthForm mode="signup"/>
+<AuthForm/>

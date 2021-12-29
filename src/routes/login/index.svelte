@@ -6,4 +6,4 @@
 	<title>Login</title>
 </svelte:head>
 
-<AuthForm mode="login" />
+<AuthForm isSignUp={false} />

@@ -1,67 +1,92 @@
 <script lang="ts">
-	import { writable } from "svelte/store";
-	import { ENV } from "$lib/env";
-	import axios, { AxiosResponse } from "axios";
+	import { Writable, writable } from 'svelte/store';
+	import { ENV } from '$lib/env';
+	import axios, { AxiosResponse } from 'axios';
+	import { DoRegister, DoLogin, User } from '../../session';
+	import { goto } from '$app/navigation';
+	import { getStores } from '$app/stores';
 
-	export let mode: "login" | "signup" = "signup";
+	const { session } = getStores();
 
-	let user;
+	// export let mode: 'login' | 'signup' = 'signup';
+	export let isSignUp: boolean = true;
+
+	let user: Writable<User>;
 	let formLabel: string;
 	let showLoginError: boolean = false;
+	let confirmPassword: string;
 
-	if (mode === "signup") {
+	if (isSignUp) {
 		user = writable({
-			firstName: "",
-			lastName: "",
-			username: "",
-			// email: "",
-			password: "",
-			confirmPassword: "",
+			username: '',
+			password: '',
+			name: '',
+			roles: [''],
 		});
-		formLabel = "Sign Up!";
-	} else if (mode === "login") {
+		formLabel = 'Sign Up!';
+	} else if (!isSignUp) {
 		user = writable({
-			username: "",
-			password: "",
+			username: '',
+			password: '',
 		});
-		formLabel = "Log In!";
+		formLabel = 'Log In!';
 	}
 
-	function handleAuth(event: any) {
-		console.log("Auth event!", event, $user);
-		if (mode === "signup") {
-			console.log("handle submit", event, $user);
-			if ($user.password === $user.confirmPassword) {
-				axios
-					.post(`${ENV.api}/users/signup`, $user)
-					.then((response) => {
-						console.log(response);
-					});
+	async function handleAuth() {
+		if (isSignUp) {
+			if ($user.password === confirmPassword) {
+				const response = await DoRegister($user);
+				processResponse(response);
 			} else {
-				alert("Passwords must be the same");
+				alert('Passwords must be the same');
 			}
-		} else if (mode === "login") {
-			console.log({
-				what: "loginUser",
-				event,
-				user: $user,
-			});
-
+		} else if (!isSignUp) {
 			axios
 				.post(`${ENV.api}/users/login`, $user)
 				.then((response: AxiosResponse<unknown, any>) => {
-					console.log("response from post login", response);
+					console.log('response from post login', response);
 				})
 				.catch((error: any) => {
-					alert(`Oops! There's been an error, this shouldn't happen. Contact your favorite dev to fix this 🖤'`)
+					alert(
+						`Oops! There's been an error, this shouldn't happen. Contact your favorite dev to fix this 🖤'`
+					);
 					showLoginError = true;
 					throw new Error(error);
 				});
 		}
 	}
+
+	async function logout() {
+		console.log('logging out');
+		await axios.delete(`${ENV.api}/users/logout`);
+		// Navigate back to home after user logs out
+		goto('/');
+	}
+
+	function processResponse(response: AxiosResponse<any, any>) {
+		console.log(response);
+
+		if (response.statusText === 'OK') {
+			session.update(() => {
+				return {
+					authenticated: !!response.data.id,
+					profile: response.data,
+				};
+			});
+		} else {
+			session.update(() => {
+				return {
+					authenticated: false,
+					profile: null,
+				};
+			});
+		}
+		console.log($session)
+	}
 </script>
 
 <h1>auth!</h1>
+<button on:click={logout}>Logout</button>
 <div class="form-container">
 	<h1>{formLabel}</h1>
 	{#if showLoginError}
@@ -72,23 +97,10 @@
 	{/if}
 	<form on:submit|preventDefault={handleAuth} method="post">
 		<!-- SIGNUP -->
-		{#if mode === "signup"}
+		{#if isSignUp}
 			<!-- First Name -->
-			<label for="first-name">First Name</label>
-			<input
-				id="first-name"
-				type="text"
-				bind:value={$user.firstName}
-				required
-			/>
-			<!-- Last Name -->
-			<label for="last-name">Last Name</label>
-			<input
-				id="last-name"
-				type="text"
-				bind:value={$user.lastName}
-				required
-			/>
+			<label for="name">Name</label>
+			<input id="name" type="text" bind:value={$user.name} required />
 			<!-- Username -->
 			<label for="username">Username</label>
 			<input
@@ -114,7 +126,7 @@
 				id="confirm-password"
 				type="password"
 				autocomplete="current-password"
-				bind:value={$user.confirmPassword}
+				bind:value={confirmPassword}
 				required
 			/>
 			<!-- Submit -->
