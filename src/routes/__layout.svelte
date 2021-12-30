@@ -17,14 +17,24 @@
 
 		try {
 			// validate session-token against server
-			const response = await axios.get(`${ENV.api}/session`);
-			if (response.statusText === 'OK') {
+			const response = await fetch(`${ENV.api}/session`, {
+				method: 'GET',
+				mode: 'cors',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			});
+
+			if (response.ok) {
+				const profile = await response.json();
+				console.log(profile);
 				// user profile is returned on success
 				console.log(response);
 				session.update(() => {
 					return {
-						authenticated: !!response.data.authenticated,
-						profile: response.data,
+						authenticated: !!profile,
+						profile,
 						loading: false,
 					};
 				});

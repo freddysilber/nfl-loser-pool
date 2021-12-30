@@ -8,7 +8,6 @@
 
 	const { session } = getStores();
 
-	// export let mode: 'login' | 'signup' = 'signup';
 	export let isSignUp: boolean = true;
 
 	let user: Writable<User>;
@@ -41,12 +40,15 @@
 				alert('Passwords must be the same');
 			}
 		} else if (!isSignUp) {
-			axios
-				.post(`${ENV.api}/users/login`, $user)
-				.then((response: AxiosResponse<unknown, any>) => {
+			axios.post(
+				`${ENV.api}/users/login`,
+				$user,
+				{
+					withCredentials: true
+				}
+				).then((response: AxiosResponse<unknown, any>) => {
 					console.log('response from post login', response);
-				})
-				.catch((error: any) => {
+				}).catch((error: any) => {
 					alert(
 						`Oops! There's been an error, this shouldn't happen. Contact your favorite dev to fix this 🖤'`
 					);
@@ -63,14 +65,14 @@
 		goto('/');
 	}
 
-	function processResponse(response: AxiosResponse<any, any>) {
-		console.log(response);
+	async function processResponse(response: Response) {
+		const user = await response.json();
 
 		if (response.statusText === 'OK') {
 			session.update(() => {
 				return {
-					authenticated: !!response.data.id,
-					profile: response.data,
+					authenticated: !!response,
+					profile: user,
 				};
 			});
 		} else {
@@ -85,9 +87,16 @@
 	}
 </script>
 
-<h1>auth!</h1>
-<button on:click={logout}>Logout</button>
 <div class="form-container">
+	{#if $session.authenticated}
+		<button class="logout" on:click={logout}>Logout</button>
+	{/if}
+
+	<label>
+		<input bind:checked={isSignUp} label="isSignUp" type="checkbox">
+		{isSignUp ? 'Sign Up' : 'Log In'}
+	</label>
+
 	<h1>{formLabel}</h1>
 	{#if showLoginError}
 		<p class="error">
@@ -95,6 +104,7 @@
 			correct!
 		</p>
 	{/if}
+	
 	<form on:submit|preventDefault={handleAuth} method="post">
 		<!-- SIGNUP -->
 		{#if isSignUp}
@@ -172,5 +182,12 @@
 	form {
 		display: flex;
 		flex-direction: column;
+	}
+
+	button.logout {
+		width: 100%;
+		background: rgb(255, 94, 121);
+		border-radius: 8px;
+		border: 1px solid rgb(94, 94, 94);
 	}
 </style>

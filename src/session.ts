@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { ENV } from "$lib/env";
 
 export interface User {
@@ -8,7 +7,7 @@ export interface User {
 	roles?: string[];
 }
 
-export function DoLogin(username: string, password: string) {
+export function DoLogin(username: string, password: string): Promise<Response> {
 	return fetch('http://localhost:8000/api/v1/session', {
 		method: 'POST',
 		mode: 'cors',
@@ -23,31 +22,14 @@ export function DoLogin(username: string, password: string) {
 	})
 }
 
-export function DoRegister(user: User) {
-
-	return axios.post(
-		`${ENV.api}/users/signup`,
-		user
-	);
-
-	// return fetch('http://localhost:8000/register', {
-	// 	method: 'POST',
-	// 	mode: 'cors',
-	// 	credentials: 'include',
-	// 	headers: {
-	// 		'Content-Type': 'application/json'
-	// 	},
-	// 	body: JSON.stringify(user)
-	// })
+export function DoRegister(user: User): Promise<Response> {
+	return fetch(`${ENV.api}/users/signup`, {
+		method: 'POST',
+		mode: 'cors',
+		credentials: 'include',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(user)
+	})
 }
-// export function DoRegister(user: User) {
-// 	return fetch('http://localhost:8000/api/v1/register', {
-// 		method: 'POST',
-// 		mode: 'cors',
-// 		credentials: 'include',
-// 		headers: {
-// 			'Content-Type': 'application/json'
-// 		},
-// 		body: JSON.stringify(user)
-// 	})
-// }
