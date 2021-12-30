@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import logo from './svelte-logo.svg';
+	// import logo from './svelte-logo.svg';
 
 	import { getStores } from '$app/stores';
 

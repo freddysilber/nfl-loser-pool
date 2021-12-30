@@ -5,6 +5,7 @@
 	import '../app.css';
 	import { ENV } from '$lib/env';
 	import axios from 'axios';
+	import { setSession } from '../session';
 
 	const { session }: any = getStores();
 
@@ -12,42 +13,17 @@
 		if (session && session.authenticated) {
 			return; // already have valid session
 		}
-
-		try {
-			// validate session-token against server
-			const response = await fetch(`${ENV.api}/session`, {
-				method: 'GET',
-				mode: 'cors',
-				credentials: 'include',
-				headers: {
-					'Content-Type': 'application/json',
-				},
+		// validate session-token against server
+		axios
+			.get(`${ENV.api}/session`, {
+				withCredentials: true,
+			})
+			.then((response) => {
+				setSession(response, session);
+			})
+			.catch((error) => {
+				console.error(error);
 			});
-
-			if (response.ok) {
-				const profile = await response.json();
-				// user profile is returned on success
-				session.update(() => {
-					return {
-						authenticated: !!profile,
-						profile,
-						loading: false,
-					};
-				});
-			} else {
-				// error validating session
-				session.update(() => {
-					return {
-						authenticated: false,
-						profile: null,
-						loading: false,
-					};
-				});
-			}
-		} catch (error) {
-			console.error(error); // connection error
-			throw new Error(error);
-		}
 	});
 </script>
 
@@ -57,7 +33,7 @@
 	{#if $session.authenticated}
 		{$session.profile.name} - {$session.profile.username}
 	{/if}
-	<slot/>
+	<slot />
 </main>
 
 <footer>

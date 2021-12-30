@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { Writable, writable } from 'svelte/store';
 	import { ENV } from '$lib/env';
-	import axios from 'axios';
-	import { DoRegister, DoLogin, User } from '../../session';
+	import axios, { AxiosResponse } from 'axios';
+	import { User, setSession, signup, login } from '../../session';
 	import { goto } from '$app/navigation';
 	import { getStores } from '$app/stores';
 
@@ -15,33 +15,32 @@
 	let showLoginError: boolean = false;
 	let confirmPassword: string;
 
+	const userDetails = {
+		username: '',
+		password: ''
+	};
+
 	if (isSignUp) {
-		user = writable({
-			username: '',
-			password: '',
-			name: '',
-			roles: [''],
-		});
+		userDetails['name'] = '';
+		userDetails['roles']= [''];
 		formLabel = 'Sign Up!';
-	} else if (!isSignUp) { // Log in
-		user = writable({
-			// Todo: Remove these values to empty strings
-			username: 'mrsir',
-			password: 'password',
-		});
+	} else {
+		// Todo: remove these
+		userDetails.username = 'mrsir';
+		userDetails.password = 'password';
 		formLabel = 'Log In!';
 	}
 
+	user = writable(userDetails);
+
 	async function handleAuth() {
-		if (isSignUp) {
-			if ($user.password === confirmPassword) {
-				processResponse(await DoRegister($user));
-			} else {
-				alert('Passwords must be the same');
-			}
-		} else if (!isSignUp) {
-			processResponse(await DoLogin($user.username, $user.password));
+		let response: AxiosResponse;
+		if (isSignUp && validUser()) {
+			response = await signup($user);
+		} else {
+			response = await login($user);
 		}
+		setSession(response, session);
 	}
 
 	async function logout() {
@@ -52,24 +51,12 @@
 		goto('/');
 	}
 
-	async function processResponse(response: Response) {
-		const user = await response.json();
-
-		if (response.statusText === 'OK') {
-			session.update(() => {
-				return {
-					authenticated: !!response,
-					profile: user,
-				};
-			});
-		} else {
-			session.update(() => {
-				return {
-					authenticated: false,
-					profile: null,
-				};
-			});
+	function validUser(): boolean {
+		if ($user.password !== confirmPassword) {
+			alert('Passwords must be the same');
+			return false;
 		}
+		return true;
 	}
 </script>
 
