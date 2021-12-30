@@ -1,19 +1,24 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import logo from './svelte-logo.svg';
+
+	import { getStores } from '$app/stores';
+
+	const { session } = getStores();
 </script>
 
 <header>
-	<!-- Top left corner logos -->
 	<div class="corner">
+		<p>:)</p>
+	</div>
+	<!-- <div class="corner">
 		<a href="https://cloudcoach.com" target="_blank">
 			<img src="https://images.g2crowd.com/uploads/product/image/social_landscape/social_landscape_5daa66323ec035555304b5a66b252bfc/cloud-coach.png" alt="Cloud Coach" target="_blank" />
 		</a>
-		<!-- Could propably strip this one out at some point... -->
 		<a href="https://kit.svelte.dev">
 			<img src={logo} alt="SvelteKit" />
 		</a>
-	</div>
+	</div> -->
 
 	<nav>
 		<!-- ATM, not much knowledge with svgs so idk what this is doing... -->
@@ -22,15 +27,15 @@
 		</svg>
 		<ul>
 			<!-- Not really relevant, but its good to have a reference... -->
-			<li class:active={$page.path === '/'}><a sveltekit:prefetch href="/">Home</a></li>
-			<li class:active={$page.path === '/about'}><a sveltekit:prefetch href="/about">About</a></li>
-			<li class:active={$page.path === '/todos'}><a sveltekit:prefetch href="/todos">Todos</a></li>
-			<li class:active={$page.path === '/admin'}><a sveltekit:prefetch href="/admin">Admin</a></li>
+			<li class:active={$page.path === "/"}><a sveltekit:prefetch href="/">Home</a></li>
+			<li class:active={$page.path === "/about"}><a sveltekit:prefetch href="/about">About</a></li>
+			<li class:active={$page.path === "/todos"}><a sveltekit:prefetch href="/todos">Todos</a></li>
+			<li class:active={$page.path === "/admin"}><a sveltekit:prefetch href="/admin">Admin</a></li>
 			<!-- This is the important stuff -->
-			<li class:active={$page.path === '/login'}><a sveltekit:prefetch href="/login">Login</a></li>
-			<li class:active={$page.path === '/sign-up'}><a sveltekit:prefetch href="/sign-up">Sign Up</a></li>
-			<li class:active={$page.path === '/rules'}><a sveltekit:prefetch href="/rules">Rules</a></li>
-			<li class:active={$page.path === '/game'}><a sveltekit:prefetch href="/game">Game</a></li>
+			<li class:active={$page.path === "/login"}><a sveltekit:prefetch href="/login">Login</a></li>
+			<li class:active={$page.path === "/sign-up"}><a sveltekit:prefetch href="/sign-up">Sign Up</a></li>
+			<li class:active={$page.path === "/rules"}><a sveltekit:prefetch href="/rules">Rules</a></li>
+			<li class:active={$page.path === "/game"}><a sveltekit:prefetch href="/game">Game</a></li>
 		</ul>
 		<!-- ATM, not much knowledge with svgs so idk what this is doing... -->
 		<svg viewBox="0 0 2 3" aria-hidden="true">
@@ -39,9 +44,9 @@
 	</nav>
 
 	<div class="corner">
-		<!-- TODO put something else here? github link? -->
-		<!-- Lets put a watermark here or something for people to click on -->
-		<a href="https://github.com/freddysilber" target="_blank">Freddy Silber</a>
+		{#if $session.profile}
+			<p>{$session.profile.name} - {$session.profile.username}</p>
+		{/if}
 	</div>
 </header>
 

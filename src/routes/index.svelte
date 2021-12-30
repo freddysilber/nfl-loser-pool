@@ -10,7 +10,6 @@
 	});
 
 	function fetchItems() {
-		console.log("fetching items");
 		axios.get(`${ENV.api}/items`).then((items) => {
 			console.log(items);
 		});
@@ -21,15 +20,12 @@
 	// import Counter from '$lib/Counter.svelte';
 
 	function handleSubmit(event: any){
-		console.log(event);
-		console.log($item, $item.name);
 		axios.post(`${ENV.api}/items`, $item).then(response =>{
 			console.log(response);
 		});
 	}
 
 	function updateItem(event: any) {
-		console.log('UPDATE EVENT', event)
 		axios.put(`${ENV.api}/item${1}`, $item).then(response => {
 			console.log('response????', response);
 		})

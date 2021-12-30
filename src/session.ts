@@ -8,7 +8,7 @@ export interface User {
 }
 
 export function DoLogin(username: string, password: string): Promise<Response> {
-	return fetch('http://localhost:8000/api/v1/session', {
+	return fetch(`${ENV.api}/users/login`, {
 		method: 'POST',
 		mode: 'cors',
 		credentials: 'include',

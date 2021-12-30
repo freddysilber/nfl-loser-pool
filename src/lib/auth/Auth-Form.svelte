@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Writable, writable } from 'svelte/store';
 	import { ENV } from '$lib/env';
-	import axios, { AxiosResponse } from 'axios';
+	import axios from 'axios';
 	import { DoRegister, DoLogin, User } from '../../session';
 	import { goto } from '$app/navigation';
 	import { getStores } from '$app/stores';
@@ -23,10 +23,11 @@
 			roles: [''],
 		});
 		formLabel = 'Sign Up!';
-	} else if (!isSignUp) {
+	} else if (!isSignUp) { // Log in
 		user = writable({
-			username: '',
-			password: '',
+			// Todo: Remove these values to empty strings
+			username: 'mrsir',
+			password: 'password',
 		});
 		formLabel = 'Log In!';
 	}
@@ -34,33 +35,19 @@
 	async function handleAuth() {
 		if (isSignUp) {
 			if ($user.password === confirmPassword) {
-				const response = await DoRegister($user);
-				processResponse(response);
+				processResponse(await DoRegister($user));
 			} else {
 				alert('Passwords must be the same');
 			}
 		} else if (!isSignUp) {
-			axios.post(
-				`${ENV.api}/users/login`,
-				$user,
-				{
-					withCredentials: true
-				}
-				).then((response: AxiosResponse<unknown, any>) => {
-					console.log('response from post login', response);
-				}).catch((error: any) => {
-					alert(
-						`Oops! There's been an error, this shouldn't happen. Contact your favorite dev to fix this 🖤'`
-					);
-					showLoginError = true;
-					throw new Error(error);
-				});
+			processResponse(await DoLogin($user.username, $user.password));
 		}
 	}
 
 	async function logout() {
-		console.log('logging out');
-		await axios.delete(`${ENV.api}/users/logout`);
+		await axios.delete(`${ENV.api}/session`, {
+			withCredentials: true,
+		});
 		// Navigate back to home after user logs out
 		goto('/');
 	}
@@ -83,7 +70,6 @@
 				};
 			});
 		}
-		console.log($session)
 	}
 </script>
 
@@ -93,7 +79,7 @@
 	{/if}
 
 	<label>
-		<input bind:checked={isSignUp} label="isSignUp" type="checkbox">
+		<input bind:checked={isSignUp} label="isSignUp" type="checkbox" />
 		{isSignUp ? 'Sign Up' : 'Log In'}
 	</label>
 
@@ -104,7 +90,7 @@
 			correct!
 		</p>
 	{/if}
-	
+
 	<form on:submit|preventDefault={handleAuth} method="post">
 		<!-- SIGNUP -->
 		{#if isSignUp}

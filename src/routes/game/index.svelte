@@ -26,7 +26,6 @@
 
 	onMount(async () => {
 		const res = await axios.get<{items: any[]}>(`${ENV.api}/items`);
-		console.log(res, res.data);
 		items = res.data.items || items;
 	});
 </script>

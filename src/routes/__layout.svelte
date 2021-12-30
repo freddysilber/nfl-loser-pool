@@ -8,8 +8,6 @@
 
 	const { session }: any = getStores();
 
-	// console.log($session);
-
 	onMount(async () => {
 		if (session && session.authenticated) {
 			return; // already have valid session
@@ -28,9 +26,7 @@
 
 			if (response.ok) {
 				const profile = await response.json();
-				console.log(profile);
 				// user profile is returned on success
-				console.log(response);
 				session.update(() => {
 					return {
 						authenticated: !!profile,
@@ -52,7 +48,6 @@
 			console.error(error); // connection error
 			throw new Error(error);
 		}
-		console.log($session);
 	});
 </script>
 
@@ -67,7 +62,7 @@
 
 <footer>
 	<p>
-		visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit
+		created by <a href="https://github.com/freddysilber" target="_blank">Freddy Silber</a>
 	</p>
 </footer>
 
