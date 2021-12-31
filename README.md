@@ -12,6 +12,9 @@ A simple game you can play to compete against a team of people for the biggest l
 VITE_DEV_API=http://localhost:8080
 ```
 
+2. Fork and clone the api [here](https://github.com/freddysilber/nfl-looser-pool-api)
+	* Make sure to follow the set up instructions in the readme!
+
 ### Developing
 
 Once you've created a project and installed dependencies with `npm install` (or `npm install` or `yarn`), start a development server:
