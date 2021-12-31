@@ -49,7 +49,8 @@
 		position: sticky;
 	}
 
-	td:first-child, th:first-child {
+	td:first-child,
+	th:first-child {
 		position: sticky;
 		left: 0;
 		z-index: 1;

@@ -32,15 +32,20 @@
 
 	user = writable(userDetails);
 
-	async function handleAuth() {
-		let response: AxiosResponse;
+	function handleAuth() {
+		let response: Promise<AxiosResponse>;
 		if (isSignUp && validUser()) {
-			response = await signup($user);
+			response = signup($user);
 		} else {
-			response = await login($user);
+			response = login($user);
 		}
-		setSession(response, session);
-		goto('/game');
+		response.then((response)=> {
+			setSession(response, session);
+			goto('/game');
+		}).catch((error)=>{
+			console.error(error);
+			showLoginError = true;
+		})
 	}
 
 	function validUser(): boolean {
@@ -54,10 +59,14 @@
 
 <div class="form-container">
 	{#if showLoginError}
-		<p class="error">
+		<div class="alert alert-danger">
 			Login Failed. Please Make sure your username and password are
 			correct!
-		</p>
+		</div>
+		<!-- <p class="error">
+			Login Failed. Please Make sure your username and password are
+			correct!
+		</p> -->
 	{/if}
 
 	<form on:submit|preventDefault={handleAuth} method="post">

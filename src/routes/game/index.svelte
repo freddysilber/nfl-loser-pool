@@ -43,7 +43,7 @@
 <h3 in:fly={{ x: 1000, duration: 1000 }} out:fly={{ x: -1000, duration: 1000 }} class="game-title">NFL Loser Pool {new Date().getFullYear()}</h3>
 <div class="game-header">
 	<h4 class="schedule-link">
-		<a href={scheduleUrl} target="_blank">Schedule</a>
+		<a href={scheduleUrl} target="_blank"  popover-top="Click to go to the NFL official schedule">Schedule</a>
 	</h4>
 	<Prize
 		message="some random prop is being passed in!!!"

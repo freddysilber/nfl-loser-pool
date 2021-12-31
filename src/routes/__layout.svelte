@@ -7,6 +7,7 @@
 	import { setSession } from '../session';
 	import '../app.css';
 	import 'papercss/dist/paper.min.css';
+	import { goto } from '$app/navigation';
 
 	const { session }: any = getStores();
 
@@ -28,7 +29,7 @@
 	});
 </script>
 
-<Header/>
+<Header />
 
 <main>
 	<!-- {#if $session.authenticated}

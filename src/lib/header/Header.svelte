@@ -37,7 +37,7 @@
 		});
 		setSession(null, session);
 		// Navigate back to home after user logs out
-		goto('/');
+		goto('/login');
 	}
 </script>
 
