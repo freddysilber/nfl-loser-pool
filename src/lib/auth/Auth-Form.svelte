@@ -126,11 +126,9 @@
 </div>
 
 <style>
-	p.error {
-		/* TODO: Change this color */
-		color: rgb(250, 104, 104);
+	input:focus {
+		border-color: var(--accent-color);
 	}
-
 	div.form-container {
 		width: 50%;
 		align-self: center;
