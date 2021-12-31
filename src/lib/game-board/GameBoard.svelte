@@ -7,29 +7,33 @@
 </script>
 
 <div>
-	<table>
-		<tr>
-			<th />
-			{#each weeks as week}
-				<th>Week {week + 1}</th>
-			{/each}
-			<th>Points</th>
-		</tr>
-
-		{#each players as player}
+	<table class="table-hover">
+		<thead>
 			<tr>
-				<td>
-					<!-- PLayers and the row they play on need to be important.... so make them very big -->
-					<h1>{player}</h1>
-				</td>
+				<th />
 				{#each weeks as week}
-					<td>
-						<WeekPicker {week} {player} />
-					</td>
+					<th>Week {week + 1}</th>
 				{/each}
-				<td />
+				<th>Points</th>
 			</tr>
-		{/each}
+		</thead>
+
+		<tbody>
+			{#each players as player}
+				<tr>
+					<td style="vertical-align: middle;">
+						<!-- PLayers and the row they play on need to be important.... so make them very big -->
+						{player}
+					</td>
+					{#each weeks as week}
+						<td>
+							<WeekPicker {week} {player} />
+						</td>
+					{/each}
+					<td />
+				</tr>
+			{/each}
+		</tbody>
 	</table>
 </div>
 
@@ -49,7 +53,8 @@
 		position: sticky;
 	}
 
-	td:first-child, th:first-child {
+	td:first-child,
+	th:first-child {
 		position: sticky;
 		left: 0;
 		z-index: 1;

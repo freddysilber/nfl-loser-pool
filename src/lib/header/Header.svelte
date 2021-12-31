@@ -1,35 +1,72 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import logo from './svelte-logo.svg';
+	import axios from 'axios';
+	import { ENV } from '$lib/env';
+	import { setSession } from '../../session';
+	import { goto } from '$app/navigation';
+	import { getStores } from '$app/stores';
+
+	interface NavTabs {
+		path: string;
+		label: string;
+	}
+
+	let navTabs: NavTabs[] = [];
+	
+	const { session } = getStores();
+
+	session.subscribe((session) => {
+		if (session.authenticated) {
+			navTabs = [
+				{ path: '/', label: 'Home' },
+				{ path: '/rules', label: 'Rules' },
+				{ path: '/game', label: 'Game' },
+			];
+		} else {
+			navTabs = [
+				{ path: '/', label: 'Home' },
+				{ path: '/login', label: 'Log In' },
+				{ path: '/sign-up', label: 'Sign Up' },
+			];
+		}
+	});
+
+	async function logout() {
+		await axios.delete(`${ENV.api}/session`, {
+			withCredentials: true,
+		});
+		setSession(null, session);
+		// Navigate back to home after user logs out
+		goto('/login');
+	}
 </script>
 
 <header>
 	<div class="corner">
-		<a href="https://kit.svelte.dev">
-			<!-- <img src="https://images.g2crowd.com/uploads/product/image/social_landscape/social_landscape_5daa66323ec035555304b5a66b252bfc/cloud-coach.png" alt="SvelteKit" /> -->
-			<img src={logo} alt="SvelteKit" />
-		</a>
+		{#if $session.profile}
+			<h5 style="margin: .5rem 0 0 .5rem;">
+				Welcome, {$session.profile.name}
+			</h5>
+		{/if}
 	</div>
 
 	<nav>
-		<svg viewBox="0 0 2 3" aria-hidden="true">
-			<path d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
-		</svg>
 		<ul>
-			<!-- <li class:active={$page.path === '/'}><a sveltekit:prefetch href="/">Home</a></li>
-			<li class:active={$page.path === '/about'}><a sveltekit:prefetch href="/about">About</a></li>
-			<li class:active={$page.path === '/todos'}><a sveltekit:prefetch href="/todos">Todos</a></li>
-			<li class:active={$page.path === '/admin'}><a sveltekit:prefetch href="/admin">Admin</a></li> -->
-			<li class:active={$page.path === '/rules'}><a sveltekit:prefetch href="/rules">Rules</a></li>
-			<li class:active={$page.path === '/game'}><a sveltekit:prefetch href="/game">Game</a></li>
+			<!-- Not really relevant, but its good to have a reference... -->
+			<!-- <li class:active={$page.path === "/todos"}><a sveltekit:prefetch href="/todos">Todos</a></li> -->
+			<!-- <li class:active={$page.path === "/admin"}><a sveltekit:prefetch href="/admin">Admin</a></li> -->
+			{#each navTabs as tab}
+				<li class:active={$page.path === tab.path}>
+					<a sveltekit:prefetch href={tab.path}>{tab.label}</a>
+				</li>
+			{/each}
 		</ul>
-		<svg viewBox="0 0 2 3" aria-hidden="true">
-			<path d="M0,0 L0,3 C0.5,3 0.5,3 1,2 L2,0 Z" />
-		</svg>
 	</nav>
 
-	<div class="corner">
-		<!-- TODO put something else here? github link? -->
+	<div class="corner" style="justify-content: flex-end;">
+		{#if $session.authenticated}
+			<button class="btn-danger logout" on:click={logout}>Logout</button>
+		{/if}
 	</div>
 </header>
 
@@ -40,40 +77,16 @@
 	}
 
 	.corner {
-		width: 3em;
+		width: 10em;
 		height: 3em;
-	}
-
-	.corner a {
 		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-		height: 100%;
-	}
-
-	.corner img {
-		width: 2em;
-		height: 2em;
-		object-fit: contain;
 	}
 
 	nav {
 		display: flex;
 		justify-content: center;
-		--background: rgba(255, 255, 255, 0.7);
+		background: transparent;
 	}
-
-	svg {
-		width: 2em;
-		height: 3em;
-		display: block;
-	}
-
-	path {
-		fill: var(--background);
-	}
-
 	ul {
 		position: relative;
 		padding: 0;
@@ -92,6 +105,9 @@
 		height: 100%;
 	}
 
+	li::before {
+		content: none;
+	}
 	li.active::before {
 		--size: 6px;
 		content: '';
@@ -102,6 +118,10 @@
 		left: calc(50% - var(--size));
 		border: var(--size) solid transparent;
 		border-top: var(--size) solid var(--accent-color);
+	}
+
+	li.active a {
+		color: var(--accent-color);
 	}
 
 	nav a {
@@ -116,6 +136,7 @@
 		letter-spacing: 10%;
 		text-decoration: none;
 		transition: color 0.2s linear;
+		border: none;
 	}
 
 	a:hover {

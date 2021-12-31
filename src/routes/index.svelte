@@ -1,20 +1,36 @@
 <script context="module" lang="ts">
-	import axios from 'axios';
-	import { ENV } from '$lib/env'
+	import axios from "axios";
+	import { ENV } from "$lib/env";
+	import { writable } from "svelte/store";
+
 	export const prerender = true;
-	// test
-	
+
+	export const item = writable({
+		name: `Random Item: ${Math.floor(Math.random() * 100)}`,
+	});
+
 	function fetchItems() {
-		console.log('fetching items')
-		axios.get(`${ENV.api}/items`).then(items =>{
-			console.log(items)
-		})
+		axios.get(`${ENV.api}/items`).then((items) => {
+			console.log(items);
+		});
 	}
 </script>
 
-<!-- <script lang="ts">
-	import Counter from '$lib/Counter.svelte';
-</script> -->
+<script lang="ts">
+	// import Counter from '$lib/Counter.svelte';
+
+	function handleSubmit(event: any){
+		axios.post(`${ENV.api}/items`, $item).then(response =>{
+			console.log(response);
+		});
+	}
+
+	function updateItem(event: any) {
+		axios.put(`${ENV.api}/item${1}`, $item).then(response => {
+			console.log('response????', response);
+		})
+	}
+</script>
 
 <svelte:head>
 	<title>Home</title>
@@ -23,9 +39,30 @@
 <section>
 	<!-- Need to either make the 'game' route the default, or redirect from '/' to '/game' -->
 	<h1>What's up guys!? Let's start loosing some games...</h1>
-	<a sveltekit:prefetch href="/game">Get to the game... or use the nav bar at the top</a>
+	<a sveltekit:prefetch href="/game"
+		>Get to the game... or use the nav bar at the top</a
+	>
+	<a sveltekit:prefetch href="/login">Login</a>
+	<a sveltekit:prefetch href="/sign-up">Sign Up</a>
 
 	<button on:click={fetchItems}>Fetch Items</button>
+
+	<h1>Create a random 'Item'</h1>
+	<form on:submit|preventDefault={handleSubmit} method="post">
+		<!-- Username -->
+		<label for="name">Name</label>
+		<input id="name" type="text" autocomplete="name" bind:value={$item.name} />
+		<!-- Submit -->
+		<button type="submit">Create Item</button>
+	</form>
+
+	<form on:submit|preventDefault={updateItem} method="post">
+			<!-- Username -->
+		<label for="name">Name</label>
+		<input id="name" type="text" autocomplete="name" bind:value={$item.name} />
+		<!-- Submit -->
+		<button type="submit">Update Item?</button>
+	</form>
 	<!-- <h1>
 		<div class="welcome">
 			<picture>

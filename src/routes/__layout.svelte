@@ -1,16 +1,49 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import Header from '$lib/header/Header.svelte';
+	import { getStores } from '$app/stores';
+	import { ENV } from '$lib/env';
+	import axios from 'axios';
+	import { setSession } from '../session';
 	import '../app.css';
+	import 'papercss/dist/paper.min.css';
+	import { goto } from '$app/navigation';
+
+	const { session }: any = getStores();
+
+	onMount(async () => {
+		if ($session && $session.authenticated) {
+			return; // already have valid session
+		}
+		// validate session-token against server
+		axios
+			.get(`${ENV.api}/session`, {
+				withCredentials: true,
+			})
+			.then((response) => {
+				setSession(response, session);
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+	});
 </script>
 
 <Header />
 
 <main>
+	<!-- {#if $session.authenticated}
+		<p>{$session.profile.name} - {$session.profile.username}</p>
+	{/if} -->
 	<slot />
 </main>
 
 <footer>
-	<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
+	<p>
+		created by <a href="https://github.com/freddysilber" target="_blank"
+			>Freddy Silber</a
+		>
+	</p>
 </footer>
 
 <style>
@@ -18,9 +51,9 @@
 		flex: 1;
 		display: flex;
 		flex-direction: column;
-		padding: 1rem;
+		padding: 0.5rem;
 		width: 100%;
-		max-width: 1024px;
+		/* max-width: 1024px; */
 		margin: 0 auto;
 		box-sizing: border-box;
 	}

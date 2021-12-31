@@ -5,7 +5,7 @@
 	export let prizeType: string;
 </script>
 
-<h1>Prize: ${cash} {prizeType}<slot></slot>!</h1>
+<h4>Prize: ${cash} {prizeType}<slot></slot>!</h4>
 
 {#if showMessage}
 	<p>{message}</p>
