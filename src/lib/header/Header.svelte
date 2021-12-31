@@ -5,26 +5,26 @@
 	import { setSession } from '../../session';
 	import { goto } from '$app/navigation';
 	import { getStores } from '$app/stores';
-	import { onMount } from 'svelte';
 
-	export let navTabs = [
-		{ path: '/', label: 'Home' },
-	];
+	interface NavTabs {
+		path: string;
+		label: string;
+	}
+
+	let navTabs: NavTabs[] = [];
 	
 	const { session } = getStores();
 
-	onMount(() => {
-		console.log($session, navTabs);
-
-		if ($session.authenticated) {
+	session.subscribe((session) => {
+		if (session.authenticated) {
 			navTabs = [
-				...navTabs,
+				{ path: '/', label: 'Home' },
 				{ path: '/rules', label: 'Rules' },
 				{ path: '/game', label: 'Game' },
 			];
 		} else {
 			navTabs = [
-				...navTabs,
+				{ path: '/', label: 'Home' },
 				{ path: '/login', label: 'Log In' },
 				{ path: '/sign-up', label: 'Sign Up' },
 			];

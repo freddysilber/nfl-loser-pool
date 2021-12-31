@@ -2,23 +2,13 @@
 	import { onMount } from 'svelte';
 	import Header from '$lib/header/Header.svelte';
 	import { getStores } from '$app/stores';
-	import '../app.css';
 	import { ENV } from '$lib/env';
 	import axios from 'axios';
 	import { setSession } from '../session';
+	import '../app.css';
 	import 'papercss/dist/paper.min.css';
 
 	const { session }: any = getStores();
-	// let navTabs = [
-	// 	{ path: '/', label: 'Home' },
-	// 	{ path: '/login', label: 'Log In' },
-	// 	{ path: '/sign-up', label: 'Sign Up' },
-	// ];
-	// navTabs = [
-	// 			{ path: '/', label: 'Home' },
-	// 			{ path: '/rules', label: 'Rules' },
-	// 			{ path: '/game', label: 'Game' },
-	// 		];
 
 	onMount(async () => {
 		if ($session && $session.authenticated) {
@@ -38,7 +28,7 @@
 	});
 </script>
 
-<Header />
+<Header/>
 
 <main>
 	<!-- {#if $session.authenticated}
