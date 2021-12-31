@@ -7,9 +7,12 @@
 	import { setSession } from '../session';
 	import '../app.css';
 	import 'papercss/dist/paper.min.css';
-	import { goto } from '$app/navigation';
+	// import Button from 'spaper/components/Button.svelte';
+	// import Modal from 'spaper/components/Modal/Modal.svelte';
 
 	const { session }: any = getStores();
+
+	// let showModal = false;
 
 	onMount(async () => {
 		if ($session && $session.authenticated) {
@@ -28,6 +31,12 @@
 			});
 	});
 </script>
+
+<!-- <Button on:click={() => (showModal = true)}>Show</Button>
+<Modal bind:active={showModal} title="Modal Title">
+	<p>Hey!</p>
+	<p>Here is the modal content</p>
+</Modal> -->
 
 <Header />
 

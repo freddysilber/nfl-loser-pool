@@ -5,6 +5,7 @@
 	import { setSession } from '../../session';
 	import { goto } from '$app/navigation';
 	import { getStores } from '$app/stores';
+	import Button from 'spaper/components/Button.svelte'
 
 	interface NavTabs {
 		path: string;
@@ -45,7 +46,7 @@
 	<div class="corner">
 		{#if $session.profile}
 			<h5 style="margin: .5rem 0 0 .5rem;">
-				Welcome, {$session.profile.name}
+				Hello, {$session.profile.name}
 			</h5>
 		{/if}
 	</div>
@@ -65,7 +66,7 @@
 
 	<div class="corner" style="justify-content: flex-end;">
 		{#if $session.authenticated}
-			<button class="btn-danger logout" on:click={logout}>Logout</button>
+			<Button outline="warning" on:click={logout}>Logout</Button>
 		{/if}
 	</div>
 </header>
@@ -86,6 +87,7 @@
 		display: flex;
 		justify-content: center;
 		background: transparent;
+		padding: 0;
 	}
 	ul {
 		position: relative;

@@ -29,6 +29,10 @@
 		text-align: left;
 		padding: 8px;
 	}
+
+	tr {
+		color: black
+	}
 	tr.zero {
 		background: red;
 	}

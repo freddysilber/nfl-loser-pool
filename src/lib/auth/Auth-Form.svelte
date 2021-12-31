@@ -4,6 +4,7 @@
 	import { User, setSession, signup, login } from '../../session';
 	import { getStores } from '$app/stores';
 	import { goto } from '$app/navigation';
+	import Alert from 'spaper/components/Alert.svelte'
 
 	const { session } = getStores();
 
@@ -61,12 +62,7 @@
 
 <div class="form-container">
 	{#if showLoginError}
-		<input class="alert-state" id="alert-5" type="checkbox" />
-		<div class="alert alert-danger dismissible">
-			Login Failed. Please Make sure your username and password is
-			correct!
-			<label class="btn-close" for="alert-5">X</label>
-		</div>
+		<Alert type="danger" dismissible>Login Failed. Please Make sure your username and password iscorrect!</Alert>
 	{/if}
 
 	<form on:submit|preventDefault={handleAuth} method="post">

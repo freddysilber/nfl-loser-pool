@@ -58,7 +58,7 @@
 		position: sticky;
 		left: 0;
 		z-index: 1;
-		background-color: #b9c6d2;
+		/* background-color: #b9c6d2; */
 	}
 
 	h1 {
