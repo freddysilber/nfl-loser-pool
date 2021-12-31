@@ -1,51 +1,71 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	// import logo from './svelte-logo.svg';
-
+	import axios from 'axios';
+	import { ENV } from '$lib/env';
+	import { setSession } from '../../session';
+	import { goto } from '$app/navigation';
 	import { getStores } from '$app/stores';
+	import { onMount } from 'svelte';
 
+	export let navTabs = [
+		{ path: '/', label: 'Home' },
+	];
+	
 	const { session } = getStores();
+
+	onMount(() => {
+		console.log($session, navTabs);
+
+		if ($session.authenticated) {
+			navTabs = [
+				...navTabs,
+				{ path: '/rules', label: 'Rules' },
+				{ path: '/game', label: 'Game' },
+			];
+		} else {
+			navTabs = [
+				...navTabs,
+				{ path: '/login', label: 'Log In' },
+				{ path: '/sign-up', label: 'Sign Up' },
+			];
+		}
+	});
+
+	async function logout() {
+		await axios.delete(`${ENV.api}/session`, {
+			withCredentials: true,
+		});
+		setSession(null, session);
+		// Navigate back to home after user logs out
+		goto('/');
+	}
 </script>
 
 <header>
 	<div class="corner">
-		<p>:)</p>
+		{#if $session.profile}
+			<h5 style="margin: .5rem 0 0 .5rem;">
+				Welcome, {$session.profile.name}
+			</h5>
+		{/if}
 	</div>
-	<!-- <div class="corner">
-		<a href="https://cloudcoach.com" target="_blank">
-			<img src="https://images.g2crowd.com/uploads/product/image/social_landscape/social_landscape_5daa66323ec035555304b5a66b252bfc/cloud-coach.png" alt="Cloud Coach" target="_blank" />
-		</a>
-		<a href="https://kit.svelte.dev">
-			<img src={logo} alt="SvelteKit" />
-		</a>
-	</div> -->
 
 	<nav>
-		<!-- ATM, not much knowledge with svgs so idk what this is doing... -->
-		<svg viewBox="0 0 2 3" aria-hidden="true">
-			<path d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
-		</svg>
 		<ul>
 			<!-- Not really relevant, but its good to have a reference... -->
-			<li class:active={$page.path === "/"}><a sveltekit:prefetch href="/">Home</a></li>
-			<li class:active={$page.path === "/about"}><a sveltekit:prefetch href="/about">About</a></li>
-			<li class:active={$page.path === "/todos"}><a sveltekit:prefetch href="/todos">Todos</a></li>
-			<li class:active={$page.path === "/admin"}><a sveltekit:prefetch href="/admin">Admin</a></li>
-			<!-- This is the important stuff -->
-			<li class:active={$page.path === "/login"}><a sveltekit:prefetch href="/login">Login</a></li>
-			<li class:active={$page.path === "/sign-up"}><a sveltekit:prefetch href="/sign-up">Sign Up</a></li>
-			<li class:active={$page.path === "/rules"}><a sveltekit:prefetch href="/rules">Rules</a></li>
-			<li class:active={$page.path === "/game"}><a sveltekit:prefetch href="/game">Game</a></li>
+			<!-- <li class:active={$page.path === "/todos"}><a sveltekit:prefetch href="/todos">Todos</a></li> -->
+			<!-- <li class:active={$page.path === "/admin"}><a sveltekit:prefetch href="/admin">Admin</a></li> -->
+			{#each navTabs as tab}
+				<li class:active={$page.path === tab.path}>
+					<a sveltekit:prefetch href={tab.path}>{tab.label}</a>
+				</li>
+			{/each}
 		</ul>
-		<!-- ATM, not much knowledge with svgs so idk what this is doing... -->
-		<svg viewBox="0 0 2 3" aria-hidden="true">
-			<path d="M0,0 L0,3 C0.5,3 0.5,3 1,2 L2,0 Z" />
-		</svg>
 	</nav>
 
-	<div class="corner">
-		{#if $session.profile}
-			<p>{$session.profile.name} - {$session.profile.username}</p>
+	<div class="corner" style="justify-content: flex-end;">
+		{#if $session.authenticated}
+			<button class="btn-danger logout" on:click={logout}>Logout</button>
 		{/if}
 	</div>
 </header>
@@ -57,41 +77,16 @@
 	}
 
 	.corner {
-		width: 3em;
+		width: 10em;
 		height: 3em;
 		display: flex;
-	}
-
-	.corner a {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-		height: 100%;
-	}
-
-	.corner img {
-		width: 2em;
-		height: 2em;
-		object-fit: contain;
 	}
 
 	nav {
 		display: flex;
 		justify-content: center;
-		--background: rgba(255, 255, 255, 0.7);
+		background: transparent;
 	}
-
-	svg {
-		width: 2em;
-		height: 3em;
-		display: block;
-	}
-
-	path {
-		fill: var(--background);
-	}
-
 	ul {
 		position: relative;
 		padding: 0;
@@ -110,6 +105,9 @@
 		height: 100%;
 	}
 
+	li::before {
+		content: none;
+	}
 	li.active::before {
 		--size: 6px;
 		content: '';
@@ -120,6 +118,10 @@
 		left: calc(50% - var(--size));
 		border: var(--size) solid transparent;
 		border-top: var(--size) solid var(--accent-color);
+	}
+
+	li.active a {
+		color: var(--accent-color);
 	}
 
 	nav a {
@@ -134,6 +136,7 @@
 		letter-spacing: 10%;
 		text-decoration: none;
 		transition: color 0.2s linear;
+		border: none;
 	}
 
 	a:hover {

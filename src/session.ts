@@ -37,7 +37,7 @@ export function setSession(response: AxiosResponse, session: Writable<Record<str
 		authenticated: false,
 		profile: null,
 	};
-	if (response.statusText === 'OK' && response.status === 200) {
+	if (response && response.statusText === 'OK' && response.status === 200) {
 		// user profile is returned on success
 		sessionDetails.authenticated = !!response.data;
 		sessionDetails.profile = response.data;

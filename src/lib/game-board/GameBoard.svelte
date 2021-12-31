@@ -20,7 +20,7 @@
 			<tr>
 				<td>
 					<!-- PLayers and the row they play on need to be important.... so make them very big -->
-					<h1>{player}</h1>
+					{player}
 				</td>
 				{#each weeks as week}
 					<td>

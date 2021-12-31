@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { Writable, writable } from 'svelte/store';
-	import { ENV } from '$lib/env';
-	import axios, { AxiosResponse } from 'axios';
+	import type { AxiosResponse } from 'axios';
 	import { User, setSession, signup, login } from '../../session';
-	import { goto } from '$app/navigation';
 	import { getStores } from '$app/stores';
+	import { goto } from '$app/navigation';
 
 	const { session } = getStores();
 
@@ -17,12 +16,12 @@
 
 	const userDetails = {
 		username: '',
-		password: ''
+		password: '',
 	};
 
 	if (isSignUp) {
 		userDetails['name'] = '';
-		userDetails['roles']= [''];
+		userDetails['roles'] = [''];
 		formLabel = 'Sign Up!';
 	} else {
 		// Todo: remove these
@@ -41,14 +40,7 @@
 			response = await login($user);
 		}
 		setSession(response, session);
-	}
-
-	async function logout() {
-		await axios.delete(`${ENV.api}/session`, {
-			withCredentials: true,
-		});
-		// Navigate back to home after user logs out
-		goto('/');
+		goto('/game');
 	}
 
 	function validUser(): boolean {
@@ -61,16 +53,6 @@
 </script>
 
 <div class="form-container">
-	{#if $session.authenticated}
-		<button class="logout" on:click={logout}>Logout</button>
-	{/if}
-
-	<label>
-		<input bind:checked={isSignUp} label="isSignUp" type="checkbox" />
-		{isSignUp ? 'Sign Up' : 'Log In'}
-	</label>
-
-	<h1>{formLabel}</h1>
 	{#if showLoginError}
 		<p class="error">
 			Login Failed. Please Make sure your username and password are
@@ -112,8 +94,6 @@
 				bind:value={confirmPassword}
 				required
 			/>
-			<!-- Submit -->
-			<button type="submit">Sign Up!</button>
 			<!-- LOGIN -->
 		{:else}
 			<!-- Username -->
@@ -135,9 +115,8 @@
 				bind:value={$user.password}
 				required
 			/>
-			<!-- Submit -->
-			<button type="submit">Login</button>
 		{/if}
+		<button type="submit" class="btn-success-outline">{formLabel}</button>
 	</form>
 </div>
 
@@ -159,8 +138,5 @@
 
 	button.logout {
 		width: 100%;
-		background: rgb(255, 94, 121);
-		border-radius: 8px;
-		border: 1px solid rgb(94, 94, 94);
 	}
 </style>

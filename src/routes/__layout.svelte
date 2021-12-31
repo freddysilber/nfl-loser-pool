@@ -6,11 +6,22 @@
 	import { ENV } from '$lib/env';
 	import axios from 'axios';
 	import { setSession } from '../session';
+	import 'papercss/dist/paper.min.css';
 
 	const { session }: any = getStores();
+	// let navTabs = [
+	// 	{ path: '/', label: 'Home' },
+	// 	{ path: '/login', label: 'Log In' },
+	// 	{ path: '/sign-up', label: 'Sign Up' },
+	// ];
+	// navTabs = [
+	// 			{ path: '/', label: 'Home' },
+	// 			{ path: '/rules', label: 'Rules' },
+	// 			{ path: '/game', label: 'Game' },
+	// 		];
 
 	onMount(async () => {
-		if (session && session.authenticated) {
+		if ($session && $session.authenticated) {
 			return; // already have valid session
 		}
 		// validate session-token against server
@@ -30,15 +41,17 @@
 <Header />
 
 <main>
-	{#if $session.authenticated}
-		{$session.profile.name} - {$session.profile.username}
-	{/if}
+	<!-- {#if $session.authenticated}
+		<p>{$session.profile.name} - {$session.profile.username}</p>
+	{/if} -->
 	<slot />
 </main>
 
 <footer>
 	<p>
-		created by <a href="https://github.com/freddysilber" target="_blank">Freddy Silber</a>
+		created by <a href="https://github.com/freddysilber" target="_blank"
+			>Freddy Silber</a
+		>
 	</p>
 </footer>
 
@@ -47,9 +60,9 @@
 		flex: 1;
 		display: flex;
 		flex-direction: column;
-		padding: 1rem;
+		padding: 0.5rem;
 		width: 100%;
-		max-width: 1024px;
+		/* max-width: 1024px; */
 		margin: 0 auto;
 		box-sizing: border-box;
 	}
