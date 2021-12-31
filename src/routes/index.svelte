@@ -37,9 +37,8 @@
 </svelte:head>
 
 <section>
-	<!-- Need to either make the 'game' route the default, or redirect from '/' to '/game' -->
-	<h1>What's up guys!? Let's start loosing some games...</h1>
-	<a sveltekit:prefetch href="/game"
+	<h1>Welcome to the NFL Loser Pool!</h1>
+	<!-- <a sveltekit:prefetch href="/game"
 		>Get to the game... or use the nav bar at the top</a
 	>
 	<a sveltekit:prefetch href="/login">Login</a>
@@ -49,20 +48,17 @@
 
 	<h1>Create a random 'Item'</h1>
 	<form on:submit|preventDefault={handleSubmit} method="post">
-		<!-- Username -->
 		<label for="name">Name</label>
 		<input id="name" type="text" autocomplete="name" bind:value={$item.name} />
-		<!-- Submit -->
 		<button type="submit">Create Item</button>
 	</form>
 
 	<form on:submit|preventDefault={updateItem} method="post">
-			<!-- Username -->
 		<label for="name">Name</label>
 		<input id="name" type="text" autocomplete="name" bind:value={$item.name} />
-		<!-- Submit -->
 		<button type="submit">Update Item?</button>
-	</form>
+	</form> -->
+
 	<!-- <h1>
 		<div class="welcome">
 			<picture>

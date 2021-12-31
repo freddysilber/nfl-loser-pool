@@ -1,5 +1,5 @@
 {
-  "name": "nfl-looser-pool",
+  "name": "nfl-loser-pool",
   "version": "0.0.1",
   "author": "Freddy Silber <freddy.silber@gmail.com> (https://github.com/freddysilber)",
   "license": "MIT",
@@ -39,7 +39,7 @@
     "papercss": "^1.8.3",
     "spaper": "^0.2.6"
   },
-  "description": "UI for NFL Looser Pool Game",
+  "description": "UI for NFL Loser Pool Game",
   "bugs": {
     "url": "https://github.com/freddysilber/nfl-looser-pool/issues"
   },

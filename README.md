@@ -1,4 +1,4 @@
-# NFL Looser Pool
+# NFL Loser Pool
 
 ## Description
 
