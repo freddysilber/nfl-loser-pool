@@ -138,8 +138,4 @@
 		display: flex;
 		flex-direction: column;
 	}
-
-	button.logout {
-		width: 100%;
-	}
 </style>

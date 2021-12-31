@@ -5,14 +5,8 @@
 	export let prizeType: string;
 </script>
 
-<h4>Prize: ${cash} {prizeType}<slot></slot>!</h4>
+<h4>Prize: ${cash} {prizeType}<slot />!</h4>
 
 {#if showMessage}
 	<p>{message}</p>
 {/if}
-
-<style>
-	h1 {
-		color: #686868;
-	}
-</style>

@@ -60,8 +60,4 @@
 		z-index: 1;
 		/* background-color: #b9c6d2; */
 	}
-
-	h1 {
-		margin-right: 0.25rem;
-	}
 </style>
