@@ -5,7 +5,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/freddysilber/nfl-looser-pool.git"
+    "url": "git+https://github.com/freddysilber/nfl-loser-pool.git"
   },
   "scripts": {
     "dev": "svelte-kit dev",
@@ -41,8 +41,8 @@
   },
   "description": "UI for NFL Loser Pool Game",
   "bugs": {
-    "url": "https://github.com/freddysilber/nfl-looser-pool/issues"
+    "url": "https://github.com/freddysilber/nfl-loser-pool/issues"
   },
-  "homepage": "https://github.com/freddysilber/nfl-looser-pool#readme",
+  "homepage": "https://github.com/freddysilber/nfl-loser-pool#readme",
   "main": "index.js"
 }
