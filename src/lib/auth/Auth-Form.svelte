@@ -39,13 +39,15 @@
 		} else {
 			response = login($user);
 		}
-		response.then((response)=> {
-			setSession(response, session);
-			goto('/game');
-		}).catch((error)=>{
-			console.error(error);
-			showLoginError = true;
-		})
+		response
+			.then((response) => {
+				setSession(response, session);
+				goto('/game');
+			})
+			.catch((error) => {
+				console.error(error);
+				showLoginError = true;
+			});
 	}
 
 	function validUser(): boolean {
@@ -59,14 +61,12 @@
 
 <div class="form-container">
 	{#if showLoginError}
-		<div class="alert alert-danger">
-			Login Failed. Please Make sure your username and password are
+		<input class="alert-state" id="alert-5" type="checkbox" />
+		<div class="alert alert-danger dismissible">
+			Login Failed. Please Make sure your username and password is
 			correct!
+			<label class="btn-close" for="alert-5">X</label>
 		</div>
-		<!-- <p class="error">
-			Login Failed. Please Make sure your username and password are
-			correct!
-		</p> -->
 	{/if}
 
 	<form on:submit|preventDefault={handleAuth} method="post">
