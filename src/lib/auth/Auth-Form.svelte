@@ -4,7 +4,8 @@
 	import { User, setSession, signup, login } from '../../session';
 	import { getStores } from '$app/stores';
 	import { goto } from '$app/navigation';
-	import Alert from 'spaper/components/Alert.svelte'
+	import Alert from 'spaper/components/Alert.svelte';
+	import Input from 'spaper/components/Form/Input.svelte';
 
 	const { session } = getStores();
 
@@ -62,73 +63,91 @@
 
 <div class="form-container">
 	{#if showLoginError}
-		<Alert type="danger" dismissible>Login Failed. Please Make sure your username and password iscorrect!</Alert>
+		<Alert type="danger" dismissible>Login Failed. Please Make sure your username and password is correct!</Alert>
 	{/if}
 
 	<form on:submit|preventDefault={handleAuth} method="post">
 		<!-- SIGNUP -->
 		{#if isSignUp}
 			<!-- First Name -->
-			<label for="name">Name</label>
-			<input id="name" type="text" bind:value={$user.name} required />
+			<div class="form-group">
+				<Input
+					placeholder="Name"
+					label="Name"
+					type="text"
+					bind:value={$user.name}
+					block
+					required
+				/>
+			</div>
 			<!-- Username -->
-			<label for="username">Username</label>
-			<input
-				id="username"
-				type="text"
-				autocomplete="username"
-				bind:value={$user.username}
-				placeholder="Choose a username"
-				required
-			/>
+			<div class="form-group">
+				<Input
+					placeholder="Choose a username"
+					label="Username"
+					type="text"
+					autocomplete="username"
+					bind:value={$user.username}
+					block
+					required
+				/>
+			</div>
 			<!-- Password -->
-			<label for="password">Password</label>
-			<input
-				id="password"
-				type="password"
-				autocomplete="current-password"
-				bind:value={$user.password}
-				required
-			/>
+			<div class="form-group">
+				<Input
+					placeholder="Password"
+					label="Password"
+					type="password"
+					autocomplete="current-password"
+					bind:value={$user.password}
+					block
+					required
+				/>
+			</div>
 			<!-- Confirm Password -->
-			<label for="confirm-password">Confirm Password</label>
-			<input
-				id="confirm-password"
-				type="password"
-				autocomplete="current-password"
-				bind:value={confirmPassword}
-				required
-			/>
+			<div class="form-group">
+				<Input
+					placeholder="Confirm Password"
+					label="Confirm Password"
+					type="password"
+					autocomplete="current-password"
+					bind:value={confirmPassword}
+					block
+					required
+				/>
+			</div>
 			<!-- LOGIN -->
 		{:else}
 			<!-- Username -->
-			<label for="username">Username</label>
-			<input
-				id="username"
-				type="text"
-				autocomplete="username"
-				bind:value={$user.username}
-				placeholder="Enter your username"
-				required
-			/>
+			<div class="form-group">
+				<Input
+					placeholder="Username"
+					label="Username"
+					type="text"
+					autocomplete="username"
+					bind:value={$user.username}
+					block
+					required
+				/>
+			</div>
 			<!-- Password -->
-			<label for="password">Password</label>
-			<input
-				id="password"
-				type="password"
-				autocomplete="current-password"
-				bind:value={$user.password}
-				required
-			/>
+			<div class="form-group">
+				<Input
+					placeholder="Password"
+					label="Password"
+					type="password"
+					autocomplete="current-password"
+					bind:value={$user.password}
+					block
+					required
+				/>
+			</div>
 		{/if}
-		<button type="submit" class="btn-success-outline">{formLabel}</button>
+		<button type="submit" class="btn-success-outline margin-top-small">{formLabel}</button>
 	</form>
 </div>
 
 <style>
-	input:focus {
-		border-color: var(--accent-color);
-	}
 	div.form-container {
 		width: 50%;
 		align-self: center;

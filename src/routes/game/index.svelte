@@ -6,10 +6,7 @@
 	import ScoreLegend from '$lib/score-legend/ScoreLegend.svelte';
 	import GameBoard from '$lib/game-board/GameBoard.svelte';
 	import axios from 'axios';
-	import Popover from 'spaper/components/Popover.svelte';
 
-	const scheduleUrl =
-		'https://www.google.com/search?q=nfl+schedule&rlz=1C1CHBF_enUS851US854&oq=nfl+schedule&aqs=chrome.0.69i59i131i433i512j0i131i433i512l4j0i433i512j0i131i433i512l2j0i433i512j0i131i433i512.2480j1j4&sourceid=chrome&ie=UTF-8#sie=lg;/g/11nym9rnk6;6;/m/059yj;mt;fp;1;;';
 	const players = [
 		'Freddy',
 		'Lydia',
@@ -49,15 +46,6 @@
 	NFL Loser Pool {new Date().getFullYear()}
 </h3>
 <div class="game-header">
-	<h4 class="schedule-link">
-		<Popover label="Click to see the NFL official schedule" position="top" background="secondary">
-			<a
-				href={scheduleUrl}
-				target="_blank"
-				>Schedule</a
-			>
-		</Popover>
-	</h4>
 	<Prize
 		message="some random prop is being passed in!!!"
 		showMessage={false}
@@ -74,12 +62,6 @@
 		display: flex;
 		justify-content: space-between;
 		margin-bottom: 0.25rem;
-	}
-
-	.schedule-link {
-		display: flex;
-		flex-direction: column;
-		align-self: center;
 	}
 
 	.game-title {
