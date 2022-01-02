@@ -46,7 +46,7 @@
 		}
 
 		axios.post(
-			`${ENV.api}/game`,
+			`${ENV.api}/games`,
 			$game,
 			{
 				withCredentials: true
