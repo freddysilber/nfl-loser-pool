@@ -22,6 +22,7 @@
 				{ path: '/', label: 'Home' },
 				{ path: '/rules', label: 'Rules' },
 				{ path: '/game', label: 'Game' },
+				{ path: '/games', label: 'My Games' },
 			];
 		} else {
 			navTabs = [
