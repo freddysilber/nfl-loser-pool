@@ -64,13 +64,13 @@
 
 <section>
 	<h1>Welcome to the NFL Loser Pool!</h1>
-	<h4 class="schedule-link">
+	<h4>
 		<Popover
 			label="Click to see the official NFL schedule"
 			position="bottom"
 			background="secondary"
 		>
-			<a href={SCHEDULE_URL} target="_blank">NFL Schedule</a>
+			<a href={SCHEDULE_URL} class="schedule-link" target="_blank">NFL Schedule</a>
 		</Popover>
 	</h4>
 	<!-- New Game Form -->
@@ -117,7 +117,11 @@
 	</Modal>
 </section>
 
-<style>
+<style lang="scss">
+	a.schedule-link {
+		color: white;
+	}
+
 	div.form-container {
 		width: 50%;
 		align-self: center;
