@@ -1,11 +1,14 @@
 <script lang="ts">
 	import { Writable, writable } from 'svelte/store';
 	import type { AxiosResponse } from 'axios';
-	import { User, setSession, signup, login } from '../../session';
 	import { getStores } from '$app/stores';
 	import { goto } from '$app/navigation';
+	
 	import Alert from 'spaper/components/Alert.svelte';
 	import Input from 'spaper/components/Form/Input.svelte';
+	
+	import { setSession, signup, login } from '../../session';
+	import type { User } from '../../models/user.model';
 
 	const { session } = getStores();
 
@@ -63,7 +66,9 @@
 
 <div class="form-container">
 	{#if showLoginError}
-		<Alert type="danger" dismissible>Login Failed. Please Make sure your username and password is correct!</Alert>
+		<Alert type="danger" dismissible>
+			<span>Login Failed. Please Make sure your username and password is correct! Or <a href="/sign-up">sign up</a> instead</span>
+		</Alert>
 	{/if}
 
 	<form on:submit|preventDefault={handleAuth} method="post">
