@@ -1,9 +1,14 @@
 <script lang="ts">
 	import { Writable, writable } from 'svelte/store';
 	import type { AxiosResponse } from 'axios';
-	import { User, setSession, signup, login } from '../../session';
 	import { getStores } from '$app/stores';
 	import { goto } from '$app/navigation';
+	
+	import Alert from 'spaper/components/Alert.svelte';
+	import Input from 'spaper/components/Form/Input.svelte';
+	
+	import { setSession, signup, login } from '../../session';
+	import type { User } from '../../models/user.model';
 
 	const { session } = getStores();
 
@@ -61,80 +66,93 @@
 
 <div class="form-container">
 	{#if showLoginError}
-		<input class="alert-state" id="alert-5" type="checkbox" />
-		<div class="alert alert-danger dismissible">
-			Login Failed. Please Make sure your username and password is
-			correct!
-			<label class="btn-close" for="alert-5">X</label>
-		</div>
+		<Alert type="danger" dismissible>
+			<span>Login Failed. Please Make sure your username and password is correct! Or <a href="/sign-up">sign up</a> instead</span>
+		</Alert>
 	{/if}
 
 	<form on:submit|preventDefault={handleAuth} method="post">
 		<!-- SIGNUP -->
 		{#if isSignUp}
 			<!-- First Name -->
-			<label for="name">Name</label>
-			<input id="name" type="text" bind:value={$user.name} required />
+			<div class="form-group">
+				<Input
+					placeholder="Name"
+					label="Name"
+					type="text"
+					bind:value={$user.name}
+					block
+					required
+				/>
+			</div>
 			<!-- Username -->
-			<label for="username">Username</label>
-			<input
-				id="username"
-				type="text"
-				autocomplete="username"
-				bind:value={$user.username}
-				placeholder="Choose a username"
-				required
-			/>
+			<div class="form-group">
+				<Input
+					placeholder="Choose a username"
+					label="Username"
+					type="text"
+					autocomplete="username"
+					bind:value={$user.username}
+					block
+					required
+				/>
+			</div>
 			<!-- Password -->
-			<label for="password">Password</label>
-			<input
-				id="password"
-				type="password"
-				autocomplete="current-password"
-				bind:value={$user.password}
-				required
-			/>
+			<div class="form-group">
+				<Input
+					placeholder="Password"
+					label="Password"
+					type="password"
+					autocomplete="current-password"
+					bind:value={$user.password}
+					block
+					required
+				/>
+			</div>
 			<!-- Confirm Password -->
-			<label for="confirm-password">Confirm Password</label>
-			<input
-				id="confirm-password"
-				type="password"
-				autocomplete="current-password"
-				bind:value={confirmPassword}
-				required
-			/>
+			<div class="form-group">
+				<Input
+					placeholder="Confirm Password"
+					label="Confirm Password"
+					type="password"
+					autocomplete="current-password"
+					bind:value={confirmPassword}
+					block
+					required
+				/>
+			</div>
 			<!-- LOGIN -->
 		{:else}
 			<!-- Username -->
-			<label for="username">Username</label>
-			<input
-				id="username"
-				type="text"
-				autocomplete="username"
-				bind:value={$user.username}
-				placeholder="Enter your username"
-				required
-			/>
+			<div class="form-group">
+				<Input
+					placeholder="Username"
+					label="Username"
+					type="text"
+					autocomplete="username"
+					bind:value={$user.username}
+					block
+					required
+				/>
+			</div>
 			<!-- Password -->
-			<label for="password">Password</label>
-			<input
-				id="password"
-				type="password"
-				autocomplete="current-password"
-				bind:value={$user.password}
-				required
-			/>
+			<div class="form-group">
+				<Input
+					placeholder="Password"
+					label="Password"
+					type="password"
+					autocomplete="current-password"
+					bind:value={$user.password}
+					block
+					required
+				/>
+			</div>
 		{/if}
-		<button type="submit" class="btn-success-outline">{formLabel}</button>
+		<button type="submit" class="btn-success-outline margin-top-small">{formLabel}</button>
 	</form>
 </div>
 
 <style>
-	p.error {
-		/* TODO: Change this color */
-		color: rgb(250, 104, 104);
-	}
-
 	div.form-container {
 		width: 50%;
 		align-self: center;
@@ -143,9 +161,5 @@
 	form {
 		display: flex;
 		flex-direction: column;
-	}
-
-	button.logout {
-		width: 100%;
 	}
 </style>

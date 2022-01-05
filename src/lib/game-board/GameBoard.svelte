@@ -58,10 +58,6 @@
 		position: sticky;
 		left: 0;
 		z-index: 1;
-		background-color: #b9c6d2;
-	}
-
-	h1 {
-		margin-right: 0.25rem;
+		/* background-color: #b9c6d2; */
 	}
 </style>

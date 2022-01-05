@@ -1,35 +1,7 @@
-<script context="module" lang="ts">
-	import axios from "axios";
-	import { ENV } from "$lib/env";
-	import { writable } from "svelte/store";
-
-	export const prerender = true;
-
-	export const item = writable({
-		name: `Random Item: ${Math.floor(Math.random() * 100)}`,
-	});
-
-	function fetchItems() {
-		axios.get(`${ENV.api}/items`).then((items) => {
-			console.log(items);
-		});
-	}
-</script>
-
 <script lang="ts">
-	// import Counter from '$lib/Counter.svelte';
+	import Popover from 'spaper/components/Popover.svelte';
 
-	function handleSubmit(event: any){
-		axios.post(`${ENV.api}/items`, $item).then(response =>{
-			console.log(response);
-		});
-	}
-
-	function updateItem(event: any) {
-		axios.put(`${ENV.api}/item${1}`, $item).then(response => {
-			console.log('response????', response);
-		})
-	}
+	const SCHEDULE_URL = `https://www.google.com/search?q=nfl+schedule&rlz=1C1CHBF_enUS851US854&oq=nfl+schedule&aqs=chrome.0.69i59i131i433i512j0i131i433i512l4j0i433i512j0i131i433i512l2j0i433i512j0i131i433i512.2480j1j4&sourceid=chrome&ie=UTF-8#sie=lg;/g/11nym9rnk6;6;/m/059yj;mt;fp;1;;`;
 </script>
 
 <svelte:head>
@@ -37,51 +9,23 @@
 </svelte:head>
 
 <section>
-	<!-- Need to either make the 'game' route the default, or redirect from '/' to '/game' -->
-	<h1>What's up guys!? Let's start loosing some games...</h1>
-	<a sveltekit:prefetch href="/game"
-		>Get to the game... or use the nav bar at the top</a
-	>
-	<a sveltekit:prefetch href="/login">Login</a>
-	<a sveltekit:prefetch href="/sign-up">Sign Up</a>
-
-	<button on:click={fetchItems}>Fetch Items</button>
-
-	<h1>Create a random 'Item'</h1>
-	<form on:submit|preventDefault={handleSubmit} method="post">
-		<!-- Username -->
-		<label for="name">Name</label>
-		<input id="name" type="text" autocomplete="name" bind:value={$item.name} />
-		<!-- Submit -->
-		<button type="submit">Create Item</button>
-	</form>
-
-	<form on:submit|preventDefault={updateItem} method="post">
-			<!-- Username -->
-		<label for="name">Name</label>
-		<input id="name" type="text" autocomplete="name" bind:value={$item.name} />
-		<!-- Submit -->
-		<button type="submit">Update Item?</button>
-	</form>
-	<!-- <h1>
-		<div class="welcome">
-			<picture>
-				<source srcset="svelte-welcome.webp" type="image/webp" />
-				<img src="svelte-welcome.png" alt="Welcome" />
-			</picture>
-		</div>
-
-		to your new<br />SvelteKit app
-	</h1>
-
-	<h2>
-		try editing <strong>src/routes/index.svelte</strong>
-	</h2>
-
-	<Counter /> -->
+	<h1>Welcome to the NFL Loser Pool!</h1>
+	<h4>
+		<Popover
+			label="Click to see the official NFL schedule"
+			position="bottom"
+			background="secondary"
+		>
+			<a href={SCHEDULE_URL} class="schedule-link" target="_blank">NFL Schedule</a>
+		</Popover>
+	</h4>
 </section>
 
-<style>
+<style lang="scss">
+	a.schedule-link {
+		color: white;
+	}
+
 	section {
 		display: flex;
 		flex-direction: column;
@@ -89,24 +33,4 @@
 		align-items: center;
 		flex: 1;
 	}
-
-	h1 {
-		width: 100%;
-		font-size: 2em;
-	}
-
-	/* .welcome {
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
-	} */
 </style>

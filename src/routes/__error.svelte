@@ -20,6 +20,12 @@
 {#if status == 404}
 	<NotFound />
 {:else}
-	<p>Error!</p>
+	<p class="error">Error!</p>
 	<!-- <Error {message} /> -->
 {/if}
+
+<style>
+	p.error {
+		text-align: center;
+	}
+</style>

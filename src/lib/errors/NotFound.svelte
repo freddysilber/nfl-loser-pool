@@ -1,6 +1,7 @@
 <div class="not-found">
 	<h1>404</h1>
 	<p>Error!</p>
+	<p>TODO: We need to customize this page</p>
 </div>
 
 <style>
