@@ -4,26 +4,14 @@
 	import axios from 'axios';
 	import Collapsible from 'spaper/components/Collapsible.svelte';
 	import Button from 'spaper/components/Button.svelte';
-	import type { Game } from '../../models/game';
+	import type { Game } from '../../models/game.model';
+	import type { Auth } from '../../models/auth.model';
 
 	let ownedGames: Game[] = [];
 	let allGames: Game[] = [];
 	let joinedGames: Game[] = [];
 
 	const { session } = getStores();
-
-	interface AuthProfile {
-		id: number;
-		name: string;
-		username: string;
-		password: string;
-		roles: string[];
-	}
-
-	interface Auth {
-		authenticated: boolean;
-		profile: AuthProfile;
-	}
 
 	session.subscribe((session: Auth) => {
 		axios

@@ -1,13 +1,7 @@
 import { ENV } from "$lib/env";
 import axios, { AxiosResponse } from 'axios';
 import type { Writable } from "svelte/store";
-
-export interface User {
-	username: string;
-	password: string;
-	name?: string;
-	roles?: string[];
-}
+import type { User } from './models/user.model';
 
 export function login({ username, password }: User): Promise<AxiosResponse> {
 	return axios.post(

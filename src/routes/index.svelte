@@ -7,13 +7,7 @@
 	import Input from 'spaper/components/Form/Input.svelte';
 	import Popover from 'spaper/components/Popover.svelte';
 	import { Writable, writable } from 'svelte/store';
-
-	interface Game {
-		name: string;
-		description: string;
-		id?: number;
-		ownerId: string;
-	}
+	import type { Game } from '../models/game.model'
 </script>
 
 <script lang="ts">

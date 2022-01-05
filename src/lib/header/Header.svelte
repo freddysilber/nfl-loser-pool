@@ -6,11 +6,7 @@
 	import { goto } from '$app/navigation';
 	import { getStores } from '$app/stores';
 	import Button from 'spaper/components/Button.svelte'
-
-	interface NavTabs {
-		path: string;
-		label: string;
-	}
+	import type { NavTabs } from '../../models/nav-tabs.model';
 
 	let navTabs: NavTabs[] = [];
 	
