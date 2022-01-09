@@ -3,12 +3,13 @@
 	import type { AxiosResponse } from 'axios';
 	import { getStores } from '$app/stores';
 	import { goto } from '$app/navigation';
-	
+
 	import Alert from 'spaper/components/Alert.svelte';
 	import Input from 'spaper/components/Form/Input.svelte';
-	
+
 	import { setSession, signup, login } from '../../session';
 	import type { User } from '../../models/user.model';
+	import Spinner from '$lib/spinner/Spinner.svelte';
 
 	const { session } = getStores();
 
@@ -18,6 +19,7 @@
 	let formLabel: string;
 	let showLoginError: boolean = false;
 	let confirmPassword: string;
+	let loading: boolean = false;
 
 	const userDetails = {
 		username: '',
@@ -38,6 +40,7 @@
 	user = writable(userDetails);
 
 	function handleAuth() {
+		loading = true;
 		let response: Promise<AxiosResponse>;
 		if (isSignUp && validUser()) {
 			response = signup($user);
@@ -52,6 +55,9 @@
 			.catch((error) => {
 				console.error(error);
 				showLoginError = true;
+			})
+			.finally(() => {
+				loading = false;
 			});
 	}
 
@@ -65,9 +71,16 @@
 </script>
 
 <div class="form-container">
+	{#if loading}
+		<Spinner />
+	{/if}
+
 	{#if showLoginError}
 		<Alert type="danger" dismissible>
-			<span>Login Failed. Please Make sure your username and password is correct! Or <a href="/sign-up">sign up</a> instead</span>
+			<span
+				>Login Failed. Please Make sure your username and password is
+				correct! Or <a href="/sign-up">sign up</a> instead</span
+			>
 		</Alert>
 	{/if}
 
@@ -148,7 +161,9 @@
 				/>
 			</div>
 		{/if}
-		<button type="submit" class="btn-success-outline margin-top-small">{formLabel}</button>
+		<button type="submit" class="btn-success-outline margin-top-small"
+			>{formLabel}</button
+		>
 	</form>
 </div>
 
