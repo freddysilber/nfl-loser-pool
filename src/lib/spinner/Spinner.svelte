@@ -19,7 +19,7 @@
 	<!-- <div />
 	<div /> -->
 	<!-- <div style="color: white">+{loadingScore}</div> -->
-	<div><img src="../../static/american-football.png" alt="football spinner"/></div>
+	<div><img src="static/american-football.png" alt="football spinner"/></div>
 </div>
 <div class="overlay" />
 
