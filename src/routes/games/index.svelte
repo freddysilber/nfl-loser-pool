@@ -31,6 +31,14 @@
 	});
 
 	session.subscribe((session: Auth) => {
+		// console.log(session);
+		// axios.interceptors.request.use(
+		// 	request => {
+		// 		console.log(request, session);
+		// 		request.headers['session-token']= session.profile.password;
+		// 		return request;
+		// 	}
+		// )
 		axios
 			.get(`${ENV.api}/users/games/${session.profile.id}`, {
 				withCredentials: true,
@@ -39,16 +47,17 @@
 				ownedGames = data.games;
 			})
 			.catch((error) => {
+				// Todo: toast error here
 				console.error(error);
 			});
 
 		axios
 			.get(`${ENV.api}/games`, { withCredentials: true })
 			.then(({ data }) => {
-				console.log(data);
 				allGames = data.games;
 			})
 			.catch((error) => {
+				// Todo: toast error here
 				console.error(error);
 			});
 

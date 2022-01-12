@@ -4,12 +4,14 @@
 	import { getStores } from '$app/stores';
 	import { goto } from '$app/navigation';
 
+	import Spinner from '$lib/spinner/Spinner.svelte';
+
 	import Alert from 'spaper/components/Alert.svelte';
 	import Input from 'spaper/components/Form/Input.svelte';
 
 	import { setSession, signup, login } from '../../session';
 	import type { User } from '../../models/user.model';
-	import Spinner from '$lib/spinner/Spinner.svelte';
+	import { Routes } from '../../tsbs/routes.enum';
 
 	const { session } = getStores();
 
@@ -17,8 +19,8 @@
 
 	let user: Writable<User>;
 	let formLabel: string;
-	let showLoginError: boolean = false;
 	let confirmPassword: string;
+	let showLoginError: boolean = false;
 	let loading: boolean = false;
 
 	const userDetails = {
@@ -39,18 +41,20 @@
 
 	user = writable(userDetails);
 
-	function handleAuth() {
+	function handleAuth(): void {
 		loading = true;
 		let response: Promise<AxiosResponse>;
+
 		if (isSignUp && validUser()) {
 			response = signup($user);
 		} else {
 			response = login($user);
 		}
+
 		response
 			.then((response) => {
 				setSession(response, session);
-				goto('/game');
+				goto(Routes.Game);
 			})
 			.catch((error) => {
 				console.error(error);
@@ -70,11 +74,11 @@
 	}
 </script>
 
-<div class="form-container">
-	{#if loading}
-		<Spinner />
-	{/if}
+{#if loading}
+	<Spinner />
+{/if}
 
+<div class="form-container">
 	{#if showLoginError}
 		<Alert type="danger" dismissible>
 			<span

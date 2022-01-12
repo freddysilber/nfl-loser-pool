@@ -1,17 +1,7 @@
 <script lang="ts">
-	import Spinner from '$lib/spinner/Spinner.svelte';
 	import Popover from 'spaper/components/Popover.svelte';
 
 	const SCHEDULE_URL = `https://www.google.com/search?q=nfl+schedule&rlz=1C1CHBF_enUS851US854&oq=nfl+schedule&aqs=chrome.0.69i59i131i433i512j0i131i433i512l4j0i433i512j0i131i433i512l2j0i433i512j0i131i433i512.2480j1j4&sourceid=chrome&ie=UTF-8#sie=lg;/g/11nym9rnk6;6;/m/059yj;mt;fp;1;;`;
-
-	let showSpinner: boolean = false;
-	function toggleShowSpinner(): void {
-		showSpinner = !showSpinner;
-
-		setTimeout(() => {
-			showSpinner = false;
-		},4000);
-	}
 </script>
 
 <svelte:head>
@@ -19,7 +9,6 @@
 </svelte:head>
 
 <section>
-	<button on:click={toggleShowSpinner}>Show Spinner</button>
 	<h1>Welcome to the NFL Loser Pool!</h1>
 	<h4>
 		<Popover
@@ -27,16 +16,15 @@
 			position="bottom"
 			background="secondary"
 		>
-			<a href={SCHEDULE_URL} class="schedule-link" target="_blank"
-				>NFL Schedule</a
+			<a
+				href={SCHEDULE_URL}
+				class="schedule-link"
+				target="_blank"
 			>
+				NFL Schedule
+			</a>
 		</Popover>
 	</h4>
-
-	{#if showSpinner}
-		<Spinner/>
-	{/if}
-
 </section>
 
 <style lang="scss">

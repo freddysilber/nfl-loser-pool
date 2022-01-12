@@ -1,32 +1,24 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import axios from 'axios';
+
+	import { page } from '$app/stores';
 	import { ENV } from '$lib/env';
-	import { setSession } from '../../session';
 	import { goto } from '$app/navigation';
 	import { getStores } from '$app/stores';
-	import Button from 'spaper/components/Button.svelte'
+
+	import Button from 'spaper/components/Button.svelte';
+
+	import { setSession } from '../../session';
 	import type { NavTabs } from '../../models/nav-tabs.model';
+	import { Routes } from '../../tsbs/routes.enum';
+	import { RouterHelper } from '../../tsbs/router-helper';
 
 	let navTabs: NavTabs[] = [];
-	
+
 	const { session } = getStores();
 
 	session.subscribe((session) => {
-		if (session.authenticated) {
-			navTabs = [
-				{ path: '/', label: 'Home' },
-				{ path: '/rules', label: 'Rules' },
-				{ path: '/game', label: 'Game' },
-				{ path: '/games', label: 'My Games' },
-			];
-		} else {
-			navTabs = [
-				{ path: '/', label: 'Home' },
-				{ path: '/login', label: 'Log In' },
-				{ path: '/sign-up', label: 'Sign Up' },
-			];
-		}
+		navTabs = RouterHelper.getRoutes(session.authenticated);
 	});
 
 	async function logout() {
@@ -35,7 +27,7 @@
 		});
 		setSession(null, session);
 		// Navigate back to home after user logs out
-		goto('/login');
+		goto(Routes.Login);
 	}
 </script>
 

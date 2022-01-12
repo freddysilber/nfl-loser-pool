@@ -1,26 +1,9 @@
-<script lang="ts">
-	import { onDestroy, onMount } from 'svelte';
-
-	// let loadingScore: number = 0;
-	// let interval: NodeJS.Timer;
-
-	// onMount(() => {
-	// 	interval = setInterval(() => {
-	// 		loadingScore += 7;
-	// 	}, 1000);
-	// });
-
-	// onDestroy(() => {
-	// 	clearInterval(interval);
-	// });
-</script>
-
 <div class="lds-ripple">
-	<!-- <div />
-	<div /> -->
-	<!-- <div style="color: white">+{loadingScore}</div> -->
-	<div><img src="static/american-football.png" alt="football spinner"/></div>
+	<div>
+		<img src="static/american-football.png" alt="football spinner" />
+	</div>
 </div>
+
 <div class="overlay" />
 
 <style>
@@ -39,20 +22,19 @@
 	}
 
 	.lds-ripple {
-		/* background-image: url("/static/american-football.png"); */
-		display: inline-block;
 		position: absolute;
-		width: 80px;
-		height: 80px;
+		width: 100%;
+		height: calc(100% - 120px);
 		z-index: 1;
+		display: flex;
+		justify-content: center;
 	}
 
 	.lds-ripple div {
-		position: absolute;
-		/* border: 4px solid rgb(219, 30, 93); */
 		opacity: 1;
 		border-radius: 50%;
 		animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+		align-self: center;
 	}
 
 	.lds-ripple div:nth-child(2) {
