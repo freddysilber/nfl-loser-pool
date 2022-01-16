@@ -1,24 +1,26 @@
 <script lang="ts">
 	import axios from 'axios';
-
-	import { page } from '$app/stores';
+	// ENV
 	import { ENV } from '$lib/env';
+	// Svelte
+	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import { getStores } from '$app/stores';
-
+	// Components
 	import Button from 'spaper/components/Button.svelte';
 
 	import { setSession } from '../../session';
-	import type { NavTabs } from '../../models/nav-tabs.model';
 	import { Routes } from '../../tsbs/routes.enum';
 	import { RouterHelper } from '../../tsbs/router-helper';
+	// Types
+	import type { NavTab } from '../../models/nav-tab.model';
 
-	let navTabs: NavTabs[] = [];
+	let navTabs: NavTab[] = [];
 
 	const { session } = getStores();
 
 	session.subscribe((session) => {
-		navTabs = RouterHelper.getRoutes(session.authenticated);
+		navTabs = new RouterHelper().getRoutes(session.authenticated);
 	});
 
 	async function logout() {

@@ -48,11 +48,7 @@
 </main>
 
 <footer>
-	<p>
-		created by <a href="https://github.com/freddysilber" target="_blank"
-			>Freddy Silber</a
-		>
-	</p>
+	<p>created by <a href="https://github.com/freddysilber" target="_blank">Freddy Silber</a></p>
 </footer>
 
 <style>
