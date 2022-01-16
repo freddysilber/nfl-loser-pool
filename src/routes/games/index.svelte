@@ -45,6 +45,7 @@
 			})
 			.then(({ data }) => {
 				ownedGames = data.games;
+				console.log(ownedGames);
 			})
 			.catch((error) => {
 				// Todo: toast error here
@@ -55,6 +56,7 @@
 			.get(`${ENV.api}/games`, { withCredentials: true })
 			.then(({ data }) => {
 				allGames = data.games;
+				console.log(allGames);
 			})
 			.catch((error) => {
 				// Todo: toast error here
@@ -150,7 +152,7 @@
 		{#each ownedGames as game}
 			<li>
 				<span class="star">&star;</span>
-				{game.name} - {game.description}
+				{game.name} - {game.description} - {game.shareId}
 			</li>
 		{/each}
 	</ol>

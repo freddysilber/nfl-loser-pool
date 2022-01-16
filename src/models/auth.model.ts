@@ -1,8 +1,10 @@
 export interface AuthProfile {
 	id: number;
+
 	name: string;
 	username: string;
 	password: string;
+
 	roles: string[];
 }
 
