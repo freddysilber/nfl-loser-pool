@@ -12,6 +12,7 @@
 
 	import type { Game } from '../../models/game.model';
 	import type { Auth } from '../../models/auth.model';
+	import GameCard from '$lib/game-card/GameCard.svelte';
 
 	let ownedGames: Game[] = [];
 	let allGames: Game[] = [];
@@ -138,12 +139,7 @@
 </div>
 <!-- New Game Modal -->
 <Modal bind:active={showModal} title="New Game - {newGame?.name}">
-	<div class="modal-content">
-		<p>Game Id - {newGame?.id}</p>
-		<p>Name - {newGame?.name}</p>
-		<p>Description - {newGame?.description}</p>
-		<p>Share Key - '{newGame?.id} - {newGame?.name}'</p>
-	</div>
+	<GameCard game={newGame}/>
 </Modal>
 
 <h1>My Games</h1>
@@ -151,8 +147,7 @@
 	<ol>
 		{#each ownedGames as game}
 			<li>
-				<span class="star">&star;</span>
-				{game.name} - {game.description} - {game.shareId}
+				<GameCard {game} />
 			</li>
 		{/each}
 	</ol>
@@ -163,12 +158,11 @@
 		{#each allGames as game}
 			{#if game.ownerId === $session.profile.id}
 				<li>
-					<span class="star">&star;</span>
-					{game.name} - {game.description}
+					<GameCard {game} />
 				</li>
 			{:else}
 				<li style="display: flex;">
-					<span>{game.name} - {game.description}</span>
+					<GameCard {game} />
 					<Button
 						size="small"
 						class="margin-left-small"
@@ -183,7 +177,9 @@
 <Collapsible label="Joined Games">
 	<ol>
 		{#each joinedGames as game}
-			<li>{game.name} - {game.description}</li>
+			<li>
+				<GameCard {game} />
+			</li>
 		{/each}
 	</ol>
 </Collapsible>
@@ -192,9 +188,6 @@
 	form {
 		display: flex;
 		flex-direction: column;
-	}
-	span.star {
-		color: pink;
 	}
 
 	div.form-container {

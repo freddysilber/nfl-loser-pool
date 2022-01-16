@@ -10,8 +10,7 @@
 	import Button from 'spaper/components/Button.svelte';
 
 	import { setSession } from '../../session';
-	import { Routes } from '../../tsbs/routes.enum';
-	import { RouterHelper } from '../../tsbs/router-helper';
+	import { Routes, RouterHelper } from '../../tsbs/router-helper';
 	// Types
 	import type { NavTab } from '../../models/nav-tab.model';
 

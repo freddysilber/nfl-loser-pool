@@ -1,4 +1,4 @@
-import type { NavTab } from '../models/nav-tab.model';
+import type { NavTabs } from '../models/nav-tab.model';
 
 export enum Routes {
 	Home = '/',
@@ -10,10 +10,15 @@ export enum Routes {
 	Profile = '/profile',
 }
 
-const HOME_ROUTE: NavTab = { path: Routes.Home, label: 'Home' };
+const SHARED_ROUTES: NavTabs = [
+	{ path: Routes.Home, label: 'Home' }
+];
 
 export class RouterHelper {
-	public getRoutes(isAuthenticated: boolean): NavTab[] {
+	/**
+	 * TODO: add some admin routes
+	 */
+	public getRoutes(isAuthenticated: boolean): NavTabs {
 		if (isAuthenticated) {
 			return RouterHelper.getAuthenticatedRoutes();
 		} else {
@@ -21,9 +26,9 @@ export class RouterHelper {
 		}
 	}
 
-	public static getAuthenticatedRoutes(): NavTab[] {
+	public static getAuthenticatedRoutes(): NavTabs {
 		return [
-			HOME_ROUTE,
+			...SHARED_ROUTES,
 			{ path: Routes.Rules, label: 'Rules' },
 			{ path: Routes.Game, label: 'Game' },
 			{ path: Routes.Games, label: 'My Games' },
@@ -31,9 +36,9 @@ export class RouterHelper {
 		];
 	}
 
-	public static getUnAuthenticatedRoutes(): NavTab[] {
+	public static getUnAuthenticatedRoutes(): NavTabs {
 		return [
-			HOME_ROUTE,
+			...SHARED_ROUTES,
 			{ path: Routes.Login, label: 'Log In' },
 			{ path: Routes.Signup, label: 'Sign Up' },
 		];
