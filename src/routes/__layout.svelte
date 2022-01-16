@@ -6,7 +6,7 @@
 	import axios from 'axios';
 	import { setSession } from '../session';
 	import '../app.css';
-	import 'papercss/dist/paper.min.css';
+	// import 'papercss/dist/paper.min.css';
 	// import Button from 'spaper/components/Button.svelte';
 	// import Modal from 'spaper/components/Modal/Modal.svelte';
 

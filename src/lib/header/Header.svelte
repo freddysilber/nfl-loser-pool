@@ -7,7 +7,7 @@
 	import { goto } from '$app/navigation';
 	import { getStores } from '$app/stores';
 	// Components
-	import Button from 'spaper/components/Button.svelte';
+	// import Button from 'spaper/components/Button.svelte';
 
 	import { setSession } from '../../session';
 	import { Routes, RouterHelper } from '../../tsbs/router-helper';
@@ -56,7 +56,8 @@
 
 	<div class="corner" style="justify-content: flex-end;">
 		{#if $session.authenticated}
-			<Button outline="warning" on:click={logout}>Logout</Button>
+			<!-- <Button outline="warning" on:click={logout}>Logout</Button> -->
+			<button on:click={logout}>Logout</button>
 		{/if}
 	</div>
 </header>

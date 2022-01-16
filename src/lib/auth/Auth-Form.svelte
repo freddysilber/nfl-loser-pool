@@ -6,12 +6,9 @@
 
 	import Spinner from '$lib/spinner/Spinner.svelte';
 
-	import Alert from 'spaper/components/Alert.svelte';
-	import Input from 'spaper/components/Form/Input.svelte';
-
 	import { setSession, signup, login } from '../../session';
 	import type { User } from '../../models/user.model';
-	import { Routes } from '../../tsbs/routes.enum';
+	import { Routes } from '../../tsbs/router-helper';
 
 	const { session } = getStores();
 
@@ -80,12 +77,12 @@
 
 <div class="form-container">
 	{#if showLoginError}
-		<Alert type="danger" dismissible>
-			<span
-				>Login Failed. Please Make sure your username and password is
-				correct! Or <a href="/sign-up">sign up</a> instead</span
-			>
-		</Alert>
+		<!-- <Alert type="danger" dismissible> -->
+		<span
+			>Login Failed. Please Make sure your username and password is
+			correct! Or <a href="/sign-up">sign up</a> instead</span
+		>
+		<!-- </Alert> -->
 	{/if}
 
 	<form on:submit|preventDefault={handleAuth} method="post">
@@ -93,48 +90,44 @@
 		{#if isSignUp}
 			<!-- First Name -->
 			<div class="form-group">
-				<Input
+				<input
 					placeholder="Name"
 					label="Name"
 					type="text"
 					bind:value={$user.name}
-					block
 					required
 				/>
 			</div>
 			<!-- Username -->
 			<div class="form-group">
-				<Input
+				<input
 					placeholder="Choose a username"
 					label="Username"
 					type="text"
 					autocomplete="username"
 					bind:value={$user.username}
-					block
 					required
 				/>
 			</div>
 			<!-- Password -->
 			<div class="form-group">
-				<Input
+				<input
 					placeholder="Password"
 					label="Password"
 					type="password"
 					autocomplete="current-password"
 					bind:value={$user.password}
-					block
 					required
 				/>
 			</div>
 			<!-- Confirm Password -->
 			<div class="form-group">
-				<Input
+				<input
 					placeholder="Confirm Password"
 					label="Confirm Password"
 					type="password"
 					autocomplete="current-password"
 					bind:value={confirmPassword}
-					block
 					required
 				/>
 			</div>
@@ -142,25 +135,23 @@
 		{:else}
 			<!-- Username -->
 			<div class="form-group">
-				<Input
+				<input
 					placeholder="Username"
 					label="Username"
 					type="text"
 					autocomplete="username"
 					bind:value={$user.username}
-					block
 					required
 				/>
 			</div>
 			<!-- Password -->
 			<div class="form-group">
-				<Input
+				<input
 					placeholder="Password"
 					label="Password"
 					type="password"
 					autocomplete="current-password"
 					bind:value={$user.password}
-					block
 					required
 				/>
 			</div>
