@@ -12,13 +12,13 @@
 
 	const { session } = getStores();
 
-	export let isSignUp: boolean = true;
+	export let isSignUp = true;
 
 	let user: Writable<User>;
 	let formLabel: string;
 	let confirmPassword: string;
-	let showLoginError: boolean = false;
-	let loading: boolean = false;
+	let showLoginError = false;
+	let loading = false;
 
 	const userDetails = {
 		username: '',

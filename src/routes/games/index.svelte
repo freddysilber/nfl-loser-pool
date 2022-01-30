@@ -1,28 +1,21 @@
 <script lang="ts">
 	import { getStores } from '$app/stores';
 	import { ENV } from '$lib/env';
+	import GameCard from '$lib/game-card/GameCard.svelte';
 	import axios, { AxiosResponse } from 'axios';
 	import { writable, Writable } from 'svelte/store';
-
-	// import Collapsible from 'spaper/components/Collapsible.svelte';
-	// import Button from 'spaper/components/Button.svelte';
-	// import Modal from 'spaper/components/Modal/Modal.svelte';
-	// import Alert from 'spaper/components/Alert.svelte';
-	// import Input from 'spaper/components/Form/Input.svelte';
-
-	import type { Game } from '../../models/game.model';
 	import type { Auth } from '../../models/auth.model';
-	import GameCard from '$lib/game-card/GameCard.svelte';
+	import type { Game } from '../../models/game.model';
 
 	let ownedGames: Game[] = [];
 	let allGames: Game[] = [];
 	let joinedGames: Game[] = [];
-	let showModal = false;
 	let newGame: Game;
-	let error = {
-		show: false,
-		message: 'An Error Occured!',
-	};
+	let error: string;
+	// let error = {
+	// 	show: false,
+	// 	message: 'An Error Occured!',
+	// };
 
 	const { session } = getStores();
 	const game: Writable<Game> = writable({
@@ -40,13 +33,13 @@
 		// 		return request;
 		// 	}
 		// )
+
 		axios
 			.get(`${ENV.api}/users/games/${session.profile.id}`, {
 				withCredentials: true,
 			})
 			.then(({ data }) => {
 				ownedGames = data.games;
-				console.log(ownedGames);
 			})
 			.catch((error) => {
 				// Todo: toast error here
@@ -57,10 +50,10 @@
 			.get(`${ENV.api}/games`, { withCredentials: true })
 			.then(({ data }) => {
 				allGames = data.games;
-				console.log(allGames);
 			})
 			.catch((error) => {
 				// Todo: toast error here
+				error = error;
 				console.error(error);
 			});
 
@@ -80,8 +73,7 @@
 
 	function handleCreateGame() {
 		if (!$game.name || !$game.ownerId) {
-			error.show = true;
-			error.message = `There is no owner for this game. Are you logged in?`;
+			error = `There is no owner for this game. Are you logged in?`;
 			return;
 		}
 
@@ -92,24 +84,30 @@
 			.then((response: AxiosResponse<Game, any>) => {
 				if (response.data) {
 					newGame = response.data;
-					showModal = true;
+					// Add the game to UI list
+					allGames.push($game);
+					ownedGames.push($game);
+					allGames = allGames;
+					ownedGames = ownedGames;
 				}
 			})
 			.catch((e) => {
 				if (e.response.status === 401) {
-					error.message = `${e.message} - ${e.response.statusText} - Make sure you are logged in!`;
+					error = `${e.message} - ${e.response.statusText} - Make sure you are logged in!`;
 				}
-				error.show = true;
 			});
 	}
 </script>
 
+<svelte:head>
+	<title>My Games</title>
+</svelte:head>
+
 <!-- New Game Form -->
 <h3 class="form-title">Create a new game</h3>
 <div class="form-container">
-	{#if error.show}
-		{error.message}
-		<!-- <Alert type="danger" dismissible>{error.message}</Alert> -->
+	{#if error}
+		<p style="color: red;">{error}</p>
 	{/if}
 	<form on:submit|preventDefault={handleCreateGame} method="post">
 		<!-- Name -->
@@ -136,58 +134,31 @@
 		>
 	</form>
 </div>
-<!-- New Game Modal -->
-
-<!-- TODO need to display this info!! -->
-
-<!-- <Modal bind:active={showModal} title="New Game - {newGame?.name}">
-	<GameCard game={newGame} />
-</Modal> -->
 
 <h1>My Games</h1>
-<!-- <Collapsible label="Games I Own"> -->
-<h1>My Games</h1>
-<ol>
-	{#each ownedGames as game}
-		<li>
-			<GameCard {game} />
-		</li>
-	{/each}
-</ol>
-<!-- </Collapsible> -->
+{#each ownedGames as game}
+	<GameCard {game} />
+{/each}
 
-<!-- <Collapsible label="All Games"> -->
 <h1>All Games</h1>
-<ol>
-	{#each allGames as game}
-		{#if game.ownerId === $session.profile.id}
-			<li>
-				<GameCard {game} />
-			</li>
-		{:else}
-			<li style="display: flex;">
-				<GameCard {game} />
-				<button on:click={() => joinGame(game.id)} />
-				<!-- <Button
+{#each allGames as game}
+	{#if game.ownerId === $session.profile.id}
+		<GameCard {game} />
+	{:else}
+		<GameCard {game} />
+		<button on:click={() => joinGame(game.id)} />
+		<!-- <Button
 					size="small"
 					class="margin-left-small"
 					on:click={() => joinGame(game.id)}>Join Game</Button
 				> -->
-			</li>
-		{/if}
-	{/each}
-</ol>
-<!-- </Collapsible> -->
+	{/if}
+{/each}
 
-<!-- <Collapsible label="Joined Games"> -->
 <h1>Joined Games</h1>
-<ol>
-	{#each joinedGames as game}
-		<li>
-			<GameCard {game} />
-		</li>
-	{/each}
-</ol>
+{#each joinedGames as game}
+	<GameCard {game} />
+{/each}
 
 <!-- </Collapsible> -->
 <style lang="scss">
