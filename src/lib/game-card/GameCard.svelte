@@ -2,10 +2,14 @@
 	import type { Game } from '../../models/game.model';
 
 	export let game: Game;
+
+	function goToGame() {
+		console.log(game);
+	}
 </script>
 
 {#if game}
-	<div class="game-card">
+	<div class="game-card" on:click={goToGame}>
 		<p><span class="label">Name: </span>{game.name}</p>
 		<p><span class="label">Description: </span>{game.description}</p>
 		<p><span class="label">Share Id: </span>{game.shareId}</p>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getStores } from '$app/stores';
-	import type { User } from 'src/models/user.model';
+	import type { User } from '../../models/user.model';
 
 	const { session } = getStores();
 	let user: User = $session.profile;

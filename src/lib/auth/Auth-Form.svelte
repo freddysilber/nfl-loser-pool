@@ -77,88 +77,73 @@
 
 <div class="form-container">
 	{#if showLoginError}
-		<!-- <Alert type="danger" dismissible> -->
-		<span
-			>Login Failed. Please Make sure your username and password is
-			correct! Or <a href="/sign-up">sign up</a> instead</span
-		>
-		<!-- </Alert> -->
+		<span>
+			Login Failed. Please Make sure your username and password is
+			correct! Or <a href="/sign-up">sign up</a> instead
+		</span>
 	{/if}
 
 	<form on:submit|preventDefault={handleAuth} method="post">
 		<!-- SIGNUP -->
 		{#if isSignUp}
 			<!-- First Name -->
-			<div class="form-group">
-				<input
-					placeholder="Name"
-					label="Name"
-					type="text"
-					bind:value={$user.name}
-					required
-				/>
-			</div>
+			<input
+				placeholder="Name"
+				label="Name"
+				type="text"
+				bind:value={$user.name}
+				required
+			/>
 			<!-- Username -->
-			<div class="form-group">
-				<input
-					placeholder="Choose a username"
-					label="Username"
-					type="text"
-					autocomplete="username"
-					bind:value={$user.username}
-					required
-				/>
-			</div>
+			<input
+				placeholder="Choose a username"
+				label="Username"
+				type="text"
+				autocomplete="username"
+				bind:value={$user.username}
+				required
+			/>
 			<!-- Password -->
-			<div class="form-group">
-				<input
-					placeholder="Password"
-					label="Password"
-					type="password"
-					autocomplete="current-password"
-					bind:value={$user.password}
-					required
-				/>
-			</div>
+			<input
+				placeholder="Password"
+				label="Password"
+				type="password"
+				autocomplete="current-password"
+				bind:value={$user.password}
+				required
+			/>
 			<!-- Confirm Password -->
-			<div class="form-group">
-				<input
-					placeholder="Confirm Password"
-					label="Confirm Password"
-					type="password"
-					autocomplete="current-password"
-					bind:value={confirmPassword}
-					required
-				/>
-			</div>
+			<input
+				placeholder="Confirm Password"
+				label="Confirm Password"
+				type="password"
+				autocomplete="current-password"
+				bind:value={confirmPassword}
+				required
+			/>
 			<!-- LOGIN -->
 		{:else}
 			<!-- Username -->
-			<div class="form-group">
-				<input
-					placeholder="Username"
-					label="Username"
-					type="text"
-					autocomplete="username"
-					bind:value={$user.username}
-					required
-				/>
-			</div>
+			<input
+				placeholder="Username"
+				label="Username"
+				type="text"
+				autocomplete="username"
+				bind:value={$user.username}
+				required
+			/>
 			<!-- Password -->
-			<div class="form-group">
-				<input
-					placeholder="Password"
-					label="Password"
-					type="password"
-					autocomplete="current-password"
-					bind:value={$user.password}
-					required
-				/>
-			</div>
+			<input
+				placeholder="Password"
+				label="Password"
+				type="password"
+				autocomplete="current-password"
+				bind:value={$user.password}
+				required
+			/>
 		{/if}
-		<button type="submit" class="btn-success-outline margin-top-small"
-			>{formLabel}</button
-		>
+		<!-- Submit -->
+		<button type="submit">{formLabel}</button>
 	</form>
 </div>
 
