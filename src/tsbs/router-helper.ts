@@ -20,7 +20,7 @@ export class RouterHelper {
 	 */
 	public getRoutes(isAuthenticated: boolean): NavTabs {
 		if (isAuthenticated) {
-			return this._getAuthenticatedRoutes();
+			return this._getAuthenticatedRoutes(/* isAdmin {boolean} */);
 		} else {
 			return this._getUnAuthenticatedRoutes();
 		}
