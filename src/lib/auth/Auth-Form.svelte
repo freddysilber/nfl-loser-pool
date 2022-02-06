@@ -20,7 +20,7 @@
 	let showLoginError = false;
 	let loading = false;
 
-	const userDetails = {
+	const userDetails: User = {
 		username: '',
 		password: '',
 	};
