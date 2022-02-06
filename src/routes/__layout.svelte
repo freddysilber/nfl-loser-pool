@@ -6,6 +6,7 @@
 	import axios from 'axios';
 	import { setSession } from '../session';
 	import '../app.css';
+import Error from '$lib/errors/Error.svelte';
 	// import 'papercss/dist/paper.min.css';
 	// import Button from 'spaper/components/Button.svelte';
 	// import Modal from 'spaper/components/Modal/Modal.svelte';
@@ -27,7 +28,7 @@
 				setSession(response, session);
 			})
 			.catch((error) => {
-				console.error(error);
+				console.error('THERE IS NO VALID SESSION!!!', error);
 			});
 	});
 </script>

@@ -5,12 +5,13 @@
 	import Prize from '$lib/prize/Prize.svelte';
 	import ScoreLegend from '$lib/score-legend/ScoreLegend.svelte';
 	import axios from 'axios';
-	import type { Auth } from '../../models/auth.model';
+	// import type { Auth } from '../../models/auth.model';
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 
 	const { session } = getStores();
 
+	// These will come from the api as 'players'
 	const players = [
 		'Freddy',
 		'Lydia',
@@ -21,26 +22,33 @@
 		'Chris',
 	];
 
-	let items = [];
+	// let items = [];
 	let allGames;
 
-	onMount(async () => {
-		const res = await axios.get<{ items: any[] }>(`${ENV.api}/items`);
-		items = res.data.items || items;
-	});
+	// onMount(async () => {
+	// 	const res = await axios.get<{ items: any[] }>(`${ENV.api}/items`);
+	// 	items = res.data.items || items;
+	// });
 
-	session.subscribe((session: Auth) => {
+	// session.subscribe((session: Auth) => {
+	session.subscribe(() => {
 		axios
-			.get(`${ENV.api}/games`, { withCredentials: true })
+			.get(`${ENV.api}/games`, {
+				withCredentials: true,
+			})
 			.then(({ data }) => {
 				allGames = data.games;
-				console.log('allgames', allGames);
+
+				console.log({
+					allGames,
+				});
 			})
 			.catch((error) => {
 				console.error(error);
 			});
 	});
 
+	// TODO: Cache this stuff
 	function selectGame(gameId: string) {
 		console.log(gameId);
 		// Get game, players and weekly picks to build the game board
@@ -85,7 +93,9 @@
 
 {#if allGames}
 	<select on:change={(event) => selectGame(event.currentTarget.value)}>
-		<option>Select Game</option>
+		<option
+			>-- SELECT GAME -- (Default to the first game the user ownes)</option
+		>
 		{#each allGames as game}
 			<option value={game.id}>{game.name}</option>
 		{/each}
