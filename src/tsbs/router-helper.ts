@@ -20,9 +20,9 @@ export class RouterHelper {
 	 */
 	public getRoutes(isAuthenticated: boolean): NavTabs {
 		if (isAuthenticated) {
-			return RouterHelper.getAuthenticatedRoutes();
+			return this._getAuthenticatedRoutes(/* isAdmin {boolean} */);
 		} else {
-			return RouterHelper.getUnAuthenticatedRoutes();
+			return this._getUnAuthenticatedRoutes();
 		}
 	}
 
@@ -42,5 +42,13 @@ export class RouterHelper {
 			{ path: Routes.Login, label: 'Log In' },
 			{ path: Routes.Signup, label: 'Sign Up' },
 		];
+	}
+
+	private _getAuthenticatedRoutes(): NavTabs {
+		return RouterHelper.getAuthenticatedRoutes();
+	}
+
+	private _getUnAuthenticatedRoutes(): NavTabs {
+		return RouterHelper.getUnAuthenticatedRoutes();
 	}
 }

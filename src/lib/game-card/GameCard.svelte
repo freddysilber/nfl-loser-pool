@@ -2,17 +2,29 @@
 	import type { Game } from '../../models/game.model';
 
 	export let game: Game;
+
+	function goToGame() {
+		console.log(game);
+	}
 </script>
 
-<span class="star">&star;</span>
 {#if game}
-	<span>Name: {game.name}</span>
-	<span>Description: {game.description}</span>
-	<span>Share Id: {game.shareId}</span>
+	<div class="game-card" on:click={goToGame}>
+		<p><span class="label">Name: </span>{game.name}</p>
+		<p><span class="label">Description: </span>{game.description}</p>
+		<p><span class="label">Share Id: </span>{game.shareId}</p>
+	</div>
 {/if}
 
 <style lang="scss">
-	span.star {
-		color: pink;
+	div.game-card {
+		border: 1px solid black;
+		border-radius: 5px;
+		p {
+			margin: 0;
+		}
+		span.label {
+			color: #eee
+		}
 	}
 </style>

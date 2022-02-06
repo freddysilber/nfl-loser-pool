@@ -1,29 +1,26 @@
 <script lang="ts">
 	import { Writable, writable } from 'svelte/store';
-	import type { AxiosResponse } from 'axios';
 	import { getStores } from '$app/stores';
 	import { goto } from '$app/navigation';
-
+	// Components
 	import Spinner from '$lib/spinner/Spinner.svelte';
-
-	import Alert from 'spaper/components/Alert.svelte';
-	import Input from 'spaper/components/Form/Input.svelte';
-
-	import { setSession, signup, login } from '../../session';
+	// Types
+	import type { AxiosResponse } from 'axios';
 	import type { User } from '../../models/user.model';
-	import { Routes } from '../../tsbs/routes.enum';
+	// BS => 🐂💩
+	import { setSession, signup, login } from '../../session';
+	import { Routes } from '../../tsbs/router-helper';
 
 	const { session } = getStores();
 
-	export let isSignUp: boolean = true;
+	export let isSignUp = true; // Default to a sign up form
 
-	let user: Writable<User>;
-	let formLabel: string;
-	let confirmPassword: string;
-	let showLoginError: boolean = false;
-	let loading: boolean = false;
+	let user: Writable<User>; // User info that we will use to either auth for login or create a new user
+	let confirmPassword: string; // Need this at the moment to make sure the NEW user enters the same password twice
+	let showLoginError = false;
+	let loading = false;
 
-	const userDetails = {
+	const userDetails: User = {
 		username: '',
 		password: '',
 	};
@@ -31,12 +28,10 @@
 	if (isSignUp) {
 		userDetails['name'] = '';
 		userDetails['roles'] = [''];
-		formLabel = 'Sign Up!';
 	} else {
 		// Todo: remove these
 		userDetails.username = 'mrsir';
 		userDetails.password = 'password';
-		formLabel = 'Log In!';
 	}
 
 	user = writable(userDetails);
@@ -80,94 +75,73 @@
 
 <div class="form-container">
 	{#if showLoginError}
-		<Alert type="danger" dismissible>
-			<span
-				>Login Failed. Please Make sure your username and password is
-				correct! Or <a href="/sign-up">sign up</a> instead</span
-			>
-		</Alert>
+		<span>
+			Login Failed. Please Make sure your username and password is
+			correct! Or <a href="/sign-up">sign up</a> instead
+		</span>
 	{/if}
 
 	<form on:submit|preventDefault={handleAuth} method="post">
 		<!-- SIGNUP -->
 		{#if isSignUp}
 			<!-- First Name -->
-			<div class="form-group">
-				<Input
-					placeholder="Name"
-					label="Name"
-					type="text"
-					bind:value={$user.name}
-					block
-					required
-				/>
-			</div>
+			<input
+				placeholder="Name"
+				label="Name"
+				type="text"
+				bind:value={$user.name}
+				required
+			/>
 			<!-- Username -->
-			<div class="form-group">
-				<Input
-					placeholder="Choose a username"
-					label="Username"
-					type="text"
-					autocomplete="username"
-					bind:value={$user.username}
-					block
-					required
-				/>
-			</div>
+			<input
+				placeholder="Choose a username"
+				label="Username"
+				type="text"
+				autocomplete="username"
+				bind:value={$user.username}
+				required
+			/>
 			<!-- Password -->
-			<div class="form-group">
-				<Input
-					placeholder="Password"
-					label="Password"
-					type="password"
-					autocomplete="current-password"
-					bind:value={$user.password}
-					block
-					required
-				/>
-			</div>
+			<input
+				placeholder="Password"
+				label="Password"
+				type="password"
+				autocomplete="current-password"
+				bind:value={$user.password}
+				required
+			/>
 			<!-- Confirm Password -->
-			<div class="form-group">
-				<Input
-					placeholder="Confirm Password"
-					label="Confirm Password"
-					type="password"
-					autocomplete="current-password"
-					bind:value={confirmPassword}
-					block
-					required
-				/>
-			</div>
+			<input
+				placeholder="Confirm Password"
+				label="Confirm Password"
+				type="password"
+				autocomplete="current-password"
+				bind:value={confirmPassword}
+				required
+			/>
 			<!-- LOGIN -->
 		{:else}
 			<!-- Username -->
-			<div class="form-group">
-				<Input
-					placeholder="Username"
-					label="Username"
-					type="text"
-					autocomplete="username"
-					bind:value={$user.username}
-					block
-					required
-				/>
-			</div>
+			<input
+				placeholder="Username"
+				label="Username"
+				type="text"
+				autocomplete="username"
+				bind:value={$user.username}
+				required
+			/>
 			<!-- Password -->
-			<div class="form-group">
-				<Input
-					placeholder="Password"
-					label="Password"
-					type="password"
-					autocomplete="current-password"
-					bind:value={$user.password}
-					block
-					required
-				/>
-			</div>
+			<input
+				placeholder="Password"
+				label="Password"
+				type="password"
+				autocomplete="current-password"
+				bind:value={$user.password}
+				required
+			/>
 		{/if}
-		<button type="submit" class="btn-success-outline margin-top-small"
-			>{formLabel}</button
-		>
+		<!-- Submit -->
+		<button type="submit">{isSignUp ? 'Sign Up!' : 'Log In!'}</button>
 	</form>
 </div>
 

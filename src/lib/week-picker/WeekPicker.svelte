@@ -5,7 +5,7 @@
 	export let player: string;
 
 	const dispatch = createEventDispatcher();
-	const label: string = 'Pick';
+	const label = 'Pick';
 	const teams: string[] =[
 		'Kansas City Chiefs',
 		'Arizona Cardinals',
@@ -14,24 +14,18 @@
 		"Denver Broncos"
 	];
 
-	function handleSelect(event: any) {
+	function handleSelect(team: string) {
 		dispatch('selectTeam', {
-			team: event.target.value,
+			team,
 			week,
 			player
 		});
 	}
 </script>
 
-<select on:change={handleSelect}>
+<select on:change={(event => handleSelect(event.currentTarget.value))}>
 	<option>{ label } a team...</option>
 	{#each teams as team}
 		<option>{team}</option>
 	{/each}
 </select>
-
-<style>
-	option {
-		font-size: 2em;
-	}
-</style>
