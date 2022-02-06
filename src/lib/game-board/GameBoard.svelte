@@ -7,7 +7,7 @@
 </script>
 
 <div>
-	<table class="table-hover">
+	<table>
 		<thead>
 			<tr>
 				<th />
