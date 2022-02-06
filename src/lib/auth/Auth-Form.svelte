@@ -1,22 +1,22 @@
 <script lang="ts">
 	import { Writable, writable } from 'svelte/store';
-	import type { AxiosResponse } from 'axios';
 	import { getStores } from '$app/stores';
 	import { goto } from '$app/navigation';
-
+	// Components
 	import Spinner from '$lib/spinner/Spinner.svelte';
-
-	import { setSession, signup, login } from '../../session';
+	// Types
+	import type { AxiosResponse } from 'axios';
 	import type { User } from '../../models/user.model';
+	// BS => 🐂💩
+	import { setSession, signup, login } from '../../session';
 	import { Routes } from '../../tsbs/router-helper';
 
 	const { session } = getStores();
 
-	export let isSignUp = true;
+	export let isSignUp = true; // Default to a sign up form
 
-	let user: Writable<User>;
-	let formLabel: string;
-	let confirmPassword: string;
+	let user: Writable<User>; // User info that we will use to either auth for login or create a new user
+	let confirmPassword: string; // Need this at the moment to make sure the NEW user enters the same password twice
 	let showLoginError = false;
 	let loading = false;
 
@@ -28,12 +28,10 @@
 	if (isSignUp) {
 		userDetails['name'] = '';
 		userDetails['roles'] = [''];
-		formLabel = 'Sign Up!';
 	} else {
 		// Todo: remove these
 		userDetails.username = 'mrsir';
 		userDetails.password = 'password';
-		formLabel = 'Log In!';
 	}
 
 	user = writable(userDetails);
@@ -143,7 +141,7 @@
 			/>
 		{/if}
 		<!-- Submit -->
-		<button type="submit">{formLabel}</button>
+		<button type="submit">{isSignUp ? 'Sign Up!' : 'Log In!'}</button>
 	</form>
 </div>
 
