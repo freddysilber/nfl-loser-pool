@@ -22,13 +22,7 @@
 		'Chris',
 	];
 
-	// let items = [];
 	let allGames;
-
-	// onMount(async () => {
-	// 	const res = await axios.get<{ items: any[] }>(`${ENV.api}/items`);
-	// 	items = res.data.items || items;
-	// });
 
 	// session.subscribe((session: Auth) => {
 	session.subscribe(() => {
@@ -66,21 +60,13 @@
 	<title>Game</title>
 </svelte:head>
 
-<!-- <ul>
-	{#each items as item}
-		<li>{item.name}</li>
-	{:else}
-	<li>loading...</li>
-	{/each}
-</ul> -->
-
-<h3
+<h1
 	in:fly={{ x: 1000, duration: 1000 }}
 	out:fly={{ x: -1000, duration: 1000 }}
 	class="game-title"
 >
 	NFL Loser Pool {new Date().getFullYear()}
-</h3>
+</h1>
 <div class="game-header">
 	<Prize
 		message="some random prop is being passed in!!!"
@@ -105,14 +91,13 @@
 <GameBoard {players} />
 
 <style>
+	h1.game-title {
+		font-size: 1.75em;
+	}
+
 	div.game-header {
 		display: flex;
 		justify-content: space-between;
 		margin-bottom: 0.25rem;
-	}
-
-	.game-title {
-		text-align: center;
-		margin: 0;
 	}
 </style>
