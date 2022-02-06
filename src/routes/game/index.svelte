@@ -79,9 +79,7 @@
 
 {#if allGames}
 	<select on:change={(event) => selectGame(event.currentTarget.value)}>
-		<option
-			>-- SELECT GAME -- (Default to the first game the user ownes)</option
-		>
+		<option>-- SELECT GAME -- (Default to the first game the user ownes)</option>
 		{#each allGames as game}
 			<option value={game.id}>{game.name}</option>
 		{/each}
