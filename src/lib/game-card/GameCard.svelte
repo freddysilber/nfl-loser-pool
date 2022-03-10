@@ -10,9 +10,12 @@
 
 {#if game}
 	<div class="game-card" on:click={goToGame}>
-		<p><span class="label">Name: </span>{game.name}</p>
-		<p><span class="label">Description: </span>{game.description}</p>
-		<p><span class="label">Share Id: </span>{game.shareId}</p>
+		<div>
+			<p><span class="label">Name: </span>{game.name}</p>
+			<p><span class="label">Description: </span>{game.description}</p>
+			<p><span class="label">Share Id: </span>{game.shareId}</p>
+		</div>
+		<slot name="join-action"></slot>
 	</div>
 {/if}
 
@@ -20,6 +23,8 @@
 	div.game-card {
 		border: 1px solid black;
 		border-radius: 5px;
+		display: flex;
+
 		p {
 			margin: 0;
 		}

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { getStores } from '$app/stores';
 	import { ENV } from '$lib/env';
 	import GameCard from '$lib/game-card/GameCard.svelte';
@@ -6,6 +7,7 @@
 	import { writable, Writable } from 'svelte/store';
 	import type { Auth } from '../../models/auth.model';
 	import type { Game } from '../../models/game.model';
+	// import teams from '$lib/data/nfl-teams.json';
 
 	let ownedGames: Game[] = [];
 	let allGames: Game[] = [];
@@ -23,6 +25,29 @@
 		description: '',
 		ownerId: $session.profile ? $session.profile.id : null,
 	});
+
+	// onMount(() => {
+	// 	console.log(teams);
+	// 	teams.sports[0].leagues[0].teams.forEach((team) => {
+	// 		console.log(team.team.displayName);
+	// 	});
+
+	// 	axios.get('https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams?limit=32').then((data) => {
+	// 		console.log(data);
+	// 		const teamURIs = [];
+	// 		data.data.items.forEach((item) => {
+	// 			console.log(item.$ref)
+	// 			teamURIs.push(item.$ref);
+	// 		})
+	// 		console.log(teamURIs);
+	// 		const teams = Promise.all(teamURIs.map((uri) => axios.get(uri))).then((teams) => {
+	// 			console.log(teams)
+	// 			teams.forEach((team) => {
+	// 				console.log(team.data.displayName);
+	// 			})
+	// 		})
+	// 	})
+	// });
 
 	session.subscribe((session: Auth) => {
 		// console.log(session);
@@ -44,6 +69,7 @@
 			.catch((error) => {
 				// Todo: toast error here
 				console.error(error);
+				alert(error);
 			});
 
 		axios
@@ -55,6 +81,7 @@
 				// Todo: toast error here
 				error = error;
 				console.error(error);
+				alert(error);
 			});
 
 		// axios
@@ -104,35 +131,37 @@
 </svelte:head>
 
 <!-- New Game Form -->
-<h3 class="form-title">Create a new game</h3>
-<div class="form-container">
-	{#if error}
-		<p style="color: red;">{error}</p>
-	{/if}
-	<form on:submit|preventDefault={handleCreateGame} method="post">
-		<!-- Name -->
-		<div class="form-group">
-			<input
-				placeholder="Name"
-				label="Name"
-				type="text"
-				bind:value={$game.name}
-				required
-			/>
-		</div>
-		<!-- Description -->
-		<div class="form-group">
-			<input
-				placeholder="Description"
-				label="Description"
-				type="text"
-				bind:value={$game.description}
-			/>
-		</div>
-		<button type="submit" class="btn-success-outline margin-top-small"
-			>Create Game</button
-		>
-	</form>
+<div class="placeholder-form-div">
+	<h3 class="form-title">Create a new game</h3>
+	<div class="form-container">
+		{#if error}
+			<p style="color: red;">{error}</p>
+		{/if}
+		<form on:submit|preventDefault={handleCreateGame} method="post">
+			<!-- Name -->
+			<div class="form-group">
+				<input
+					placeholder="Name"
+					label="Name"
+					type="text"
+					bind:value={$game.name}
+					required
+				/>
+			</div>
+			<!-- Description -->
+			<div class="form-group">
+				<textarea
+					placeholder="Description"
+					label="Description"
+					type="text"
+					bind:value={$game.description}
+				/>
+			</div>
+			<button type="submit" class="btn-success-outline margin-top-small"
+				>Create Game</button
+			>
+		</form>
+	</div>
 </div>
 
 <h1>My Games</h1>
@@ -140,19 +169,22 @@
 	<GameCard {game} />
 {/each}
 
-<h1>All Games</h1>
+<h1>Other Games</h1>
 {#each allGames as game}
-	{#if game.ownerId === $session.profile.id}
+	{#if game.ownerId !== $session.profile.id}
+		<GameCard {game}>
+			<button slot="join-action" on:click={() => joinGame(game.id)}
+				>Join Game</button
+			>
+		</GameCard>
+	{/if}
+	<!-- {#if game.ownerId === $session.profile.id}
 		<GameCard {game} />
 	{:else}
-		<GameCard {game} />
-		<button on:click={() => joinGame(game.id)} />
-		<!-- <Button
-					size="small"
-					class="margin-left-small"
-					on:click={() => joinGame(game.id)}>Join Game</Button
-				> -->
-	{/if}
+		<GameCard {game}>
+			<button slot="join-action" on:click={() => joinGame(game.id)}>Join Game</button>
+		</GameCard>
+	{/if} -->
 {/each}
 
 <h1>Joined Games</h1>
@@ -165,6 +197,12 @@
 	form {
 		display: flex;
 		flex-direction: column;
+	}
+
+	div.placeholder-form-div {
+		border: 1px solid black;
+		border-radius: 10px;
+		padding: 0.25rem;
 	}
 
 	div.form-container {
