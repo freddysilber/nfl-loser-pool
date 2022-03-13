@@ -17,15 +17,16 @@ start();
 
 const teams = await fetch(TEAMS_ROOT);
 const teamList = await teams.json();
+// Map each team enpoint to a fetch promise
 await Promise.all(teamList.items.map((team) => {
-	return team[TEAM_REF];
-}).map((team) => {
-	return fetch(team)
+	return fetch(team[TEAM_REF])
 }))
 	.then((responses) => Promise.all(responses.map((teamRes) => {
+		// Parse each team to json
 		return teamRes.json();
 	})))
 	.then((teams) => {
+		// Populate file with data
 		fs.writeFile(
 			'./src/lib/data/nfl-teams.json',
 			JSON.stringify(teams),
