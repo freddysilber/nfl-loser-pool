@@ -1,7 +1,10 @@
 <script lang="ts">
 	import WeekPicker from '$lib/week-picker/WeekPicker.svelte';
+	import teams from '$lib/data/nfl-teams.json';
 
 	export let players: string[];
+	console.log(teams);
+	const teamNames = teams.map((team) => team.displayName);
 
 	const weeks = [...Array(19).keys()];
 </script>
@@ -27,7 +30,7 @@
 					</td>
 					{#each weeks as week}
 						<td>
-							<WeekPicker {week} {player} />
+							<WeekPicker {week} {player} {teamNames} />
 						</td>
 					{/each}
 					<td />

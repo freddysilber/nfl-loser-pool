@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { getStores } from '$app/stores';
 	import { ENV } from '$lib/env';
 	import GameCard from '$lib/game-card/GameCard.svelte';
@@ -7,7 +6,6 @@
 	import { writable, Writable } from 'svelte/store';
 	import type { Auth } from '../../models/auth.model';
 	import type { Game } from '../../models/game.model';
-	// import teams from '$lib/data/nfl-teams.json';
 
 	let ownedGames: Game[] = [];
 	let allGames: Game[] = [];
@@ -25,29 +23,6 @@
 		description: '',
 		ownerId: $session.profile ? $session.profile.id : null,
 	});
-
-	// onMount(() => {
-	// 	console.log(teams);
-	// 	teams.sports[0].leagues[0].teams.forEach((team) => {
-	// 		console.log(team.team.displayName);
-	// 	});
-
-	// 	axios.get('https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams?limit=32').then((data) => {
-	// 		console.log(data);
-	// 		const teamURIs = [];
-	// 		data.data.items.forEach((item) => {
-	// 			console.log(item.$ref)
-	// 			teamURIs.push(item.$ref);
-	// 		})
-	// 		console.log(teamURIs);
-	// 		const teams = Promise.all(teamURIs.map((uri) => axios.get(uri))).then((teams) => {
-	// 			console.log(teams)
-	// 			teams.forEach((team) => {
-	// 				console.log(team.data.displayName);
-	// 			})
-	// 		})
-	// 	})
-	// });
 
 	session.subscribe((session: Auth) => {
 		// console.log(session);

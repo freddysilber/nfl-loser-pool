@@ -5,8 +5,6 @@
 	import Prize from '$lib/prize/Prize.svelte';
 	import ScoreLegend from '$lib/score-legend/ScoreLegend.svelte';
 	import axios from 'axios';
-	// import type { Auth } from '../../models/auth.model';
-	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 
 	const { session } = getStores();
@@ -79,7 +77,9 @@
 
 {#if allGames}
 	<select on:change={(event) => selectGame(event.currentTarget.value)}>
-		<option>-- SELECT GAME -- (Default to the first game the user ownes)</option>
+		<option
+			>-- SELECT GAME -- (Default to the first game the user ownes)</option
+		>
 		{#each allGames as game}
 			<option value={game.id}>{game.name}</option>
 		{/each}

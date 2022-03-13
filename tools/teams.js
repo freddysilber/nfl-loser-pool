@@ -32,7 +32,7 @@ await Promise.all(teamList.items.map((team) => {
 	})))
 	.then((teams) => {
 		fs.writeFile(
-			'./src/lib/data/teams.json',
+			'./src/lib/data/nfl-teams.json',
 			JSON.stringify(teams),
 			(error) => {
 				if (error) {
