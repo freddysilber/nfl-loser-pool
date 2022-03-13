@@ -3,7 +3,7 @@
 	import teams from '$lib/data/nfl-teams.json';
 
 	export let players: string[];
-	console.log(teams);
+	// TODO: move this to a more top level component so we dont run this map everytime a board is changed when a user switches between different games
 	const teamNames = teams.map((team) => team.displayName);
 
 	const weeks = [...Array(19).keys()];
