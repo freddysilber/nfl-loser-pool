@@ -1,3 +1,7 @@
+/**
+ * Gets all the NFL team data and dumps the list of teams into the 'nfl-teams.json' file.
+ * In case these endpoints change or stop working, we can have a backup of the teams.
+ */
 import fs from 'fs';
 import fetch from 'node-fetch';
 import colors from 'colors';
@@ -5,15 +9,6 @@ import colors from 'colors';
  * This is a pretty sketch api... we'll probebly find something new to use...
  * https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams?limit=32
  * http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/teams/21?lang=en&region=us%27,
- */
-
-/**
- * THIS IS PROBABLY AN UNSUSTAINBLE API
- * 
- * ...keep reading...
- * 
- * We need to find a better source than this...
- * ... or the dev can find some wack enpoint and cache, like I did
  */
 const TEAMS_ROOT = `https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams?limit=32`;
 const TEAM_REF = `$ref`;
