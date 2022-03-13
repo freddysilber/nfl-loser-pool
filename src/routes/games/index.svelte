@@ -21,8 +21,10 @@
 
 	session.subscribe((session: Auth) => {
 		Promise.all([
-			axios.get(`${ENV.api}/users/games/${session.profile.id}`, {withCredentials: true}), // Owned games
-			axios.get(`${ENV.api}/games`, {withCredentials: true}), // All Games
+			axios.get(`${ENV.api}/users/games/${session.profile.id}`, {
+				withCredentials: true,
+			}), // Owned games
+			axios.get(`${ENV.api}/games`, { withCredentials: true }), // All Games
 			// axios.get(`${ENV.api}/players/?player=${session.profile.id}`, { withCredentials: true })
 		]).then(([owned, all]) => {
 			ownedGames = owned.data.games;
@@ -30,8 +32,27 @@
 		});
 	});
 
-	function joinGame(gameId: number) {
+	function joinGame(gameId: string) {
 		console.log('join game', gameId);
+	}
+
+	function deleteGame(game: Game) {
+		if (game.ownerId === $session.profile.id) {
+			axios
+				.delete(`${ENV.api}/games/${game.id}`)
+				.then((_) => {
+					// Remove the game from the UI
+					const newOwnedGames = [...ownedGames];
+					newOwnedGames.splice(ownedGames.indexOf(game), 1);
+					ownedGames = newOwnedGames;
+				})
+				.catch((error) => {
+					console.error(error);
+				});
+		} else {
+			// TODO: add this validation in the server code too
+			alert('you cannot delete games you dont own');
+		}
 	}
 
 	function handleCreateGame() {
@@ -101,16 +122,23 @@
 
 <h1>My Games</h1>
 {#each ownedGames as game}
-	<GameCard {game} />
+	<GameCard {game}>
+		<button
+			slot="actions"
+			on:click|stopPropagation={() => deleteGame(game)}
+		>
+			Delete Game
+		</button>
+	</GameCard>
 {/each}
 
 <h1>Other Games</h1>
 {#each allGames as game}
 	{#if game.ownerId !== $session.profile.id}
 		<GameCard {game}>
-			<button slot="join-action" on:click={() => joinGame(game.id)}
-				>Join Game</button
-			>
+			<button slot="actions" on:click={() => joinGame(game.id)}>
+				Join Game
+			</button>
 		</GameCard>
 	{/if}
 	<!-- {#if game.ownerId === $session.profile.id}

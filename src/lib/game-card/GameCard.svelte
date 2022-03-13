@@ -15,7 +15,7 @@
 			<p><span class="label">Description: </span>{game.description}</p>
 			<p><span class="label">Share Id: </span>{game.shareId}</p>
 		</div>
-		<slot name="join-action"></slot>
+		<slot name="actions" />
 	</div>
 {/if}
 
@@ -29,7 +29,7 @@
 			margin: 0;
 		}
 		span.label {
-			color: #eee
+			color: #eee;
 		}
 	}
 </style>

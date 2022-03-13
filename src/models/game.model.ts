@@ -4,7 +4,7 @@ export interface Game {
 	name: string;
 	description: string;
 
-	id?: number;
+	id?: string;
 
 	created_at?: string;
 	shareId?: string;
