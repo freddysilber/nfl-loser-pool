@@ -46,7 +46,6 @@
 			})
 			.then((response: AxiosResponse<Game, any>) => {
 				if (response.data) {
-					newGame = response.data;
 					// Add the game to UI list
 					allGames.push($game);
 					ownedGames.push($game);
