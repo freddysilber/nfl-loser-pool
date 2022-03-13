@@ -10,12 +10,7 @@
 	let ownedGames: Game[] = [];
 	let allGames: Game[] = [];
 	let joinedGames: Game[] = [];
-	let newGame: Game;
 	let error: string;
-	// let error = {
-	// 	show: false,
-	// 	message: 'An Error Occured!',
-	// };
 
 	const { session } = getStores();
 	const game: Writable<Game> = writable({
@@ -25,48 +20,14 @@
 	});
 
 	session.subscribe((session: Auth) => {
-		// console.log(session);
-		// axios.interceptors.request.use(
-		// 	request => {
-		// 		console.log(request, session);
-		// 		request.headers['session-token']= session.profile.password;
-		// 		return request;
-		// 	}
-		// )
-
-		axios
-			.get(`${ENV.api}/users/games/${session.profile.id}`, {
-				withCredentials: true,
-			})
-			.then(({ data }) => {
-				ownedGames = data.games;
-			})
-			.catch((error) => {
-				// Todo: toast error here
-				console.error(error);
-				alert(error);
-			});
-
-		axios
-			.get(`${ENV.api}/games`, { withCredentials: true })
-			.then(({ data }) => {
-				allGames = data.games;
-			})
-			.catch((error) => {
-				// Todo: toast error here
-				error = error;
-				console.error(error);
-				alert(error);
-			});
-
-		// axios
-		// 	.get(`${ENV.api}/players/?player=${session.profile.id}`, { withCredentials: true })
-		// 	.then((response) => {
-		// 		joinedGames = response.data.games;
-		// 	})
-		// 	.catch((error) => {
-		// 		console.error(error);
-		// 	});
+		Promise.all([
+			axios.get(`${ENV.api}/users/games/${session.profile.id}`, {withCredentials: true}), // Owned games
+			axios.get(`${ENV.api}/games`, {withCredentials: true}), // All Games
+			// axios.get(`${ENV.api}/players/?player=${session.profile.id}`, { withCredentials: true })
+		]).then(([owned, all]) => {
+			ownedGames = owned.data.games;
+			allGames = all.data.games;
+		});
 	});
 
 	function joinGame(gameId: number) {
