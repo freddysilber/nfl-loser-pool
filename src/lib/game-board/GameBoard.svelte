@@ -4,7 +4,10 @@
 
 	export let players: string[];
 	// TODO: move this to a more top level component so we dont run this map everytime a board is changed when a user switches between different games
-	const teamNames = teams.map((team) => team.displayName);
+	const teamOptions = teams.map((team) => ({
+		name: team.displayName,
+		value: team.displayName,
+	}));
 
 	const weeks = [...Array(19).keys()];
 </script>
@@ -30,7 +33,7 @@
 					</td>
 					{#each weeks as week}
 						<td>
-							<WeekPicker {week} {player} {teamNames} />
+							<WeekPicker {week} {player} {teamOptions} />
 						</td>
 					{/each}
 					<td />

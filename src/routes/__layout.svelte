@@ -6,10 +6,8 @@
 	import axios from 'axios';
 	import { setSession } from '../session';
 	import '../app.css';
-import Error from '$lib/errors/Error.svelte';
-	// import 'papercss/dist/paper.min.css';
-	// import Button from 'spaper/components/Button.svelte';
-	// import Modal from 'spaper/components/Modal/Modal.svelte';
+	// import Error from '$lib/errors/Error.svelte';
+	import { MaterialApp } from 'svelte-materialify';
 
 	const { session }: any = getStores();
 
@@ -33,24 +31,24 @@ import Error from '$lib/errors/Error.svelte';
 	});
 </script>
 
-<!-- <Button on:click={() => (showModal = true)}>Show</Button>
-<Modal bind:active={showModal} title="Modal Title">
-	<p>Hey!</p>
-	<p>Here is the modal content</p>
-</Modal> -->
+<MaterialApp theme="dark" style="height: 100%">
+	<Header />
 
-<Header />
-
-<main>
-	<!-- {#if $session.authenticated}
+	<main>
+		<!-- {#if $session.authenticated}
 		<p>{$session.profile.name} - {$session.profile.username}</p>
 	{/if} -->
-	<slot />
-</main>
+		<slot />
+	</main>
 
-<footer>
-	<p>created by <a href="https://github.com/freddysilber" target="_blank">Freddy Silber</a></p>
-</footer>
+	<footer>
+		<p>
+			created by <a href="https://github.com/freddysilber" target="_blank"
+				>Freddy Silber</a
+			>
+		</p>
+	</footer>
+</MaterialApp>
 
 <style>
 	main {

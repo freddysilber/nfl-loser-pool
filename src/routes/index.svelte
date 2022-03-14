@@ -7,19 +7,13 @@
 </svelte:head>
 
 <section>
-	<h1>Welcome to the NFL Loser Pool!</h1>
+	<h3>Welcome to the NFL Loser Pool!</h3>
 	<h4>
-		<a href={SCHEDULE_URL} class="schedule-link" target="_blank">
-			NFL Schedule
-		</a>
+		<a href={SCHEDULE_URL} target="_blank"> NFL Schedule </a>
 	</h4>
 </section>
 
 <style lang="scss">
-	a.schedule-link {
-		color: white;
-	}
-
 	section {
 		display: flex;
 		flex-direction: column;

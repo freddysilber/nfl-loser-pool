@@ -5,6 +5,8 @@
 	import Prize from '$lib/prize/Prize.svelte';
 	import ScoreLegend from '$lib/score-legend/ScoreLegend.svelte';
 	import axios from 'axios';
+	import type { Game } from '../../models/game.model';
+	import { Select } from 'svelte-materialify';
 	import { fly } from 'svelte/transition';
 
 	const { session } = getStores();
@@ -20,7 +22,8 @@
 		'Chris',
 	];
 
-	let allGames;
+	let allGames: Game[];
+	let selectedGameId: string;
 
 	// session.subscribe((session: Auth) => {
 	session.subscribe(() => {
@@ -41,11 +44,11 @@
 	});
 
 	// TODO: Cache this stuff
-	function selectGame(gameId: string) {
-		console.log(gameId);
+	function selectGame() {
+		console.log('change event', selectedGameId);
 		// Get game, players and weekly picks to build the game board
 		axios
-			.get(`${ENV.api}/games/${gameId}/players`, {
+			.get(`${ENV.api}/games/${selectedGameId}/players`, {
 				withCredentials: true,
 			})
 			.then((response) => {
@@ -76,14 +79,27 @@
 </div>
 
 {#if allGames}
-	<select on:change={(event) => selectGame(event.currentTarget.value)}>
+	<Select
+		solo
+		items={allGames.map((game) => {
+			console.log(game);
+			return {
+				name: game.name,
+				value: game.id,
+			};
+		})}
+		bind:selectedGameId
+		placeholder="-- SELECT GAME -- (Default to the first game the user ownes)"
+		on:change={selectGame}
+	/>
+	<!-- <select on:change={(event) => selectGame(event.currentTarget.value)}>
 		<option
 			>-- SELECT GAME -- (Default to the first game the user ownes)</option
 		>
 		{#each allGames as game}
 			<option value={game.id}>{game.name}</option>
 		{/each}
-	</select>
+	</select> -->
 {/if}
 
 <GameBoard {players} />

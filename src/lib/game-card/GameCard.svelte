@@ -3,19 +3,24 @@
 
 	export let game: Game;
 
-	function goToGame() {
+	function editGame(): void {
 		console.log(game);
 	}
 </script>
 
 {#if game}
-	<div class="game-card" on:click={goToGame}>
+	<div class="game-card">
 		<div>
 			<p><span class="label">Name: </span>{game.name}</p>
+			<p><span class="label">Id: </span>{game.id}</p>
 			<p><span class="label">Description: </span>{game.description}</p>
 			<p><span class="label">Share Id: </span>{game.shareId}</p>
 		</div>
-		<slot name="actions" />
+		<div>
+			<slot name="actions" />
+			<button on:click={editGame}>Edit Game</button>
+		</div>
+		<!-- <slot>default</slot> -->
 	</div>
 {/if}
 

@@ -3,14 +3,14 @@
 	import { ENV } from '$lib/env';
 	import GameCard from '$lib/game-card/GameCard.svelte';
 	import axios, { AxiosResponse } from 'axios';
+	import { onMount } from 'svelte';
 	import { writable, Writable } from 'svelte/store';
-	import type { Auth } from '../../models/auth.model';
 	import type { Game } from '../../models/game.model';
 
 	let ownedGames: Game[] = [];
 	let allGames: Game[] = [];
-	let joinedGames: Game[] = [];
 	let error: string;
+	let selectedGame: Game;
 
 	const { session } = getStores();
 	const game: Writable<Game> = writable({
@@ -19,21 +19,28 @@
 		ownerId: $session.profile ? $session.profile.id : null,
 	});
 
-	session.subscribe((session: Auth) => {
-		Promise.all([
-			axios.get(`${ENV.api}/users/games/${session.profile.id}`, {
-				withCredentials: true,
-			}), // Owned games
-			axios.get(`${ENV.api}/games`, { withCredentials: true }), // All Games
-			// axios.get(`${ENV.api}/players/?player=${session.profile.id}`, { withCredentials: true })
-		]).then(([owned, all]) => {
-			ownedGames = owned.data.games;
-			allGames = all.data.games;
-		});
+	onMount(() => {
+		if ($session.profile) {
+			Promise.all([
+				axios.get(`${ENV.api}/users/games/${$session.profile.id}`, {
+					withCredentials: true,
+				}), // Owned games
+				axios.get(`${ENV.api}/games`, { withCredentials: true }), // All Games
+				// axios.get(`${ENV.api}/players/?player=${session.profile.id}`, { withCredentials: true })
+			]).then(([owned, all]) => {
+				ownedGames = owned.data.games;
+				allGames = all.data.games;
+			});
+		}
 	});
 
 	function joinGame(gameId: string) {
 		console.log('join game', gameId);
+	}
+
+	function selectGame(game: Game): void {
+		console.log(game);
+		selectedGame = game;
 	}
 
 	function deleteGame(game: Game) {
@@ -68,8 +75,8 @@
 			.then((response: AxiosResponse<Game, any>) => {
 				if (response.data) {
 					// Add the game to UI list
-					allGames.push($game);
-					ownedGames.push($game);
+					allGames.push(response.data);
+					ownedGames.push(response.data);
 					allGames = allGames;
 					ownedGames = ownedGames;
 				}
@@ -85,6 +92,44 @@
 <svelte:head>
 	<title>My Games</title>
 </svelte:head>
+
+<div class="container">
+	<div class="list">
+		<h1>Games List</h1>
+		<ul>
+			{#each allGames as game}
+				<li class="list-item" on:click={() => selectGame(game)}>
+					{game.name}
+				</li>
+			{/each}
+		</ul>
+	</div>
+	<div class="details">
+		<h1>Details</h1>
+		<div style="padding: .25rem;">
+			{#if selectedGame}
+				<GameCard game={selectedGame}>
+					<div slot="actions">
+						{#if selectedGame.ownerId !== $session.profile.id}
+							<button on:click={() => joinGame(selectedGame.id)}>
+								Join Game
+							</button>
+						{:else}
+							<button
+								on:click|stopPropagation={() =>
+									deleteGame(selectedGame)}
+							>
+								Delete Game
+							</button>
+						{/if}
+					</div>
+				</GameCard>
+			{:else}
+				<p>Select a game to view details</p>
+			{/if}
+		</div>
+	</div>
+</div>
 
 <!-- New Game Form -->
 <div class="placeholder-form-div">
@@ -120,46 +165,42 @@
 	</div>
 </div>
 
-<h1>My Games</h1>
-{#each ownedGames as game}
-	<GameCard {game}>
-		<button
-			slot="actions"
-			on:click|stopPropagation={() => deleteGame(game)}
-		>
-			Delete Game
-		</button>
-	</GameCard>
-{/each}
-
-<h1>Other Games</h1>
-{#each allGames as game}
-	{#if game.ownerId !== $session.profile.id}
-		<GameCard {game}>
-			<button slot="actions" on:click={() => joinGame(game.id)}>
-				Join Game
-			</button>
-		</GameCard>
-	{/if}
-	<!-- {#if game.ownerId === $session.profile.id}
-		<GameCard {game} />
-	{:else}
-		<GameCard {game}>
-			<button slot="join-action" on:click={() => joinGame(game.id)}>Join Game</button>
-		</GameCard>
-	{/if} -->
-{/each}
-
-<h1>Joined Games</h1>
-{#each joinedGames as game}
-	<GameCard {game} />
-{/each}
-
 <!-- </Collapsible> -->
 <style lang="scss">
 	form {
 		display: flex;
 		flex-direction: column;
+	}
+
+	div.container {
+		display: flex;
+		border: 1px solid black;
+
+		div.list {
+			width: 25%;
+			border-right: 1px solid black;
+			h1 {
+				text-align: left;
+				border-bottom: 1px solid black;
+				margin: 0;
+			}
+
+			li.list-item {
+				color: #eee;
+				&:hover {
+					cursor: pointer;
+				}
+			}
+		}
+
+		div.details {
+			width: 75%;
+			h1 {
+				text-align: left;
+				border-bottom: 1px solid black;
+				margin: 0;
+			}
+		}
 	}
 
 	div.placeholder-form-div {
