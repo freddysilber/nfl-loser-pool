@@ -42,7 +42,7 @@
 	</main>
 
 	<footer>
-		<p>
+		<p class="blue-text">
 			created by <a href="https://github.com/freddysilber" target="_blank"
 				>Freddy Silber</a
 			>

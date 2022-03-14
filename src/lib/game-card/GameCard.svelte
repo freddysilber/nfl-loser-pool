@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Game } from '../../models/game.model';
+	import { Button } from 'svelte-materialify';
 
 	export let game: Game;
 
@@ -11,14 +12,20 @@
 {#if game}
 	<div class="game-card">
 		<div>
-			<p><span class="label">Name: </span>{game.name}</p>
-			<p><span class="label">Id: </span>{game.id}</p>
-			<p><span class="label">Description: </span>{game.description}</p>
-			<p><span class="label">Share Id: </span>{game.shareId}</p>
+			<p class="amber-text">
+				<span class="label">Name: </span>{game.name}
+			</p>
+			<p class="amber-text"><span class="label">Id: </span>{game.id}</p>
+			<p class="amber-text">
+				<span class="label">Description: </span>{game.description}
+			</p>
+			<p class="amber-text">
+				<span class="label">Share Id: </span>{game.shareId}
+			</p>
 		</div>
 		<div>
 			<slot name="actions" />
-			<button on:click={editGame}>Edit Game</button>
+			<Button class="blue" on:click={editGame}>Edit Game</Button>
 		</div>
 		<!-- <slot>default</slot> -->
 	</div>

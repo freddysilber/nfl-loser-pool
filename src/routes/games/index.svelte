@@ -6,6 +6,7 @@
 	import { onMount } from 'svelte';
 	import { writable, Writable } from 'svelte/store';
 	import type { Game } from '../../models/game.model';
+	import { Button, Textarea, TextField } from 'svelte-materialify';
 
 	let ownedGames: Game[] = [];
 	let allGames: Game[] = [];
@@ -49,9 +50,10 @@
 				.delete(`${ENV.api}/games/${game.id}`)
 				.then((_) => {
 					// Remove the game from the UI
-					const newOwnedGames = [...ownedGames];
-					newOwnedGames.splice(ownedGames.indexOf(game), 1);
-					ownedGames = newOwnedGames;
+					const newAllGames = [...allGames];
+					newAllGames.splice(ownedGames.indexOf(game), 1);
+					allGames = newAllGames;
+					selectedGame = undefined;
 				})
 				.catch((error) => {
 					console.error(error);
@@ -95,7 +97,7 @@
 
 <div class="container">
 	<div class="list">
-		<h1>Games List</h1>
+		<h1 class="white-text">Games List</h1>
 		<ul>
 			{#each allGames as game}
 				<li class="list-item" on:click={() => selectGame(game)}>
@@ -105,27 +107,30 @@
 		</ul>
 	</div>
 	<div class="details">
-		<h1>Details</h1>
+		<h1 class="white-text">Details</h1>
 		<div style="padding: .25rem;">
 			{#if selectedGame}
 				<GameCard game={selectedGame}>
 					<div slot="actions">
 						{#if selectedGame.ownerId !== $session.profile.id}
-							<button on:click={() => joinGame(selectedGame.id)}>
+							<Button
+								class="red"
+								on:click={() => joinGame(selectedGame.id)}
+							>
 								Join Game
-							</button>
+							</Button>
 						{:else}
-							<button
-								on:click|stopPropagation={() =>
-									deleteGame(selectedGame)}
+							<Button
+								class="red"
+								on:click={() => deleteGame(selectedGame)}
 							>
 								Delete Game
-							</button>
+							</Button>
 						{/if}
 					</div>
 				</GameCard>
 			{:else}
-				<p>Select a game to view details</p>
+				<p class="green-text">Select a game to view details</p>
 			{/if}
 		</div>
 	</div>
@@ -133,7 +138,7 @@
 
 <!-- New Game Form -->
 <div class="placeholder-form-div">
-	<h3 class="form-title">Create a new game</h3>
+	<h3 class="white-text form-title">Create a new game</h3>
 	<div class="form-container">
 		{#if error}
 			<p style="color: red;">{error}</p>
@@ -141,9 +146,8 @@
 		<form on:submit|preventDefault={handleCreateGame} method="post">
 			<!-- Name -->
 			<div class="form-group">
-				<input
+				<TextField
 					placeholder="Name"
-					label="Name"
 					type="text"
 					bind:value={$game.name}
 					required
@@ -151,16 +155,14 @@
 			</div>
 			<!-- Description -->
 			<div class="form-group">
-				<textarea
+				<Textarea
+					class="mt-4"
 					placeholder="Description"
-					label="Description"
-					type="text"
 					bind:value={$game.description}
-				/>
+				>
+				</Textarea>
 			</div>
-			<button type="submit" class="btn-success-outline margin-top-small"
-				>Create Game</button
-			>
+			<Button type="submit" class="green mt-4">Create Game</Button>
 		</form>
 	</div>
 </div>

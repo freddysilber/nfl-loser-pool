@@ -64,7 +64,7 @@
 <h1
 	in:fly={{ x: 1000, duration: 1000 }}
 	out:fly={{ x: -1000, duration: 1000 }}
-	class="game-title"
+	class="orange-text game-title"
 >
 	NFL Loser Pool {new Date().getFullYear()}
 </h1>

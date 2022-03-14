@@ -48,7 +48,7 @@
 			<!-- <li class:active={$page.path === "/admin"}><a sveltekit:prefetch href="/admin">Admin</a></li> -->
 			{#each navTabs as tab}
 				<li class:active={$page.path === tab.path}>
-					<a sveltekit:prefetch href={tab.path}>{tab.label}</a>
+					<a sveltekit:prefetch class="teal-text" href={tab.path}>{tab.label}</a>
 				</li>
 			{/each}
 		</ul>
