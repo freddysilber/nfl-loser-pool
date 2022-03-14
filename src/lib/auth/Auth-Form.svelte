@@ -10,6 +10,9 @@
 	// BS => 🐂💩
 	import { setSession, signup, login } from '../../session';
 	import { Routes } from '../../tsbs/router-helper';
+	// Material UI
+	import { TextField, Button } from 'svelte-materialify';
+	//   import { mdiEyeOff, mdiEye } from '@mdi/js';
 
 	const { session } = getStores();
 
@@ -85,63 +88,73 @@
 		<!-- SIGNUP -->
 		{#if isSignUp}
 			<!-- First Name -->
-			<input
+			<TextField
+				dense
+				required
 				placeholder="Name"
-				label="Name"
-				type="text"
 				bind:value={$user.name}
-				required
-			/>
-			<!-- Username -->
-			<input
-				placeholder="Choose a username"
-				label="Username"
 				type="text"
-				autocomplete="username"
-				bind:value={$user.username}
+				class="mb-4"
+			>
+				Name
+			</TextField>
+			<!-- Username -->
+			<TextField
+				dense
 				required
-			/>
+				placeholder="Username"
+				bind:value={$user.username}
+				type="text"
+				class="mb-4"
+			>
+				Username
+			</TextField>
 			<!-- Password -->
-			<input
-				placeholder="Password"
-				label="Password"
+			<TextField
 				type="password"
-				autocomplete="current-password"
 				bind:value={$user.password}
 				required
-			/>
+				placeholder="Password"
+				class="mb-4"
+			>
+				Password
+			</TextField>
 			<!-- Confirm Password -->
-			<input
-				placeholder="Confirm Password"
-				label="Confirm Password"
+			<TextField
 				type="password"
-				autocomplete="current-password"
 				bind:value={confirmPassword}
 				required
-			/>
+				placeholder="Confirm Password"
+				class="mb-4"
+			>
+				Confirm Password
+			</TextField>
 			<!-- LOGIN -->
 		{:else}
 			<!-- Username -->
-			<input
-				placeholder="Username"
-				label="Username"
-				type="text"
-				autocomplete="username"
-				bind:value={$user.username}
+			<TextField
+				dense
 				required
-			/>
-			<!-- Password -->
-			<input
-				placeholder="Password"
-				label="Password"
+				placeholder="Username"
+				bind:value={$user.username}
+				type="text"
+				class="mb-4"
+			>
+				Username
+			</TextField>
+			<!-- Password (class="mb-4" = margin bottom <size>)-->
+			<TextField
 				type="password"
-				autocomplete="current-password"
 				bind:value={$user.password}
 				required
-			/>
+				placeholder="Password"
+				class="mb-4"
+			>
+				Password
+			</TextField>
 		{/if}
 		<!-- Submit -->
-		<button type="submit">{isSignUp ? 'Sign Up!' : 'Log In!'}</button>
+		<Button type="submit" class="green">{isSignUp ? 'Sign Up!' : 'Log In!'}</Button>
 	</form>
 </div>
 

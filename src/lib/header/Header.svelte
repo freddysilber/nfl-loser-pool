@@ -11,6 +11,8 @@
 	import { Routes, RouterHelper } from '../../tsbs/router-helper';
 	// Types
 	import type { NavTab } from '../../models/nav-tab.model';
+	// UI
+	import { Button } from 'svelte-materialify';
 
 	let navTabs: NavTab[] = [];
 
@@ -54,7 +56,7 @@
 
 	<div class="corner" style="justify-content: flex-end;">
 		{#if $session.authenticated}
-			<button on:click={logout}>Logout</button>
+			<Button on:click={logout} size="large" class="orange white-text">Logout</Button>
 		{/if}
 	</div>
 </header>
