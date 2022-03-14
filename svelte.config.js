@@ -1,6 +1,5 @@
 import preprocess from 'svelte-preprocess';
 import vercel from '@sveltejs/adapter-vercel';
-// const pkg = require("./package.json");
 import pkg from './package.json' assert {type: "json"};
 
 /** @type {import('@sveltejs/kit').Config} */

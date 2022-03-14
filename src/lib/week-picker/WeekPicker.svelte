@@ -1,11 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import { Select } from 'svelte-materialify';
-
-	interface SelectOption {
-		name: string;
-		value: string;
-	}
+	import type { SelectOption } from '../../models/select-option.model';
 
 	export let week: number;
 	export let player: string;
@@ -24,7 +20,13 @@
 	}
 </script>
 
-<Select solo items={teamOptions} bind:value  placeholder="Select" on:change={(event => handleSelect(value))}/>
+<Select
+	solo
+	items={teamOptions}
+	bind:value
+	placeholder="Select"
+	on:change={(event) => handleSelect(value)}
+/>
 <!-- <select on:change={(event => handleSelect(event.currentTarget.value))}>
 	<option>Select a team...</option>
 	{#each teamNames as team}
