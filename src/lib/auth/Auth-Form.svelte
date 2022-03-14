@@ -11,8 +11,8 @@
 	import { setSession, signup, login } from '../../session';
 	import { Routes } from '../../tsbs/router-helper';
 	// Material UI
-	import { TextField, Button } from 'svelte-materialify';
-	//   import { mdiEyeOff, mdiEye } from '@mdi/js';
+	import { TextField, Button, Icon } from 'svelte-materialify';
+	import { mdiEyeOff, mdiEye } from '@mdi/js';
 
 	const { session } = getStores();
 
@@ -22,6 +22,7 @@
 	let confirmPassword: string; // Need this at the moment to make sure the NEW user enters the same password twice
 	let showLoginError = false;
 	let loading = false;
+	let show = false;
 
 	const userDetails: User = {
 		username: '',
@@ -144,17 +145,27 @@
 			</TextField>
 			<!-- Password (class="mb-4" = margin bottom <size>)-->
 			<TextField
-				type="password"
+				type={show ? 'text' : 'password'}
 				bind:value={$user.password}
 				required
 				placeholder="Password"
 				class="mb-4"
 			>
 				Password
+				<div
+					slot="append"
+					on:click={() => {
+						show = !show;
+					}}
+				>
+					<Icon path={show ? mdiEyeOff : mdiEye} />
+				</div>
 			</TextField>
 		{/if}
 		<!-- Submit -->
-		<Button type="submit" class="green">{isSignUp ? 'Sign Up!' : 'Log In!'}</Button>
+		<Button type="submit" class="green"
+			>{isSignUp ? 'Sign Up!' : 'Log In!'}</Button
+		>
 	</form>
 </div>
 
