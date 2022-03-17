@@ -43,10 +43,13 @@
 			axios
 				.delete(`${ENV.api}/games/${game.id}`)
 				.then((_) => {
-					
 					// Remove the game from the UI
 					const newAllGames = [...allGames];
-					newAllGames.splice(ownedGames.findIndex((owned) => owned.id === game.id) - 1, 1);
+					newAllGames.splice(
+						ownedGames.findIndex((owned) => owned.id === game.id) -
+							1,
+						1
+					);
 					allGames = newAllGames;
 
 					selectedGame = undefined;
@@ -60,7 +63,8 @@
 		}
 	}
 
-	function createPayload(event: any) { // TODO fix this type
+	function createPayload(event: any) {
+		// TODO fix this type
 		allGames = [...allGames, ...event.detail.payload];
 		ownedGames = [...ownedGames, ...event.detail.payload];
 	}
@@ -118,7 +122,6 @@
 
 <!-- </Collapsible> -->
 <style lang="scss">
-
 	div.container {
 		display: flex;
 		border: 1px solid black;
@@ -149,7 +152,6 @@
 			}
 		}
 	}
-
 
 	div.form-container {
 		align-self: center;
