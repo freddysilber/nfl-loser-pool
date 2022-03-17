@@ -79,10 +79,13 @@
 
 <div class="form-container">
 	{#if showLoginError}
-		<span>
+		<span style="color: red;">
 			Login Failed. Please Make sure your username and password is
 			correct! Or <a href="/sign-up">sign up</a> instead
 		</span>
+		<!-- Temp need some space for form errors -->
+		<br/>
+		<br/>
 	{/if}
 
 	<form on:submit|preventDefault={handleAuth} method="post">

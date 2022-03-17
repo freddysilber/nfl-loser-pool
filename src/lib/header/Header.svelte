@@ -23,12 +23,16 @@
 	});
 
 	async function logout() {
-		await axios.delete(`${ENV.api}/session`, {
-			withCredentials: true,
-		});
-		setSession(null, session);
-		// Navigate back to home after user logs out
-		goto(Routes.Login);
+		if (confirm('Your not gonna be quitter are you?')) {
+			await axios.delete(`${ENV.api}/session`, {
+				withCredentials: true,
+			});
+			setSession(null, session);
+			// Navigate back to home after user logs out
+			goto(Routes.Login);
+		} else {
+			alert('Thanks for not giving up...')
+		}
 	}
 </script>
 

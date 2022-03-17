@@ -95,6 +95,36 @@
 	<title>My Games</title>
 </svelte:head>
 
+<!-- New Game Form -->
+<div class="placeholder-form-div">
+	<h5 class="white-text form-title">Create a new game</h5>
+	<div class="form-container">
+		{#if error}
+			<p style="color: red;">{error}</p>
+		{/if}
+		<form on:submit|preventDefault={handleCreateGame} method="post">
+			<!-- Name -->
+			<div class="form-group">
+				<TextField
+					placeholder="Name"
+					type="text"
+					bind:value={$game.name}
+					required
+				/>
+			</div>
+			<!-- Description -->
+			<div class="form-group">
+				<Textarea
+					class="mt-4"
+					placeholder="Description"
+					bind:value={$game.description}
+				>
+				</Textarea>
+			</div>
+			<Button type="submit" class="green mt-4">Create Game</Button>
+		</form>
+	</div>
+</div>
 <div class="container">
 	<div class="list">
 		<h1 class="white-text">Games List</h1>
@@ -133,37 +163,6 @@
 				<p class="green-text">Select a game to view details</p>
 			{/if}
 		</div>
-	</div>
-</div>
-
-<!-- New Game Form -->
-<div class="placeholder-form-div">
-	<h3 class="white-text form-title">Create a new game</h3>
-	<div class="form-container">
-		{#if error}
-			<p style="color: red;">{error}</p>
-		{/if}
-		<form on:submit|preventDefault={handleCreateGame} method="post">
-			<!-- Name -->
-			<div class="form-group">
-				<TextField
-					placeholder="Name"
-					type="text"
-					bind:value={$game.name}
-					required
-				/>
-			</div>
-			<!-- Description -->
-			<div class="form-group">
-				<Textarea
-					class="mt-4"
-					placeholder="Description"
-					bind:value={$game.description}
-				>
-				</Textarea>
-			</div>
-			<Button type="submit" class="green mt-4">Create Game</Button>
-		</form>
 	</div>
 </div>
 
@@ -212,7 +211,6 @@
 	}
 
 	div.form-container {
-		width: 50%;
 		align-self: center;
 	}
 

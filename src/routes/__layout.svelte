@@ -31,7 +31,9 @@
 	});
 </script>
 
-<MaterialApp theme="dark" style="height: 100%">
+<!-- Leave this.... might make toggleing between light and dark easier... -->
+<!-- <MaterialApp theme="dark" style="height: 100%;"> -->
+<MaterialApp theme="dark">
 	<Header />
 
 	<main>
@@ -40,14 +42,14 @@
 	{/if} -->
 		<slot />
 	</main>
-
+<!-- 
 	<footer>
 		<p class="blue-text">
 			created by <a href="https://github.com/freddysilber" target="_blank"
 				>Freddy Silber</a
 			>
 		</p>
-	</footer>
+	</footer> -->
 </MaterialApp>
 
 <style>
