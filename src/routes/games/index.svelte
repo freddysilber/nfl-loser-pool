@@ -43,13 +43,12 @@
 			axios
 				.delete(`${ENV.api}/games/${game.id}`)
 				.then((_) => {
+					
 					// Remove the game from the UI
 					const newAllGames = [...allGames];
-					const t = ownedGames.findIndex((owned) => owned.id === game.id);
-
 					newAllGames.splice(ownedGames.findIndex((owned) => owned.id === game.id) - 1, 1);
-					// newAllGames.splice(ownedGames.indexOf(game), 1);
 					allGames = newAllGames;
+
 					selectedGame = undefined;
 				})
 				.catch((error) => {
