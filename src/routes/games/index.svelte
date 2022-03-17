@@ -152,12 +152,4 @@
 			}
 		}
 	}
-
-	div.form-container {
-		align-self: center;
-	}
-
-	h3.form-title {
-		text-align: center;
-	}
 </style>
