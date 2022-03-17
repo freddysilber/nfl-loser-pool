@@ -62,8 +62,8 @@
 </svelte:head>
 
 <h1
-	in:fly={{ x: 1000, duration: 1000 }}
-	out:fly={{ x: -1000, duration: 1000 }}
+	in:fly={{ x: 400, duration: 200 }}
+	out:fly={{ x: -400, duration: 200 }}
 	class="orange-text game-title"
 >
 	NFL Loser Pool {new Date().getFullYear()}
