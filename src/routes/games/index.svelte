@@ -125,6 +125,7 @@
 		</form>
 	</div>
 </div>
+<br/>
 <div class="container">
 	<div class="list">
 		<h1 class="white-text">Games List</h1>
@@ -213,14 +214,6 @@
 	div.form-container {
 		align-self: center;
 	}
-
-	// div.modal-content {
-	// 	width: 25vw;
-	// }
-
-	// div.modal-content > p {
-	// 	color: white;
-	// }
 
 	h3.form-title {
 		text-align: center;

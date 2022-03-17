@@ -60,7 +60,7 @@
 
 	<div class="corner" style="justify-content: flex-end;">
 		{#if $session.authenticated}
-			<Button on:click={logout} size="large" class="orange white-text">Logout</Button>
+			<Button on:click={logout} size="large" class="orange white-text ma-1">Logout</Button>
 		{/if}
 	</div>
 </header>

@@ -12,11 +12,11 @@
 </svelte:head>
 
 <div>
-	<p>Profile</p>
+	<p class="white-text">Profile</p>
 	{#if user}
-		<p>Id: {user.id}</p>
-		<p>Name: {user.name}</p>
-		<p>Username: {user.username}</p>
-		<p>Account Created: {new Date(user.createdAt).toUTCString()}</p>
+		<p class="white-text">Id: {user.id}</p>
+		<p class="white-text">Name: {user.name}</p>
+		<p class="white-text">Username: {user.username}</p>
+		<p class="white-text">Account Created: {new Date(user.createdAt).toLocaleDateString()}</p>
 	{/if}
 </div>
