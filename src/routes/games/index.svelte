@@ -1,24 +1,18 @@
 <script lang="ts">
 	import { getStores } from '$app/stores';
+	import CreateGame from '$lib/CreateGame.svelte';
 	import { ENV } from '$lib/env';
 	import GameCard from '$lib/game-card/GameCard.svelte';
-	import axios, { AxiosResponse } from 'axios';
+	import axios from 'axios';
 	import { onMount } from 'svelte';
-	import { writable, Writable } from 'svelte/store';
+	import { Button } from 'svelte-materialify';
 	import type { Game } from '../../models/game.model';
-	import { Button, Textarea, TextField } from 'svelte-materialify';
 
 	let ownedGames: Game[] = [];
 	let allGames: Game[] = [];
-	let error: string;
 	let selectedGame: Game;
 
 	const { session } = getStores();
-	const game: Writable<Game> = writable({
-		name: '',
-		description: '',
-		ownerId: $session.profile ? $session.profile.id : null,
-	});
 
 	onMount(() => {
 		if ($session.profile) {
@@ -51,7 +45,10 @@
 				.then((_) => {
 					// Remove the game from the UI
 					const newAllGames = [...allGames];
-					newAllGames.splice(ownedGames.indexOf(game), 1);
+					const t = ownedGames.findIndex((owned) => owned.id === game.id);
+
+					newAllGames.splice(ownedGames.findIndex((owned) => owned.id === game.id) - 1, 1);
+					// newAllGames.splice(ownedGames.indexOf(game), 1);
 					allGames = newAllGames;
 					selectedGame = undefined;
 				})
@@ -64,30 +61,9 @@
 		}
 	}
 
-	function handleCreateGame() {
-		if (!$game.name || !$game.ownerId) {
-			error = `There is no owner for this game. Are you logged in?`;
-			return;
-		}
-
-		axios
-			.post(`${ENV.api}/games`, $game, {
-				withCredentials: true,
-			})
-			.then((response: AxiosResponse<Game, any>) => {
-				if (response.data) {
-					// Add the game to UI list
-					allGames.push(response.data);
-					ownedGames.push(response.data);
-					allGames = allGames;
-					ownedGames = ownedGames;
-				}
-			})
-			.catch((e) => {
-				if (e.response.status === 401) {
-					error = `${e.message} - ${e.response.statusText} - Make sure you are logged in!`;
-				}
-			});
+	function createPayload(event: any) { // TODO fix this type
+		allGames = [...allGames, ...event.detail.payload];
+		ownedGames = [...ownedGames, ...event.detail.payload];
 	}
 </script>
 
@@ -96,36 +72,10 @@
 </svelte:head>
 
 <!-- New Game Form -->
-<div class="placeholder-form-div">
-	<h5 class="white-text form-title">Create a new game</h5>
-	<div class="form-container">
-		{#if error}
-			<p style="color: red;">{error}</p>
-		{/if}
-		<form on:submit|preventDefault={handleCreateGame} method="post">
-			<!-- Name -->
-			<div class="form-group">
-				<TextField
-					placeholder="Name"
-					type="text"
-					bind:value={$game.name}
-					required
-				/>
-			</div>
-			<!-- Description -->
-			<div class="form-group">
-				<Textarea
-					class="mt-4"
-					placeholder="Description"
-					bind:value={$game.description}
-				>
-				</Textarea>
-			</div>
-			<Button type="submit" class="green mt-4">Create Game</Button>
-		</form>
-	</div>
-</div>
-<br/>
+<CreateGame on:create={createPayload} />
+
+<br />
+
 <div class="container">
 	<div class="list">
 		<h1 class="white-text">Games List</h1>
@@ -169,10 +119,6 @@
 
 <!-- </Collapsible> -->
 <style lang="scss">
-	form {
-		display: flex;
-		flex-direction: column;
-	}
 
 	div.container {
 		display: flex;
@@ -205,11 +151,6 @@
 		}
 	}
 
-	div.placeholder-form-div {
-		border: 1px solid black;
-		border-radius: 10px;
-		padding: 0.25rem;
-	}
 
 	div.form-container {
 		align-self: center;
