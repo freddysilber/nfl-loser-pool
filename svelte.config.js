@@ -1,6 +1,6 @@
 import preprocess from 'svelte-preprocess';
 import vercel from '@sveltejs/adapter-vercel';
-import pkg from './package.json' assert {type: "json"};
+// import pkg from './package.json' assert {type: "json"};
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -18,11 +18,11 @@ const config = {
 		target: '#svelte',
 		adapter: vercel()
 	},
-	vite: {
-		ssr: {
-			noExternal: Object.keys(pkg.dependencies || {}),
-		},
-	},
+	// vite: {
+	// 	ssr: {
+	// 		noExternal: Object.keys(pkg.dependencies || {}),
+	// 	},
+	// },
 };
 
 export default config;
