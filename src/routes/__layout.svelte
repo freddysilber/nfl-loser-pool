@@ -11,8 +11,6 @@
 
 	const { session }: any = getStores();
 
-	// let showModal = false;
-
 	onMount(async () => {
 		if ($session && $session.authenticated) {
 			return; // already have valid session
@@ -34,51 +32,61 @@
 <!-- Leave this.... might make toggleing between light and dark easier... -->
 <!-- <MaterialApp theme="dark" style="height: 100%;"> -->
 <MaterialApp theme="dark">
-	<Header />
+	<div class="app-layout">
+		<Header />
 
-	<main>
-		<!-- {#if $session.authenticated}
-		<p>{$session.profile.name} - {$session.profile.username}</p>
-	{/if} -->
-		<slot />
-	</main>
-<!-- 
-	<footer>
-		<p class="blue-text">
-			created by <a href="https://github.com/freddysilber" target="_blank"
-				>Freddy Silber</a
-			>
-		</p>
-	</footer> -->
+		<main>
+			<!-- {#if $session.authenticated}
+				<p>{$session.profile.name} - {$session.profile.username}</p>
+				{/if} -->
+			<slot />
+		</main>
+
+		<footer>
+			<p class="blue-text">
+				created by <a
+					href="https://github.com/freddysilber"
+					target="_blank">Freddy Silber</a
+				>
+			</p>
+		</footer>
+	</div>
 </MaterialApp>
 
-<style>
-	main {
-		flex: 1;
+<style lang="scss">
+	div.app-layout {
 		display: flex;
 		flex-direction: column;
-		padding: 0.5rem;
-		width: 100%;
-		/* max-width: 1024px; */
-		margin: 0 auto;
-		box-sizing: border-box;
-	}
+		overflow: auto;
+		height: 100%;
 
-	footer {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 40px;
-	}
-
-	footer a {
-		font-weight: bold;
-	}
-
-	@media (min-width: 480px) {
-		footer {
-			padding: 40px 0;
+		main {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			padding: 0.5rem;
+			width: 100%;
+			/* max-width: 1024px; */
+			margin: 0 auto;
+			box-sizing: border-box;
 		}
+
+		footer {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			/* padding: 40px; */
+		}
+
+		footer a {
+			font-weight: bold;
+		}
+		/* 
+		@media (min-width: 480px) {
+			footer {
+				padding: 40px 0;
+			}
+		} */
 	}
 </style>
