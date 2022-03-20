@@ -3,13 +3,15 @@
 	import teams from '$lib/data/nfl-teams.json';
 
 	export let players: string[];
+
+	const weeksInSeason: number = 19;
 	// TODO: move this to a more top level component so we dont run this map everytime a board is changed when a user switches between different games
 	const teamOptions = teams.map((team) => ({
 		name: team.displayName,
 		value: team.displayName,
 	}));
 
-	const weeks = [...Array(19).keys()];
+	const weeks = [...Array(weeksInSeason).keys()];
 </script>
 
 <div>

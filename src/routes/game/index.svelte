@@ -82,7 +82,6 @@
 	<Select
 		solo
 		items={allGames.map((game) => {
-			console.log(game);
 			return {
 				name: game.name,
 				value: game.id,
