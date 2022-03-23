@@ -33,11 +33,6 @@
 		console.log('join game', gameId);
 	}
 
-	function selectGame(game: Game): void {
-		console.log(game);
-		selectedGame = game;
-	}
-
 	function deleteGame(game: Game) {
 		if (game.ownerId === $session.profile.id) {
 			axios
@@ -84,39 +79,42 @@
 		<h1 class="white-text">Games List</h1>
 		<ul>
 			{#each allGames as game}
-				<li class="list-item" on:click={() => selectGame(game)}>
+				<!-- Set Selected Game -->
+				<li
+					class="list-item"
+					on:click={() => (selectedGame = game)}
+				>
 					{game.name}
 				</li>
 			{/each}
 		</ul>
 	</div>
+
 	<div class="details">
 		<h1 class="white-text">Details</h1>
-		<div style="padding: .25rem;">
-			{#if selectedGame}
-				<GameCard game={selectedGame}>
-					<div slot="actions">
-						{#if selectedGame.ownerId !== $session.profile.id}
-							<Button
-								class="red"
-								on:click={() => joinGame(selectedGame.id)}
-							>
-								Join Game
-							</Button>
-						{:else}
-							<Button
-								class="red"
-								on:click={() => deleteGame(selectedGame)}
-							>
-								Delete Game
-							</Button>
-						{/if}
-					</div>
-				</GameCard>
-			{:else}
-				<p class="green-text">Select a game to view details</p>
-			{/if}
-		</div>
+		{#if selectedGame}
+			<GameCard game={selectedGame}>
+				<div slot="actions">
+					{#if selectedGame.ownerId !== $session.profile.id}
+						<Button
+							class="red"
+							on:click={() => joinGame(selectedGame.id)}
+						>
+							Join Game
+						</Button>
+					{:else}
+						<Button
+							class="red"
+							on:click={() => deleteGame(selectedGame)}
+						>
+							Delete Game
+						</Button>
+					{/if}
+				</div>
+			</GameCard>
+		{:else}
+			<p class="green-text">Select a game to view details</p>
+		{/if}
 	</div>
 </div>
 

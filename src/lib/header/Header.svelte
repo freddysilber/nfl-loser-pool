@@ -52,7 +52,13 @@
 			<!-- <li class:active={$page.path === "/admin"}><a sveltekit:prefetch href="/admin">Admin</a></li> -->
 			{#each navTabs as tab}
 				<li class:active={$page.path === tab.path}>
-					<a sveltekit:prefetch class="teal-text" href={tab.path}>{tab.label}</a>
+					<a
+						sveltekit:prefetch
+						class="teal-text"
+						href={tab.path}
+					>
+						{tab.label}
+					</a>
 				</li>
 			{/each}
 		</ul>
@@ -60,7 +66,13 @@
 
 	<div class="corner" style="justify-content: flex-end;">
 		{#if $session.authenticated}
-			<Button on:click={logout} size="large" class="orange white-text ma-1">Logout</Button>
+			<Button
+				on:click={logout}
+				size="large"
+				class="orange white-text ma-1"
+			>
+				Logout
+			</Button>
 		{/if}
 	</div>
 </header>
