@@ -10,6 +10,7 @@
 <style>
 	img {
 		border: none;
+		width: 100%;
 	}
 
 	div.overlay {
@@ -19,14 +20,15 @@
 		width: 100%;
 		height: 100%;
 		background: black;
-		opacity: 0.5;
+		opacity: 0.8;
+		z-index: 1;
 	}
 
 	.lds-ripple {
 		position: absolute;
 		width: 100%;
 		height: calc(100% - 120px);
-		z-index: 1;
+		z-index: 2;
 		display: flex;
 		justify-content: center;
 	}
@@ -34,28 +36,34 @@
 	.lds-ripple div {
 		opacity: 1;
 		border-radius: 50%;
-		animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+		animation: lds-ripple 2s infinite, rotation 3s infinite linear;
 		align-self: center;
-	}
-
-	.lds-ripple div:nth-child(2) {
-		animation-delay: -0.5s;
 	}
 
 	@keyframes lds-ripple {
 		0% {
-			top: 36px;
-			left: 36px;
-			width: 0;
-			height: 0;
+			width: 72px;
+			height: 72px;
+			opacity: 0.6;
+		}
+		50% {
+			width: 92px;
+			height: 92px;
 			opacity: 1;
 		}
 		100% {
-			top: 0px;
-			left: 0px;
 			width: 72px;
 			height: 72px;
-			opacity: 0;
+			opacity: 0.6;
+		}
+	}
+
+	@keyframes rotation {
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(359deg);
 		}
 	}
 </style>
