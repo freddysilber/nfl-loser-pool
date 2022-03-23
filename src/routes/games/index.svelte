@@ -5,12 +5,13 @@
 	import GameCard from '$lib/game-card/GameCard.svelte';
 	import axios from 'axios';
 	import { onMount } from 'svelte';
-	import { Button } from 'svelte-materialify';
+	import { Button, Dialog } from 'svelte-materialify';
 	import type { Game } from '../../models/game.model';
 
 	let ownedGames: Game[] = [];
 	let allGames: Game[] = [];
 	let selectedGame: Game;
+	let showCreateModal = false;
 
 	const { session } = getStores();
 
@@ -62,6 +63,7 @@
 		// TODO fix this type
 		allGames = [...allGames, ...event.detail.payload];
 		ownedGames = [...ownedGames, ...event.detail.payload];
+		showCreateModal = false;
 	}
 </script>
 
@@ -69,8 +71,23 @@
 	<title>My Games</title>
 </svelte:head>
 
-<!-- New Game Form -->
-<CreateGame on:create={createPayload} />
+<Button
+	class="green"
+	on:click={() => showCreateModal = true}
+>
+	New Game
+</Button>
+
+<Dialog
+	class="pa-5"
+	bind:active={showCreateModal}
+	persistent
+>
+	<CreateGame
+		on:create={createPayload}
+		on:cancel={() => showCreateModal = false}
+	/>
+</Dialog>
 
 <br />
 
@@ -80,10 +97,7 @@
 		<ul>
 			{#each allGames as game}
 				<!-- Set Selected Game -->
-				<li
-					class="list-item"
-					on:click={() => (selectedGame = game)}
-				>
+				<li class="list-item" on:click={() => (selectedGame = game)}>
 					{game.name}
 				</li>
 			{/each}

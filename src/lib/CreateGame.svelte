@@ -44,7 +44,7 @@
 </script>
 
 <div class="placeholder-form-div">
-	<h5 class="white-text form-title">Create a new game</h5>
+	<h6 class="white-text form-title mb-4">Create a new game</h6>
 	<div class="form-container">
 		{#if error}
 			<p style="color: red;">{error}</p>
@@ -67,7 +67,17 @@
 					bind:value={$game.description}
 				/>
 			</div>
-			<Button type="submit" class="green mt-4">Create Game</Button>
+			<div class="button-container">
+				<Button on:click={() => dispatch('cancel')} class="red mt-4">Cancel</Button>
+				<Button type="submit" class="green mt-4">Create Game</Button>
+			</div>
 		</form>
 	</div>
 </div>
+
+<style lang="scss">
+	.button-container {
+		display: flex;
+		justify-content: space-between;
+	}
+</style>
