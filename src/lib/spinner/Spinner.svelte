@@ -1,6 +1,7 @@
 <div class="lds-ripple">
 	<div>
-		<img src="static/american-football.png" alt="football spinner" />
+		<img src="/american-football.png" alt="football spinner" />
+		<!-- <img src="static/american-football.png" alt="football spinner" /> -->
 	</div>
 </div>
 

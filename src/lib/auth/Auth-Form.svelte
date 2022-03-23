@@ -84,8 +84,8 @@
 			correct! Or <a href="/sign-up">sign up</a> instead
 		</span>
 		<!-- Temp need some space for form errors -->
-		<br/>
-		<br/>
+		<br />
+		<br />
 	{/if}
 
 	<form on:submit|preventDefault={handleAuth} method="post">
@@ -115,13 +115,21 @@
 			</TextField>
 			<!-- Password -->
 			<TextField
-				type="password"
+				type={show ? 'text' : 'password'}
 				bind:value={$user.password}
 				required
 				placeholder="Password"
 				class="mb-4"
 			>
 				Password
+				<div
+					slot="append"
+					on:click={() => {
+						show = !show;
+					}}
+				>
+					<Icon path={show ? mdiEyeOff : mdiEye} />
+				</div>
 			</TextField>
 			<!-- Confirm Password -->
 			<TextField

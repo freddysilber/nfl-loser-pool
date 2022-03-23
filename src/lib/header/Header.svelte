@@ -54,7 +54,7 @@
 				<li class:active={$page.path === tab.path}>
 					<a
 						sveltekit:prefetch
-						class="teal-text"
+						class="deep-orange-text"
 						href={tab.path}
 					>
 						{tab.label}
