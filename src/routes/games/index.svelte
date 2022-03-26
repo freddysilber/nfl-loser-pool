@@ -28,6 +28,7 @@
 			]).then(([owned, all]) => {
 				ownedGames = owned.data.games;
 				allGames = all.data.games;
+				selectedGame = allGames[0] || undefined;
 			});
 		}
 	});
@@ -57,13 +58,16 @@
 				.then((_) => {
 					// Remove the game from the UI
 					const newAllGames = [...allGames]; // Make a clone that we can manipulate
-					newAllGames.splice(newAllGames.findIndex((owned) => owned.id === game.id), 1); // Remove the item that was deleted from the UI
+					newAllGames.splice(
+						newAllGames.findIndex((owned) => owned.id === game.id),
+						1
+					); // Remove the item that was deleted from the UI
 					allGames = newAllGames; // Set the updated list for re-rendering
 
-					selectedGame = undefined;
+					selectedGame = allGames[0] || undefined;
 				})
 				.catch((error) => {
-					console.error(error);
+					throw new Error(error);
 				});
 		} else {
 			// TODO: add this validation in the server code too
@@ -72,7 +76,7 @@
 	}
 
 	function createPayload(event: any) {
-		// TODO fix this type
+		// TODO fix this type and this logic
 		allGames = [...allGames, ...event.detail.payload];
 		ownedGames = [...ownedGames, ...event.detail.payload];
 		showCreateModal = false;
@@ -83,11 +87,18 @@
 	<title>My Games</title>
 </svelte:head>
 
-<Button class="green" on:click={() => (showCreateModal = true)}>
+<Button
+	class="green"
+	on:click={() => (showCreateModal = true)}
+>
 	New Game
 </Button>
 
-<Dialog class="pa-5" bind:active={showCreateModal} persistent>
+<Dialog
+	persistent
+	class="pa-5"
+	bind:active={showCreateModal}
+>
 	<CreateGame
 		on:create={createPayload}
 		on:cancel={() => (showCreateModal = false)}
@@ -99,14 +110,15 @@
 <div class="container">
 	<div class="list">
 		<h1 class="white-text">Games List</h1>
-		<ul>
-			{#each allGames as game}
-				<!-- Set Selected Game -->
-				<li class="list-item" on:click={() => (selectedGame = game)}>
-					{game.name}
-				</li>
-			{/each}
-		</ul>
+		{#each allGames as game}
+			<div
+				class="list-item"
+				class:selected={selectedGame.id === game.id}
+				on:click={() => (selectedGame = game)}
+			>
+				{game.name}
+			</div>
+		{/each}
 	</div>
 
 	<div class="details">
@@ -152,16 +164,23 @@
 		div.list {
 			width: 25%;
 			border-right: 1px solid black;
+
 			h1 {
 				text-align: left;
 				border-bottom: 1px solid black;
 				margin: 0;
 			}
 
-			li.list-item {
-				color: #eee;
+			.list-item {
+				transition: background-color .5s ease-in-out;
+
 				&:hover {
 					cursor: pointer;
+					background-color: red;
+				}
+
+				&.selected {
+					background-color: red;
 				}
 			}
 		}
