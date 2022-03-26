@@ -157,6 +157,8 @@
 
 <!-- </Collapsible> -->
 <style lang="scss">
+	$selected-color: rgb(0, 162, 202);
+
 	div.container {
 		display: flex;
 		border: 1px solid black;
@@ -172,15 +174,22 @@
 			}
 
 			.list-item {
-				transition: background-color .5s ease-in-out;
+				border-radius: 4px;
+				margin: .1rem;
+				padding: .2rem;
+				transition: background-color .2s ease-in-out;
 
 				&:hover {
 					cursor: pointer;
-					background-color: red;
+					background-color: $selected-color;
+					
+					&:not(.selected) {
+						opacity: .6;
+					}
 				}
 
 				&.selected {
-					background-color: red;
+					background-color: $selected-color;
 				}
 			}
 		}
