@@ -56,9 +56,9 @@
 				.delete(`${ENV.api}/games/${game.id}`)
 				.then((_) => {
 					// Remove the game from the UI
-					const newAllGames = [...allGames];
-					newAllGames.splice(newAllGames.findIndex((owned) => owned.id === game.id), 1);
-					allGames = newAllGames;
+					const newAllGames = [...allGames]; // Make a clone that we can manipulate
+					newAllGames.splice(newAllGames.findIndex((owned) => owned.id === game.id), 1); // Remove the item that was deleted from the UI
+					allGames = newAllGames; // Set the updated list for re-rendering
 
 					selectedGame = undefined;
 				})
