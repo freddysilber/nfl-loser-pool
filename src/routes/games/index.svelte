@@ -4,7 +4,8 @@
 	import { ENV } from '$lib/env';
 	import Error from '$lib/errors/Error.svelte';
 	import GameCard from '$lib/game-card/GameCard.svelte';
-	import { mdiDiscPlayer } from '@mdi/js';
+	import GameList from '$lib/GameList.svelte';
+	// import { mdiDiscPlayer } from '@mdi/js';
 	import axios from 'axios';
 	import { onMount } from 'svelte';
 	import { Button, Dialog } from 'svelte-materialify';
@@ -108,18 +109,10 @@
 <br />
 
 <div class="container">
-	<div class="list">
-		<h1 class="white-text">Games List</h1>
-		{#each allGames as game}
-			<div
-				class="list-item"
-				class:selected={selectedGame.id === game.id}
-				on:click={() => (selectedGame = game)}
-			>
-				{game.name}
-			</div>
-		{/each}
-	</div>
+	<GameList
+		games={allGames}
+		on:select={(game) => selectedGame = game.detail}
+	/>
 
 	<div class="details">
 		<h1 class="white-text">Details</h1>
@@ -157,42 +150,9 @@
 
 <!-- </Collapsible> -->
 <style lang="scss">
-	$selected-color: rgb(0, 162, 202);
-
 	div.container {
 		display: flex;
 		border: 1px solid black;
-
-		div.list {
-			width: 25%;
-			border-right: 1px solid black;
-
-			h1 {
-				text-align: left;
-				border-bottom: 1px solid black;
-				margin: 0;
-			}
-
-			.list-item {
-				border-radius: 4px;
-				margin: .1rem;
-				padding: .2rem;
-				transition: background-color .2s ease-in-out;
-
-				&:hover {
-					cursor: pointer;
-					background-color: $selected-color;
-					
-					&:not(.selected) {
-						opacity: .6;
-					}
-				}
-
-				&.selected {
-					background-color: $selected-color;
-				}
-			}
-		}
 
 		div.details {
 			width: 75%;
