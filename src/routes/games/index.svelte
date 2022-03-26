@@ -2,7 +2,9 @@
 	import { getStores } from '$app/stores';
 	import CreateGame from '$lib/CreateGame.svelte';
 	import { ENV } from '$lib/env';
+	import Error from '$lib/errors/Error.svelte';
 	import GameCard from '$lib/game-card/GameCard.svelte';
+	import { mdiDiscPlayer } from '@mdi/js';
 	import axios from 'axios';
 	import { onMount } from 'svelte';
 	import { Button, Dialog } from 'svelte-materialify';
@@ -31,7 +33,21 @@
 	});
 
 	function joinGame(gameId: string) {
-		console.log('join game', gameId);
+		const player = {
+			gameId,
+			playerId: $session.profile.id,
+		};
+		console.log('player ', player);
+		axios
+			.post(`${ENV.api}/players`, player, {
+				withCredentials: true,
+			})
+			.then((result) => {
+				console.log(result);
+			})
+			.catch((error) => {
+				throw new Error(error);
+			});
 	}
 
 	function deleteGame(game: Game) {
@@ -41,11 +57,7 @@
 				.then((_) => {
 					// Remove the game from the UI
 					const newAllGames = [...allGames];
-					newAllGames.splice(
-						ownedGames.findIndex((owned) => owned.id === game.id) -
-							1,
-						1
-					);
+					newAllGames.splice(newAllGames.findIndex((owned) => owned.id === game.id), 1);
 					allGames = newAllGames;
 
 					selectedGame = undefined;
@@ -71,21 +83,14 @@
 	<title>My Games</title>
 </svelte:head>
 
-<Button
-	class="green"
-	on:click={() => showCreateModal = true}
->
+<Button class="green" on:click={() => (showCreateModal = true)}>
 	New Game
 </Button>
 
-<Dialog
-	class="pa-5"
-	bind:active={showCreateModal}
-	persistent
->
+<Dialog class="pa-5" bind:active={showCreateModal} persistent>
 	<CreateGame
 		on:create={createPayload}
-		on:cancel={() => showCreateModal = false}
+		on:cancel={() => (showCreateModal = false)}
 	/>
 </Dialog>
 
@@ -117,6 +122,12 @@
 							Join Game
 						</Button>
 					{:else}
+						<Button
+							class="blue"
+							on:click={(event) => console.log(event)}
+						>
+							Edit Game
+						</Button>
 						<Button
 							class="red"
 							on:click={() => deleteGame(selectedGame)}

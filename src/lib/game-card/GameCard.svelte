@@ -25,7 +25,6 @@
 		</div>
 		<div>
 			<slot name="actions" />
-			<Button class="blue" on:click={editGame}>Edit Game</Button>
 		</div>
 		<!-- <slot>default</slot> -->
 	</div>
