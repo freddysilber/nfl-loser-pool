@@ -96,7 +96,7 @@
 	class="green"
 	on:click={() => (showCreateModal = true)}
 >
-	New Game
+	New Game +
 </Button>
 
 <Dialog
