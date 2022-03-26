@@ -82,6 +82,10 @@
 		ownedGames = [...ownedGames, ...event.detail.payload];
 		showCreateModal = false;
 	}
+
+	function setSelected(game: Game): void {
+	 	selectedGame = game;
+	}
 </script>
 
 <svelte:head>
@@ -111,7 +115,7 @@
 <div class="container">
 	<GameList
 		games={allGames}
-		on:select={(game) => selectedGame = game.detail}
+		on:select={(game) => setSelected(game.detail)}
 	/>
 
 	<div class="details">
