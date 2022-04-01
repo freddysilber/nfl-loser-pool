@@ -28,13 +28,18 @@
 <style lang="scss">
 	$selected-color: rgb(0, 162, 202);
 
+	// We can use a function to be a bit more dynamic with some styles... subject to change...
+	@function border($size: 1) {
+		@return $size + px solid black;
+	}
+
 	div.list {
 		width: 25%;
-		border-right: 1px solid black;
+		border-right: border();
 
 		h1 {
 			text-align: left;
-			border-bottom: 1px solid black;
+			border-bottom: border(1);
 			margin: 0;
 		}
 
