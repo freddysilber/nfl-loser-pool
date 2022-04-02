@@ -1,205 +1,170 @@
 <script lang="ts">
 	import { getStores } from '$app/stores';
+	import CreateGame from '$lib/CreateGame.svelte';
 	import { ENV } from '$lib/env';
-	import axios, { AxiosResponse } from 'axios';
-	import { writable, Writable } from 'svelte/store';
-
-	import Collapsible from 'spaper/components/Collapsible.svelte';
-	import Button from 'spaper/components/Button.svelte';
-	import Modal from 'spaper/components/Modal/Modal.svelte';
-	import Alert from 'spaper/components/Alert.svelte';
-	import Input from 'spaper/components/Form/Input.svelte';
-
+	import Error from '$lib/errors/Error.svelte';
+	import GameCard from '$lib/game-card/GameCard.svelte';
+	import GameList from '$lib/GameList.svelte';
+	// import { mdiDiscPlayer } from '@mdi/js';
+	import axios from 'axios';
+	import { onMount } from 'svelte';
+	import { Button, Dialog } from 'svelte-materialify';
 	import type { Game } from '../../models/game.model';
-	import type { Auth } from '../../models/auth.model';
 
 	let ownedGames: Game[] = [];
 	let allGames: Game[] = [];
-	let joinedGames: Game[] = [];
-	let showModal = false;
-	let newGame: Game;
-	let error = {
-		show: false,
-		message: 'An Error Occured!',
-	};
+	let selectedGame: Game;
+	let showCreateModal = false;
 
 	const { session } = getStores();
-	const game: Writable<Game> = writable({
-		name: '',
-		description: '',
-		ownerId: $session.profile ? $session.profile.id : null,
+
+	onMount(() => {
+		if ($session.profile) {
+			Promise.all([
+				axios.get(`${ENV.api}/users/games/${$session.profile.id}`, {
+					withCredentials: true,
+				}), // Owned games
+				axios.get(`${ENV.api}/games`, { withCredentials: true }), // All Games
+				// axios.get(`${ENV.api}/players/?player=${session.profile.id}`, { withCredentials: true })
+			]).then(([owned, all]) => {
+				ownedGames = owned.data.games;
+				allGames = all.data.games;
+				selectedGame = allGames[0] || undefined;
+			});
+		}
 	});
 
-	session.subscribe((session: Auth) => {
+	function joinGame(gameId: string) {
+		const player = {
+			gameId,
+			playerId: $session.profile.id,
+		};
+		console.log('player ', player);
 		axios
-			.get(`${ENV.api}/users/games/${session.profile.id}`, {
+			.post(`${ENV.api}/players`, player, {
 				withCredentials: true,
 			})
-			.then(({ data }) => {
-				ownedGames = data.games;
+			.then((result) => {
+				console.log(result);
 			})
 			.catch((error) => {
-				console.error(error);
+				throw new Error(error);
 			});
-
-		axios
-			.get(`${ENV.api}/games`, { withCredentials: true })
-			.then(({ data }) => {
-				console.log(data);
-				allGames = data.games;
-			})
-			.catch((error) => {
-				console.error(error);
-			});
-
-		// axios
-		// 	.get(`${ENV.api}/players/?player=${session.profile.id}`, { withCredentials: true })
-		// 	.then((response) => {
-		// 		joinedGames = response.data.games;
-		// 	})
-		// 	.catch((error) => {
-		// 		console.error(error);
-		// 	});
-	});
-
-	function joinGame(gameId: number) {
-		console.log('join game', gameId);
 	}
 
-	function handleCreateGame() {
-		if (!$game.name || !$game.ownerId) {
-			error.show = true;
-			error.message = `There is no owner for this game. Are you logged in?`;
-			return;
-		}
+	function deleteGame(game: Game) {
+		if (game.ownerId === $session.profile.id) {
+			axios
+				.delete(`${ENV.api}/games/${game.id}`)
+				.then((_) => {
+					// Remove the game from the UI
+					const newAllGames = [...allGames]; // Make a clone that we can manipulate
+					newAllGames.splice(
+						newAllGames.findIndex((owned) => owned.id === game.id),
+						1
+					); // Remove the item that was deleted from the UI
+					allGames = newAllGames; // Set the updated list for re-rendering
 
-		axios
-			.post(`${ENV.api}/games`, $game, {
-				withCredentials: true,
-			})
-			.then((response: AxiosResponse<Game, any>) => {
-				if (response.data) {
-					newGame = response.data;
-					showModal = true;
-				}
-			})
-			.catch((e) => {
-				if (e.response.status === 401) {
-					error.message = `${e.message} - ${e.response.statusText} - Make sure you are logged in!`;
-				}
-				error.show = true;
-			});
+					selectedGame = allGames[0] || undefined;
+				})
+				.catch((error) => {
+					throw new Error(error);
+				});
+		} else {
+			// TODO: add this validation in the server code too
+			alert('you cannot delete games you dont own');
+		}
+	}
+
+	function createPayload(event: any) {
+		// TODO fix this type and this logic
+		allGames = [...allGames, ...event.detail.payload];
+		ownedGames = [...ownedGames, ...event.detail.payload];
+		showCreateModal = false;
+	}
+
+	function setSelected(game: Game): void {
+	 	selectedGame = game;
 	}
 </script>
 
-<!-- New Game Form -->
-<h3 class="form-title">Create a new game</h3>
-<div class="form-container">
-	{#if error.show}
-		<Alert type="danger" dismissible>{error.message}</Alert>
-	{/if}
-	<form on:submit|preventDefault={handleCreateGame} method="post">
-		<!-- Name -->
-		<div class="form-group">
-			<Input
-				placeholder="Name"
-				label="Name"
-				type="text"
-				bind:value={$game.name}
-				block
-				required
-			/>
-		</div>
-		<!-- Description -->
-		<div class="form-group">
-			<Input
-				placeholder="Description"
-				label="Description"
-				type="text"
-				bind:value={$game.description}
-				block
-			/>
-		</div>
-		<button type="submit" class="btn-success-outline margin-top-small"
-			>Create Game</button
-		>
-	</form>
-</div>
-<!-- New Game Modal -->
-<Modal bind:active={showModal} title="New Game - {newGame?.name}">
-	<div class="modal-content">
-		<p>Game Id - {newGame?.id}</p>
-		<p>Name - {newGame?.name}</p>
-		<p>Description - {newGame?.description}</p>
-		<p>Share Key - '{newGame?.id} - {newGame?.name}'</p>
+<svelte:head>
+	<title>My Games</title>
+</svelte:head>
+
+<Button
+	class="green"
+	on:click={() => (showCreateModal = true)}
+>
+	New Game +
+</Button>
+
+<Dialog
+	persistent
+	class="pa-5"
+	bind:active={showCreateModal}
+>
+	<CreateGame
+		on:create={createPayload}
+		on:cancel={() => (showCreateModal = false)}
+	/>
+</Dialog>
+
+<br />
+
+<div class="container">
+	<GameList
+		games={allGames}
+		on:select={(game) => setSelected(game.detail)}
+	/>
+
+	<div class="details">
+		<h1 class="white-text">Details</h1>
+		{#if selectedGame}
+			<GameCard game={selectedGame}>
+				<div slot="actions">
+					{#if selectedGame.ownerId !== $session.profile.id}
+						<Button
+							class="red"
+							on:click={() => joinGame(selectedGame.id)}
+						>
+							Join Game
+						</Button>
+					{:else}
+						<Button
+							class="blue"
+							on:click={(event) => console.log(event)}
+						>
+							Edit Game
+						</Button>
+						<Button
+							class="red"
+							on:click={() => deleteGame(selectedGame)}
+						>
+							Delete Game
+						</Button>
+					{/if}
+				</div>
+			</GameCard>
+		{:else}
+			<p class="green-text">Select a game to view details</p>
+		{/if}
 	</div>
-</Modal>
+</div>
 
-<h1>My Games</h1>
-<Collapsible label="Games I Own">
-	<ol>
-		{#each ownedGames as game}
-			<li>
-				<span class="star">&star;</span>
-				{game.name} - {game.description}
-			</li>
-		{/each}
-	</ol>
-</Collapsible>
-
-<Collapsible label="All Games">
-	<ol>
-		{#each allGames as game}
-			{#if game.ownerId === $session.profile.id}
-				<li>
-					<span class="star">&star;</span>
-					{game.name} - {game.description}
-				</li>
-			{:else}
-				<li style="display: flex;">
-					<span>{game.name} - {game.description}</span>
-					<Button
-						size="small"
-						class="margin-left-small"
-						on:click={() => joinGame(game.id)}>Join Game</Button
-					>
-				</li>
-			{/if}
-		{/each}
-	</ol>
-</Collapsible>
-
-<Collapsible label="Joined Games">
-	<ol>
-		{#each joinedGames as game}
-			<li>{game.name} - {game.description}</li>
-		{/each}
-	</ol>
-</Collapsible>
-
+<!-- </Collapsible> -->
 <style lang="scss">
-	form {
+	div.container {
 		display: flex;
-		flex-direction: column;
-	}
-	span.star {
-		color: pink;
-	}
+		border: 1px solid black;
 
-	div.form-container {
-		width: 50%;
-		align-self: center;
-	}
-
-	div.modal-content {
-		width: 25vw;
-	}
-
-	div.modal-content > p {
-		color: white;
-	}
-
-	h3.form-title {
-		text-align: center;
+		div.details {
+			width: 75%;
+			h1 {
+				text-align: left;
+				border-bottom: 1px solid black;
+				margin: 0;
+			}
+		}
 	}
 </style>

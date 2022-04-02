@@ -6,13 +6,10 @@
 	import axios from 'axios';
 	import { setSession } from '../session';
 	import '../app.css';
-	import 'papercss/dist/paper.min.css';
-	// import Button from 'spaper/components/Button.svelte';
-	// import Modal from 'spaper/components/Modal/Modal.svelte';
+	// import Error from '$lib/errors/Error.svelte';
+	import { MaterialApp } from 'svelte-materialify';
 
 	const { session }: any = getStores();
-
-	// let showModal = false;
 
 	onMount(async () => {
 		if ($session && $session.authenticated) {
@@ -27,61 +24,69 @@
 				setSession(response, session);
 			})
 			.catch((error) => {
-				console.error(error);
+				console.error('THERE IS NO VALID SESSION!!!', error);
 			});
 	});
 </script>
 
-<!-- <Button on:click={() => (showModal = true)}>Show</Button>
-<Modal bind:active={showModal} title="Modal Title">
-	<p>Hey!</p>
-	<p>Here is the modal content</p>
-</Modal> -->
+<!-- Leave this.... might make toggleing between light and dark easier... -->
+<!-- <MaterialApp theme="dark" style="height: 100%;"> -->
+<MaterialApp theme="dark">
+	<div class="app-layout">
+		<Header />
 
-<Header />
+		<main>
+			<!-- {#if $session.authenticated}
+				<p>{$session.profile.name} - {$session.profile.username}</p>
+				{/if} -->
+			<slot />
+		</main>
 
-<main>
-	<!-- {#if $session.authenticated}
-		<p>{$session.profile.name} - {$session.profile.username}</p>
-	{/if} -->
-	<slot />
-</main>
+		<footer>
+			<p class="blue-text">
+				created by <a
+					href="https://github.com/freddysilber"
+					target="_blank">Freddy Silber</a
+				>
+			</p>
+		</footer>
+	</div>
+</MaterialApp>
 
-<footer>
-	<p>
-		created by <a href="https://github.com/freddysilber" target="_blank"
-			>Freddy Silber</a
-		>
-	</p>
-</footer>
-
-<style>
-	main {
-		flex: 1;
+<style lang="scss">
+	div.app-layout {
 		display: flex;
 		flex-direction: column;
-		padding: 0.5rem;
-		width: 100%;
-		/* max-width: 1024px; */
-		margin: 0 auto;
-		box-sizing: border-box;
-	}
+		overflow: auto;
+		height: 100%;
 
-	footer {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 40px;
-	}
-
-	footer a {
-		font-weight: bold;
-	}
-
-	@media (min-width: 480px) {
-		footer {
-			padding: 40px 0;
+		main {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			padding: 0.5rem;
+			width: 100%;
+			/* max-width: 1024px; */
+			margin: 0 auto;
+			box-sizing: border-box;
 		}
+
+		footer {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			/* padding: 40px; */
+		}
+
+		footer a {
+			font-weight: bold;
+		}
+		/* 
+		@media (min-width: 480px) {
+			footer {
+				padding: 40px 0;
+			}
+		} */
 	}
 </style>

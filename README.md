@@ -30,7 +30,7 @@ Once you've created a project and installed dependencies with `npm install` (or 
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte);
 
-## Building
+### Building
 
 Before creating a production version of your app, install an [adapter](https://kit.svelte.dev/docs#adapters) for your target environment. Then:
 
@@ -39,3 +39,9 @@ npm run build
 ```
 
 > You can preview the built app with `npm run preview`, regardless of whether you installed an adapter. This should _not_ be used to serve your app in production.
+
+### Resources
+
+- Api for NFL Teams: https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams
+- ESPN Hidden API (GitHub): https://gist.github.com/akeaswaran/b48b02f1c94f873c6655e7129910fc3b
+- List Of NFL API Enpoints: https://gist.github.com/nntrn/ee26cb2a0716de0947a0a4e9a157bc1c

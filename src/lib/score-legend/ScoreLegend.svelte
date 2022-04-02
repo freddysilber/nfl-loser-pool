@@ -2,11 +2,13 @@
 	<table>
 		<tr class="zero">
 			<th>0 Point</th>
-			<td>Guessed incorrectly or picked the same team twice</td>
+			<td>Guess was was incorrect a duplicate guess</td>
+			<!-- <td>Guessed incorrectly or picked the same team twice</td> -->
 		</tr>
 		<tr class="half">
 			<th>1/2 Point</th>
-			<td>Both teams tied</td>
+			<td>Guess resulted in a tie</td>
+			<!-- <td>Both teams tied</td> -->
 		</tr>
 		<tr class="one">
 			<th>1 Point</th>

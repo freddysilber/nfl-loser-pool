@@ -1,37 +1,35 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
+	import { Select } from 'svelte-materialify';
+	import type { SelectOption } from '../../models/select-option.model';
 
 	export let week: number;
 	export let player: string;
+	export let teamOptions: SelectOption[];
+
+	let value;
 
 	const dispatch = createEventDispatcher();
-	const label: string = 'Pick';
-	const teams: string[] =[
-		'Kansas City Chiefs',
-		'Arizona Cardinals',
-		'Chicago Bears',
-		'Green Bay Packers',
-		"Denver Broncos"
-	];
 
-	function handleSelect(event: any) {
+	function handleSelect(team: string) {
 		dispatch('selectTeam', {
-			team: event.target.value,
+			team,
 			week,
-			player
+			player,
 		});
 	}
 </script>
 
-<select on:change={handleSelect}>
-	<option>{ label } a team...</option>
-	{#each teams as team}
+<Select
+	solo
+	items={teamOptions}
+	bind:value
+	placeholder="Select"
+	on:change={(event) => handleSelect(value)}
+/>
+<!-- <select on:change={(event => handleSelect(event.currentTarget.value))}>
+	<option>Select a team...</option>
+	{#each teamNames as team}
 		<option>{team}</option>
 	{/each}
-</select>
-
-<style>
-	option {
-		font-size: 2em;
-	}
-</style>
+</select> -->

@@ -8,12 +8,16 @@
     "url": "git+https://github.com/freddysilber/nfl-loser-pool.git"
   },
   "scripts": {
+    "------------------ SVELTE ------------------": "",
     "dev": "svelte-kit dev",
     "build": "svelte-kit build",
     "preview": "svelte-kit preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
-    "lint": "eslint --ignore-path .gitignore ."
+    "------------------ LINT ------------------": "",
+    "lint": "eslint --ignore-path .gitignore .",
+    "------------------ NODE ------------------": "",
+    "build:teams": "node tools/teams.js"
   },
   "devDependencies": {
     "@sveltejs/adapter-vercel": "next",
@@ -21,12 +25,15 @@
     "@types/cookie": "^0.4.1",
     "@typescript-eslint/eslint-plugin": "^5.8.0",
     "@typescript-eslint/parser": "^5.8.0",
+    "colors": "^1.4.0",
     "eslint": "^8.5.0",
     "eslint-plugin-svelte3": "^3.2.1",
+    "node-fetch": "^3.2.3",
     "svelte": "^3.44.3",
     "svelte-check": "^2.2.11",
     "svelte-preprocess": "^4.10.1",
     "svelte-toolbox": "^0.6.1",
+    "ts-node": "^10.7.0",
     "tslib": "^2.3.1",
     "typescript": "^4.5.4"
   },
@@ -34,10 +41,10 @@
   "dependencies": {
     "@fontsource/fira-mono": "^4.5.0",
     "@lukeed/uuid": "^2.0.0",
+    "@mdi/js": "^6.5.95",
     "axios": "^0.24.0",
     "cookie": "^0.4.1",
-    "papercss": "^1.8.3",
-    "spaper": "^0.2.6"
+    "svelte-materialify": "^0.3.11"
   },
   "description": "UI for NFL Loser Pool Game",
   "bugs": {

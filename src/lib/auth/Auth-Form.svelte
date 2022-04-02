@@ -1,25 +1,30 @@
 <script lang="ts">
 	import { Writable, writable } from 'svelte/store';
-	import type { AxiosResponse } from 'axios';
 	import { getStores } from '$app/stores';
 	import { goto } from '$app/navigation';
-	
-	import Alert from 'spaper/components/Alert.svelte';
-	import Input from 'spaper/components/Form/Input.svelte';
-	
-	import { setSession, signup, login } from '../../session';
+	// Components
+	import Spinner from '$lib/spinner/Spinner.svelte';
+	// Types
+	import type { AxiosResponse } from 'axios';
 	import type { User } from '../../models/user.model';
+	// BS => 🐂💩
+	import { setSession, signup, login } from '../../session';
+	import { Routes } from '../../tsbs/router-helper';
+	// Material UI
+	import { TextField, Button, Icon } from 'svelte-materialify';
+	import { mdiEyeOff, mdiEye } from '@mdi/js';
 
 	const { session } = getStores();
 
-	export let isSignUp: boolean = true;
+	export let isSignUp = true; // Default to a sign up form
 
-	let user: Writable<User>;
-	let formLabel: string;
-	let showLoginError: boolean = false;
-	let confirmPassword: string;
+	let user: Writable<User>; // User info that we will use to either auth for login or create a new user
+	let confirmPassword: string; // Need this at the moment to make sure the NEW user enters the same password twice
+	let showLoginError = false;
+	let loading = false;
+	let show = false;
 
-	const userDetails = {
+	const userDetails: User = {
 		username: '',
 		password: '',
 	};
@@ -27,31 +32,35 @@
 	if (isSignUp) {
 		userDetails['name'] = '';
 		userDetails['roles'] = [''];
-		formLabel = 'Sign Up!';
 	} else {
 		// Todo: remove these
 		userDetails.username = 'mrsir';
 		userDetails.password = 'password';
-		formLabel = 'Log In!';
 	}
 
 	user = writable(userDetails);
 
-	function handleAuth() {
+	function handleAuth(): void {
+		loading = true;
 		let response: Promise<AxiosResponse>;
+
 		if (isSignUp && validUser()) {
 			response = signup($user);
 		} else {
 			response = login($user);
 		}
+
 		response
 			.then((response) => {
 				setSession(response, session);
-				goto('/game');
+				goto(Routes.Game);
 			})
 			.catch((error) => {
 				console.error(error);
 				showLoginError = true;
+			})
+			.finally(() => {
+				loading = false;
 			});
 	}
 
@@ -64,91 +73,113 @@
 	}
 </script>
 
-<div class="form-container">
+{#if loading}
+	<Spinner />
+{/if}
+
+<div class="form-container d-flex flex-column justify-center">
 	{#if showLoginError}
-		<Alert type="danger" dismissible>
-			<span>Login Failed. Please Make sure your username and password is correct! Or <a href="/sign-up">sign up</a> instead</span>
-		</Alert>
+		<span style="color: red;">
+			Login Failed. Please Make sure your username and password is
+			correct! Or <a href="/sign-up">sign up</a> instead
+		</span>
+		<!-- Temp need some space for form errors -->
+		<br />
+		<br />
 	{/if}
 
 	<form on:submit|preventDefault={handleAuth} method="post">
 		<!-- SIGNUP -->
 		{#if isSignUp}
 			<!-- First Name -->
-			<div class="form-group">
-				<Input
-					placeholder="Name"
-					label="Name"
-					type="text"
-					bind:value={$user.name}
-					block
-					required
-				/>
-			</div>
+			<TextField
+				dense
+				required
+				placeholder="Name"
+				bind:value={$user.name}
+				type="text"
+				class="mb-4"
+			>
+				Name
+			</TextField>
 			<!-- Username -->
-			<div class="form-group">
-				<Input
-					placeholder="Choose a username"
-					label="Username"
-					type="text"
-					autocomplete="username"
-					bind:value={$user.username}
-					block
-					required
-				/>
-			</div>
+			<TextField
+				dense
+				required
+				placeholder="Username"
+				bind:value={$user.username}
+				type="text"
+				class="mb-4"
+			>
+				Username
+			</TextField>
 			<!-- Password -->
-			<div class="form-group">
-				<Input
-					placeholder="Password"
-					label="Password"
-					type="password"
-					autocomplete="current-password"
-					bind:value={$user.password}
-					block
-					required
-				/>
-			</div>
+			<TextField
+				type={show ? 'text' : 'password'}
+				bind:value={$user.password}
+				required
+				placeholder="Password"
+				class="mb-4"
+				autocomplete="password"
+			>
+				Password
+				<div
+					slot="append"
+					on:click={() => {
+						show = !show;
+					}}
+				>
+					<Icon path={show ? mdiEyeOff : mdiEye} />
+				</div>
+			</TextField>
 			<!-- Confirm Password -->
-			<div class="form-group">
-				<Input
-					placeholder="Confirm Password"
-					label="Confirm Password"
-					type="password"
-					autocomplete="current-password"
-					bind:value={confirmPassword}
-					block
-					required
-				/>
-			</div>
+			<TextField
+				type="password"
+				bind:value={confirmPassword}
+				required
+				placeholder="Confirm Password"
+				class="mb-4"
+				autocomplete="password"
+			>
+				Confirm Password
+			</TextField>
 			<!-- LOGIN -->
 		{:else}
 			<!-- Username -->
-			<div class="form-group">
-				<Input
-					placeholder="Username"
-					label="Username"
-					type="text"
-					autocomplete="username"
-					bind:value={$user.username}
-					block
-					required
-				/>
-			</div>
-			<!-- Password -->
-			<div class="form-group">
-				<Input
-					placeholder="Password"
-					label="Password"
-					type="password"
-					autocomplete="current-password"
-					bind:value={$user.password}
-					block
-					required
-				/>
-			</div>
+			<TextField
+				dense
+				required
+				placeholder="Username"
+				bind:value={$user.username}
+				type="text"
+				class="mb-4"
+			>
+				Username
+			</TextField>
+			<!-- Password (class="mb-4" = margin bottom <size>)-->
+			<TextField
+				type={show ? 'text' : 'password'}
+				bind:value={$user.password}
+				required
+				placeholder="Password"
+				class="mb-4"
+				autocomplete="password"
+			>
+				Password
+				<div
+					slot="append"
+					on:click={() => {
+						show = !show;
+					}}
+				>
+					<Icon path={show ? mdiEyeOff : mdiEye} />
+				</div>
+			</TextField>
 		{/if}
-		<button type="submit" class="btn-success-outline margin-top-small">{formLabel}</button>
+		<!-- Submit -->
+		<Button type="submit" class="green"
+			>{isSignUp ? 'Sign Up!' : 'Log In!'}</Button
+		>
 	</form>
 </div>
 
@@ -156,6 +187,7 @@
 	div.form-container {
 		width: 50%;
 		align-self: center;
+		height: 100%;;
 	}
 
 	form {

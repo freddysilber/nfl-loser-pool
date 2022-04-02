@@ -1,13 +1,21 @@
 <script lang="ts">
 	import WeekPicker from '$lib/week-picker/WeekPicker.svelte';
+	import teams from '$lib/data/nfl-teams.json';
 
 	export let players: string[];
 
-	const weeks = [...Array(19).keys()];
+	const weeksInSeason: number = 19;
+	// TODO: move this to a more top level component so we dont run this map everytime a board is changed when a user switches between different games
+	const teamOptions = teams.map((team) => ({
+		name: team.displayName,
+		value: team.displayName,
+	}));
+
+	const weeks = [...Array(weeksInSeason).keys()];
 </script>
 
 <div>
-	<table class="table-hover">
+	<table>
 		<thead>
 			<tr>
 				<th />
@@ -27,7 +35,7 @@
 					</td>
 					{#each weeks as week}
 						<td>
-							<WeekPicker {week} {player} />
+							<WeekPicker {week} {player} {teamOptions} />
 						</td>
 					{/each}
 					<td />

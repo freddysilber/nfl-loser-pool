@@ -1,41 +1,43 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import axios from 'axios';
+	// ENV
 	import { ENV } from '$lib/env';
-	import { setSession } from '../../session';
+	// Svelte
+	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import { getStores } from '$app/stores';
-	import Button from 'spaper/components/Button.svelte'
-	import type { NavTabs } from '../../models/nav-tabs.model';
 
-	let navTabs: NavTabs[] = [];
-	
+	import { setSession } from '../../session';
+	import { Routes, RouterHelper } from '../../tsbs/router-helper';
+	// Types
+	import type { NavTab } from '../../models/nav-tab.model';
+	// UI
+	import { Button, Menu, List, ListItem, Icon } from 'svelte-materialify';
+	// Icons
+	import { mdiMenu } from '@mdi/js';
+	// Transitions
+	import { scale } from 'svelte/transition';
+	import { elasticOut } from 'svelte/easing';
+
+	let navTabs: NavTab[] = [];
+
 	const { session } = getStores();
 
 	session.subscribe((session) => {
-		if (session.authenticated) {
-			navTabs = [
-				{ path: '/', label: 'Home' },
-				{ path: '/rules', label: 'Rules' },
-				{ path: '/game', label: 'Game' },
-				{ path: '/games', label: 'My Games' },
-			];
-		} else {
-			navTabs = [
-				{ path: '/', label: 'Home' },
-				{ path: '/login', label: 'Log In' },
-				{ path: '/sign-up', label: 'Sign Up' },
-			];
-		}
+		navTabs = new RouterHelper().getRoutes(session.authenticated);
 	});
 
 	async function logout() {
-		await axios.delete(`${ENV.api}/session`, {
-			withCredentials: true,
-		});
-		setSession(null, session);
-		// Navigate back to home after user logs out
-		goto('/login');
+		if (confirm('Your not gonna be quitter are you?')) {
+			await axios.delete(`${ENV.api}/session`, {
+				withCredentials: true,
+			});
+			setSession(null, session);
+			// Navigate back to home after user logs out
+			goto(Routes.Login);
+		} else {
+			alert('Thanks for not giving up...');
+		}
 	}
 </script>
 
@@ -55,16 +57,37 @@
 			<!-- <li class:active={$page.path === "/admin"}><a sveltekit:prefetch href="/admin">Admin</a></li> -->
 			{#each navTabs as tab}
 				<li class:active={$page.path === tab.path}>
-					<a sveltekit:prefetch href={tab.path}>{tab.label}</a>
+					<a
+						sveltekit:prefetch
+						class="deep-orange-text"
+						href={tab.path}
+					>
+						{tab.label}
+					</a>
 				</li>
 			{/each}
 		</ul>
 	</nav>
 
 	<div class="corner" style="justify-content: flex-end;">
-		{#if $session.authenticated}
-			<Button outline="warning" on:click={logout}>Logout</Button>
-		{/if}
+		<Menu
+			right
+			transition={scale}
+			inOpts={{ easing: elasticOut, duration: 500 }}
+		>
+			<div slot="activator">
+				<Button icon class="cyan darken-1">
+					<Icon path={mdiMenu} />
+				</Button>
+			</div>
+			<List>
+				{#if $session.authenticated}
+					<ListItem on:click={logout}>Logout</ListItem>
+				{/if}
+				<ListItem>[Option 2]</ListItem>
+				<ListItem>[This is Cool]</ListItem>
+			</List>
+		</Menu>
 	</div>
 </header>
 
@@ -72,6 +95,7 @@
 	header {
 		display: flex;
 		justify-content: space-between;
+		border-bottom: 1px solid white;
 	}
 
 	.corner {
