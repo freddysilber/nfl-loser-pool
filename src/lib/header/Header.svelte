@@ -12,7 +12,12 @@
 	// Types
 	import type { NavTab } from '../../models/nav-tab.model';
 	// UI
-	import { Button } from 'svelte-materialify';
+	import { Button, Menu, List, ListItem, Icon } from 'svelte-materialify';
+	// Icons
+	import { mdiMenu } from '@mdi/js';
+	// Transitions
+	import { scale } from 'svelte/transition';
+	import { elasticOut } from 'svelte/easing';
 
 	let navTabs: NavTab[] = [];
 
@@ -31,7 +36,7 @@
 			// Navigate back to home after user logs out
 			goto(Routes.Login);
 		} else {
-			alert('Thanks for not giving up...')
+			alert('Thanks for not giving up...');
 		}
 	}
 </script>
@@ -65,15 +70,24 @@
 	</nav>
 
 	<div class="corner" style="justify-content: flex-end;">
-		{#if $session.authenticated}
-			<Button
-				on:click={logout}
-				size="large"
-				class="orange white-text ma-1"
-			>
-				Logout
-			</Button>
-		{/if}
+		<Menu
+			right
+			transition={scale}
+			inOpts={{ easing: elasticOut, duration: 500 }}
+		>
+			<div slot="activator">
+				<Button icon class="cyan darken-1">
+					<Icon path={mdiMenu} />
+				</Button>
+			</div>
+			<List>
+				{#if $session.authenticated}
+					<ListItem on:click={logout}>Logout</ListItem>
+				{/if}
+				<ListItem>[Option 2]</ListItem>
+				<ListItem>[This is Cool]</ListItem>
+			</List>
+		</Menu>
 	</div>
 </header>
 
@@ -81,6 +95,7 @@
 	header {
 		display: flex;
 		justify-content: space-between;
+		border-bottom: 1px solid white;
 	}
 
 	.corner {

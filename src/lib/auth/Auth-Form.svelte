@@ -77,7 +77,7 @@
 	<Spinner />
 {/if}
 
-<div class="form-container">
+<div class="form-container d-flex flex-column justify-center">
 	{#if showLoginError}
 		<span style="color: red;">
 			Login Failed. Please Make sure your username and password is
@@ -120,6 +120,7 @@
 				required
 				placeholder="Password"
 				class="mb-4"
+				autocomplete="password"
 			>
 				Password
 				<div
@@ -138,6 +139,7 @@
 				required
 				placeholder="Confirm Password"
 				class="mb-4"
+				autocomplete="password"
 			>
 				Confirm Password
 			</TextField>
@@ -161,6 +163,7 @@
 				required
 				placeholder="Password"
 				class="mb-4"
+				autocomplete="password"
 			>
 				Password
 				<div
@@ -184,6 +187,7 @@
 	div.form-container {
 		width: 50%;
 		align-self: center;
+		height: 100%;;
 	}
 
 	form {
