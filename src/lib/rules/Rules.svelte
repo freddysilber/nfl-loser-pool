@@ -1,4 +1,4 @@
-<div class="rules-container">
+<div class="rules-container d-flex flex-column justify-center">
 	<h4>Rules:</h4>
 	<ol>
 		<li><b>You can only vote for each team ONCE</b></li>
@@ -11,10 +11,8 @@
 
 <style>
 	div.rules-container {
-		display: flex;
-		flex-direction: column;
+		height: 100%;
 		align-self: center;
-		padding: 1rem;
 		font-size: 1.3em;
 	}
 	h4 {
