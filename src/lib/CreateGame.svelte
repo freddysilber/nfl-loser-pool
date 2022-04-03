@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { getStores } from '$app/stores';
 	import { ENV } from '$lib/env';
-	import axios,{ AxiosResponse } from 'axios';
+	import axios from 'axios';
+	import type { AxiosResponse } from 'axios';
 	import { createEventDispatcher } from 'svelte';
-	import { Button,Textarea,TextField } from 'svelte-materialify';
-	import { writable,Writable } from 'svelte/store';
+	import { Button, Textarea, TextField } from 'svelte-materialify';
+	import { writable } from 'svelte/store';
+	import type { Writable } from 'svelte/store';
 	import type { Game } from '../models/game.model';
 
 	let error: any;
@@ -35,7 +37,7 @@
 				}
 			})
 			.catch((e) => {
-				console.error(e)
+				console.error(e);
 				if (e.response.status === 401) {
 					error = `${e.message} - ${e.response.statusText} - Make sure you are logged in!`;
 				}
@@ -68,7 +70,9 @@
 				/>
 			</div>
 			<div class="button-container">
-				<Button on:click={() => dispatch('cancel')} class="red mt-4">Cancel</Button>
+				<Button on:click={() => dispatch('cancel')} class="red mt-4"
+					>Cancel</Button
+				>
 				<Button type="submit" class="green mt-4">Create Game</Button>
 			</div>
 		</form>
