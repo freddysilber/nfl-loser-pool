@@ -8,6 +8,7 @@ export enum Routes {
 	Games = '/games',
 	Signup = '/sign-up',
 	Profile = '/profile',
+	Dashboard = '/dashboard',
 }
 
 const SHARED_ROUTES: NavTabs = [
@@ -30,6 +31,7 @@ export class RouterHelper {
 		return [
 			...SHARED_ROUTES,
 			{ path: Routes.Rules, label: 'Rules' },
+			{ path: Routes.Dashboard, label: 'Dashboard' },
 			{ path: Routes.Game, label: 'Game' },
 			{ path: Routes.Games, label: 'My Games' },
 			{ path: Routes.Profile, label: 'Profile' },
