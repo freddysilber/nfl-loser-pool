@@ -24,7 +24,7 @@
 	const { session }: any = getStores(); // TODO type this better
 
 	session.subscribe((session) => {
-		navTabs = new RouterHelper().getRoutes(session.authenticated);
+		navTabs = RouterHelper.routes(session.authenticated);
 	});
 
 	async function logout() {
