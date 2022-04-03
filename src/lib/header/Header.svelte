@@ -21,7 +21,7 @@
 
 	let navTabs: NavTab[] = [];
 
-	const { session } = getStores();
+	const { session }: any = getStores(); // TODO type this better
 
 	session.subscribe((session) => {
 		navTabs = new RouterHelper().getRoutes(session.authenticated);
@@ -56,7 +56,7 @@
 			<!-- <li class:active={$page.path === "/todos"}><a sveltekit:prefetch href="/todos">Todos</a></li> -->
 			<!-- <li class:active={$page.path === "/admin"}><a sveltekit:prefetch href="/admin">Admin</a></li> -->
 			{#each navTabs as tab}
-				<li class:active={$page.path === tab.path}>
+				<li class:active={$page.url.pathname === tab.path}>
 					<a
 						sveltekit:prefetch
 						class="deep-orange-text"
