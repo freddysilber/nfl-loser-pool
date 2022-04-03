@@ -1,5 +1,6 @@
 import { ENV } from "$lib/env";
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
+import type { AxiosResponse } from 'axios';
 import type { Writable } from "svelte/store";
 import type { User } from './models/user.model';
 

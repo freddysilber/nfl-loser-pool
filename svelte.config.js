@@ -1,6 +1,6 @@
 import preprocess from 'svelte-preprocess';
 import vercel from '@sveltejs/adapter-vercel';
-// import pkg from './package.json' assert {type: "json"};
+// import pkg from './package.json' assert {type: 'json'};
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -9,13 +9,13 @@ const config = {
 	// preprocess: preprocess(),
 	preprocess: preprocess({
 		scss: {
-			includePaths: ["theme"],
+			includePaths: ['theme'],
 		},
 	}),
 
 	kit: {
-		// hydrate the <div id="svelte"> element in src/app.html
-		target: '#svelte',
+		// hydrate the <div id='svelte'> element in src/app.html
+		// target: '#svelte',
 		adapter: vercel()
 	},
 	// vite: {

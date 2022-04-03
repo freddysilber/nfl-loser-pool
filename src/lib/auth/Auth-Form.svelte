@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { Writable, writable } from 'svelte/store';
+	import { writable } from 'svelte/store';
 	import { getStores } from '$app/stores';
 	import { goto } from '$app/navigation';
 	// Components
 	import Spinner from '$lib/spinner/Spinner.svelte';
 	// Types
 	import type { AxiosResponse } from 'axios';
+	import type { Writable } from 'svelte/store';
 	import type { User } from '../../models/user.model';
 	// BS => 🐂💩
 	import { setSession, signup, login } from '../../session';
@@ -187,7 +188,7 @@
 	div.form-container {
 		width: 50%;
 		align-self: center;
-		height: 100%;;
+		height: 100%;
 	}
 
 	form {
