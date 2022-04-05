@@ -68,6 +68,7 @@
 		>
 			Take it easy
 		</Button>
+		
 		<Button
 			class="red"
 			on:click={logout}
