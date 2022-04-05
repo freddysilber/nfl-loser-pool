@@ -64,8 +64,6 @@
 </h1>
 <div class="game-header">
 	<Prize
-		message="some random prop is being passed in!!!"
-		showMessage={false}
 		cash={100}
 		prizeType="Gift Card"
 	/>
