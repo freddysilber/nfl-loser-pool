@@ -8,8 +8,17 @@
 	import '../app.css';
 	// import Error from '$lib/errors/Error.svelte';
 	import { MaterialApp } from 'svelte-materialify';
+	import { goto } from '$app/navigation';
+	import { Routes } from '../tsbs/router-helper';
 
 	const { session }: any = getStores();
+
+	session.subscribe((session) => {
+		console.log('SESSION: ', session);
+		if (!session.authenticated) {
+			// goto(Routes.Home);
+		}
+	});
 
 	onMount(async () => {
 		if ($session && $session.authenticated) {
