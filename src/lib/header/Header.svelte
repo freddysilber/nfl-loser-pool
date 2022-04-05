@@ -119,9 +119,11 @@
 			</div>
 			<List>
 				{#if $session.authenticated}
-					<ListItem on:click={() => (confirmLogout = true)}
-						>Logout</ListItem
+					<ListItem
+						on:click={() => (confirmLogout = true)}
 					>
+						Logout
+					</ListItem>
 				{/if}
 				<ListItem on:click={createGame}>Create Game</ListItem>
 				<ListItem on:click={joinGame}>Join Game</ListItem>
