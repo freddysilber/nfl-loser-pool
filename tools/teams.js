@@ -17,8 +17,8 @@ const DASHES = `-------------------------`;
 // Start the script
 (function start() {
 	console.log(colors.america(`${DASHES} LETS GOO000000000OoOOoooOoOOO ${DASHES}`));
-	console.log(`${DASHES} LETS GET SOME TEAMS!!! 🏈 ${DASHES}`);
-	console.log(colors.green(`${DASHES} Fetching data ${DASHES}`));
+	console.log(`${DASHES} LETS GET SOME TEAMS!!! 🏈 ${DASHES}\n`);
+	console.log(colors.green(`${DASHES} Fetching data ${DASHES}\n`));
 })();
 
 const teams = await fetch(TEAMS_ROOT);
