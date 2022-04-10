@@ -12,8 +12,14 @@ import colors from 'colors';
  */
 const TEAMS_ROOT = `https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams?limit=32`;
 const TEAM_REF = `$ref`;
+const DASHES = `-------------------------`;
+
 // Start the script
-start();
+(function start() {
+	console.log(colors.america(`${DASHES} LETS GOO000000000OoOOoooOoOOO ${DASHES}`));
+	console.log(`${DASHES} LETS GET SOME TEAMS!!! 🏈 ${DASHES}`);
+	console.log(colors.green(`${DASHES} Fetching data ${DASHES}`));
+})();
 
 const teams = await fetch(TEAMS_ROOT);
 const teamList = await teams.json();
@@ -40,15 +46,7 @@ await Promise.all(teamList.items.map((team) => {
 	});
 
 // End the script
-end();
-
-function start() {
-	const dashes = `-------------------------`;
-	console.log(colors.america(`${dashes} LETS GOO000000000OoOOoooOoOOO`));
-	console.log(`${dashes} LETS GET SOME TEAMS!!! 🏈 \n`);
-}
-
-function end() {
-	console.log(colors.blue('Thanks for collecting some NFL data!!'));
-	console.log(`We'll throw this in a file...`);
-}
+(function end() {
+	console.log(colors.blue(`${DASHES} Thanks for collecting some NFL data!! ${DASHES}`));
+	console.log(`${DASHES} We'll throw this in a file, check 'src/lib/data/nfl-teams.json' for results ... ${DASHES}`);
+})();
