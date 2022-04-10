@@ -1,10 +1,14 @@
 /**
  * Gets all the NFL team data and dumps the list of teams into the 'nfl-teams.json' file.
  * In case these endpoints change or stop working, we can have a backup of the teams.
+ * 
+ * This is only here as a fallback and should NEVER be used as a reliable source.
+ * We should find a more stable API for this in the future, but for now, at least there is some somewhat current data stored that we can use.
  */
 import fs from 'fs';
 import fetch from 'node-fetch';
 import colors from 'colors';
+
 /**
  * This is a pretty sketch api... we'll probebly find something new to use...
  * https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams?limit=32
@@ -23,15 +27,18 @@ const DASHES = `-------------------------`;
 
 const teams = await fetch(TEAMS_ROOT);
 const teamList = await teams.json();
+
 // Map each team enpoint to a fetch promise
 await Promise.all(teamList.items.map((team) => {
 	return fetch(team[TEAM_REF])
 }))
 	.then((responses) => Promise.all(responses.map((teamRes) => {
+
 		// Parse each team to json
 		return teamRes.json();
 	})))
 	.then((teams) => {
+
 		// Populate file with data
 		fs.writeFile(
 			'./src/lib/data/nfl-teams.json',
