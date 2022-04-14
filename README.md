@@ -46,3 +46,11 @@ npm run build
 - ESPN Hidden API (GitHub): https://gist.github.com/akeaswaran/b48b02f1c94f873c6655e7129910fc3b
 - List Of NFL API Enpoints: https://gist.github.com/nntrn/ee26cb2a0716de0947a0a4e9a157bc1c
 - check out [npm-run-all](https://www.npmjs.com/package/npm-run-all)
+```json
+// In package.json
+"------------------ EXAMPLE SCRIPT NAMESPACE [DELETE ME LATER] ------------------": "",
+"task:first": "echo first",
+"task:second": "echo second",
+"task": "npm run task:first && npm run task:second",
+"taskk": "npm-run-all task:first task:second"
+```
