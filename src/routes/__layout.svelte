@@ -26,7 +26,7 @@
 			.then((response) => {
 				setSession(response, session);
 
-				if (!session.authenticated) {
+				if (!$session.authenticated) {
 					goto(Routes.Home);
 				}
 			})
