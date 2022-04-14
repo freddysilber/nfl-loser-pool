@@ -15,9 +15,10 @@
 	{#each games as game, index}
 		<div
 			class="list-item"
-			class:selected={selectedGame?.id === game.id || (index === 0 && !selectedGame)}
+			class:selected={selectedGame?.id === game.id ||
+				(index === 0 && !selectedGame)}
 			on:click={() => {
-				dispatch('select', selectedGame = game);
+				dispatch('select', (selectedGame = game));
 			}}
 		>
 			{game.name}
