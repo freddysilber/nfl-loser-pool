@@ -56,25 +56,14 @@
 	}
 </script>
 
-<Dialog
-	bind:active={confirmLogout}
-	class="pa-6"
->
+<Dialog bind:active={confirmLogout} class="pa-6">
 	<h1 class="white-text">Are you sure you want to logout??</h1>
 	<div class="d-flex justify-space-between">
-		<Button
-			class="green"
-			on:click={() => confirmLogout = false}
-		>
+		<Button class="green" on:click={() => (confirmLogout = false)}>
 			Take it easy
 		</Button>
-		
-		<Button
-			class="red"
-			on:click={logout}
-		>
-			Yes, I'm done
-		</Button>
+
+		<Button class="red" on:click={logout}>Yes, I'm done</Button>
 	</div>
 </Dialog>
 
@@ -106,29 +95,29 @@
 		</ul>
 	</nav>
 
-	<div class="corner" style="justify-content: flex-end;">
-		<Menu
-			right
-			transition={scale}
-			inOpts={{ easing: elasticOut, duration: 500 }}
-		>
-			<div slot="activator">
-				<Button icon class="orange">
-					<Icon path={mdiMenu} />
-				</Button>
-			</div>
-			<List>
-				{#if $session.authenticated}
-					<ListItem
-						on:click={() => (confirmLogout = true)}
-					>
-						Logout
-					</ListItem>
-				{/if}
-				<ListItem on:click={createGame}>Create Game</ListItem>
-				<ListItem on:click={joinGame}>Join Game</ListItem>
-			</List>
-		</Menu>
+	<div class="corner justify-end mr-1">
+		{#if $session.authenticated}
+			<Menu
+				right
+				transition={scale}
+				inOpts={{ easing: elasticOut, duration: 500 }}
+			>
+				<div slot="activator">
+					<Button icon class="orange">
+						<Icon path={mdiMenu} />
+					</Button>
+				</div>
+				<List>
+					{#if $session.authenticated}
+						<ListItem on:click={() => (confirmLogout = true)}>
+							Logout
+						</ListItem>
+					{/if}
+					<ListItem on:click={createGame}>Create Game</ListItem>
+					<ListItem on:click={joinGame}>Join Game</ListItem>
+				</List>
+			</Menu>
+		{/if}
 	</div>
 </header>
 
