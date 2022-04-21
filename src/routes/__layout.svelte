@@ -7,9 +7,10 @@
 	import { setSession } from '../session';
 	import '../app.css';
 	// import Error from '$lib/errors/Error.svelte';
-	import { MaterialApp } from 'svelte-materialify';
+	import { MaterialApp, Icon } from 'svelte-materialify';
 	import { goto } from '$app/navigation';
 	import { Routes } from '../tsbs/router-helper';
+	import { mdiGithub } from '@mdi/js';
 
 	const { session }: any = getStores();
 
@@ -54,6 +55,13 @@
 				created by <a
 					href="https://github.com/freddysilber"
 					target="_blank">Freddy Silber</a
+				>
+				<span>|</span>
+				<a
+					href="https://github.com/sponsors/freddysilber"
+					style="color: dodgerblue;"
+					target="_blank"
+					>Support the creator <Icon path={mdiGithub} /></a
 				>
 			</p>
 		</footer>
