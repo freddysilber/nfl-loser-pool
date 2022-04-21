@@ -8,6 +8,8 @@
 	import '../app.css';
 	// import Error from '$lib/errors/Error.svelte';
 	import { MaterialApp } from 'svelte-materialify';
+	import { goto } from '$app/navigation';
+	import { Routes } from '../tsbs/router-helper';
 
 	const { session }: any = getStores();
 
@@ -15,6 +17,7 @@
 		if ($session && $session.authenticated) {
 			return; // already have valid session
 		}
+
 		// validate session-token against server
 		axios
 			.get(`${ENV.api}/session`, {
@@ -22,9 +25,13 @@
 			})
 			.then((response) => {
 				setSession(response, session);
+
+				if (!$session.authenticated) {
+					goto(Routes.Home);
+				}
 			})
-			.catch((error) => {
-				console.error('THERE IS NO VALID SESSION!!!', error);
+			.catch((_) => {
+				goto(Routes.Home);
 			});
 	});
 </script>
@@ -66,7 +73,6 @@
 			flex-direction: column;
 			padding: 0.5rem;
 			width: 100%;
-			/* max-width: 1024px; */
 			margin: 0 auto;
 			box-sizing: border-box;
 		}

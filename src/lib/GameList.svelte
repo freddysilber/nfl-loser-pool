@@ -12,12 +12,13 @@
 
 <div class="list">
 	<h1 class="white-text">Games List</h1>
-	{#each games as game}
+	{#each games as game, index}
 		<div
 			class="list-item"
-			class:selected={selectedGame?.id === game.id}
+			class:selected={selectedGame?.id === game.id ||
+				(index === 0 && !selectedGame)}
 			on:click={() => {
-				dispatch('select', selectedGame = game);
+				dispatch('select', (selectedGame = game));
 			}}
 		>
 			{game.name}

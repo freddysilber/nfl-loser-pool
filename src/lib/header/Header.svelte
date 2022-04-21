@@ -12,34 +12,68 @@
 	// Types
 	import type { NavTab } from '../../models/nav-tab.model';
 	// UI
-	import { Button, Menu, List, ListItem, Icon } from 'svelte-materialify';
+	import {
+		Button,
+		Menu,
+		List,
+		ListItem,
+		Icon,
+		Dialog,
+	} from 'svelte-materialify';
 	// Icons
 	import { mdiMenu } from '@mdi/js';
 	// Transitions
 	import { scale } from 'svelte/transition';
 	import { elasticOut } from 'svelte/easing';
+import CreateGameModal from '$lib/create-game/CreateGameModal.svelte';
 
 	let navTabs: NavTab[] = [];
+	let confirmLogout: boolean = false;
+	let showCreateModal: boolean = false;
 
 	const { session }: any = getStores(); // TODO type this better
 
 	session.subscribe((session) => {
-		navTabs = new RouterHelper().getRoutes(session.authenticated);
+		navTabs = RouterHelper.routes(session.authenticated);
 	});
 
 	async function logout() {
-		if (confirm('Your not gonna be quitter are you?')) {
-			await axios.delete(`${ENV.api}/session`, {
-				withCredentials: true,
-			});
-			setSession(null, session);
-			// Navigate back to home after user logs out
-			goto(Routes.Login);
-		} else {
-			alert('Thanks for not giving up...');
-		}
+		await axios.delete(`${ENV.api}/session`, {
+			withCredentials: true,
+		});
+
+		setSession(null, session);
+
+		goto(Routes.Home);
+
+		confirmLogout = false;
+	}
+
+	function createGame(): void {
+		console.log('create game');
+		showCreateModal = true;
+	}
+
+	function joinGame(): void {
+		console.log('join game');
 	}
 </script>
+
+<Dialog bind:active={confirmLogout} class="pa-6">
+	<h1 class="white-text">Are you sure you want to logout??</h1>
+	<div class="d-flex justify-space-between">
+		<Button class="green" on:click={() => (confirmLogout = false)}>
+			Take it easy
+		</Button>
+
+		<Button class="red" on:click={logout}>Yes, I'm done</Button>
+	</div>
+</Dialog>
+
+<CreateGameModal
+	{showCreateModal}
+	on:submit={() => showCreateModal = false}
+/>
 
 <header>
 	<div class="corner">
@@ -69,25 +103,29 @@
 		</ul>
 	</nav>
 
-	<div class="corner" style="justify-content: flex-end;">
-		<Menu
-			right
-			transition={scale}
-			inOpts={{ easing: elasticOut, duration: 500 }}
-		>
-			<div slot="activator">
-				<Button icon class="cyan darken-1">
-					<Icon path={mdiMenu} />
-				</Button>
-			</div>
-			<List>
-				{#if $session.authenticated}
-					<ListItem on:click={logout}>Logout</ListItem>
-				{/if}
-				<ListItem>[Option 2]</ListItem>
-				<ListItem>[This is Cool]</ListItem>
-			</List>
-		</Menu>
+	<div class="corner justify-end mr-1">
+		{#if $session.authenticated}
+			<Menu
+				right
+				transition={scale}
+				inOpts={{ easing: elasticOut, duration: 500 }}
+			>
+				<div slot="activator">
+					<Button icon class="orange">
+						<Icon path={mdiMenu} />
+					</Button>
+				</div>
+				<List>
+					{#if $session.authenticated}
+						<ListItem on:click={() => (confirmLogout = true)}>
+							Logout
+						</ListItem>
+					{/if}
+					<ListItem on:click={createGame}>Create Game</ListItem>
+					<ListItem on:click={joinGame}>Join Game</ListItem>
+				</List>
+			</Menu>
+		{/if}
 	</div>
 </header>
 

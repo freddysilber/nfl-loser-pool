@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getStores } from '$app/stores';
-	import CreateGame from '$lib/CreateGame.svelte';
+	import CreateGameModal from '$lib/create-game/CreateGameModal.svelte';
 	import { ENV } from '$lib/env';
 	import Error from '$lib/errors/Error.svelte';
 	import GameCard from '$lib/game-card/GameCard.svelte';
@@ -72,19 +72,20 @@
 				});
 		} else {
 			// TODO: add this validation in the server code too
-			alert('you cannot delete games you dont own');
+			alert("you cannot delete games you don't own");
 		}
 	}
 
-	function createPayload(event: any) {
-		// TODO fix this type and this logic
-		allGames = [...allGames, ...event.detail.payload];
-		ownedGames = [...ownedGames, ...event.detail.payload];
+	function handleSuccess(event: CustomEvent) {
+		console.log('success', event)
+		const game: Game = event.detail.game;
+		allGames = [...allGames, ...[game]];
+		ownedGames = [...ownedGames, ...[game]];
 		showCreateModal = false;
 	}
 
 	function setSelected(game: Game): void {
-	 	selectedGame = game;
+		selectedGame = game;
 	}
 </script>
 
@@ -92,31 +93,16 @@
 	<title>My Games</title>
 </svelte:head>
 
-<Button
-	class="green"
-	on:click={() => (showCreateModal = true)}
->
+<Button class="green" on:click={() => (showCreateModal = true)}>
 	New Game +
 </Button>
 
-<Dialog
-	persistent
-	class="pa-5"
-	bind:active={showCreateModal}
->
-	<CreateGame
-		on:create={createPayload}
-		on:cancel={() => (showCreateModal = false)}
-	/>
-</Dialog>
+<CreateGameModal bind:showCreateModal on:submit={handleSuccess} />
 
 <br />
 
 <div class="container">
-	<GameList
-		games={allGames}
-		on:select={(game) => setSelected(game.detail)}
-	/>
+	<GameList games={allGames} on:select={(game) => setSelected(game.detail)} />
 
 	<div class="details">
 		<h1 class="white-text">Details</h1>

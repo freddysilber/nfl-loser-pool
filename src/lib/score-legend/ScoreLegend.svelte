@@ -1,50 +1,38 @@
-<div>
-	<table>
-		<tr class="zero">
-			<th>0 Point</th>
-			<td>Guess was was incorrect a duplicate guess</td>
-			<!-- <td>Guessed incorrectly or picked the same team twice</td> -->
-		</tr>
-		<tr class="half">
-			<th>1/2 Point</th>
-			<td>Guess resulted in a tie</td>
-			<!-- <td>Both teams tied</td> -->
-		</tr>
-		<tr class="one">
-			<th>1 Point</th>
-			<td>Guessed the losing team but the wrong point spread</td>
-		</tr>
-		<tr class="two">
-			<th>2 Points</th>
-			<td>Guessed the losing team and point spread correctly</td>
-		</tr>
-	</table>
+<script>
+	import { Tooltip } from 'svelte-materialify';
+
+	const legendItems = [
+		{ class: 'zero', content: '0 Points - Guess was was incorrect or was a duplicate guess' },
+		{ class: 'half', content: '1/2 Point - Guess resulted in a tie' },
+		{ class: 'one', content: '1 Point - Guessed the losing team but the wrong point spread' },
+		{ class: 'two', content: '2 Points - Guessed the losing team and point spread correctly!' },
+	];
+</script>
+
+<div class="d-flex">
+	{#each legendItems as item}
+	<Tooltip top>
+		<div class="{item.class} legend-item"></div>
+		<span slot="tip">{item.content}</span>
+	</Tooltip>
+	{/each}
 </div>
 
 <style>
-	table {
-		border-collapse: collapse;
-		width: 100%;
-	}
-	td,
-	th {
-		text-align: left;
-		padding: 8px;
-	}
-
-	tr {
-		color: black
-	}
-	tr.zero {
+	.zero {
 		background: red;
 	}
-	tr.half {
+	.half {
 		background: lightskyblue;
 	}
-	tr.one {
+	.one {
 		background: yellow;
 	}
-	tr.two {
+	.two {
 		background: lightgreen;
+	}
+	.legend-item {
+		height: 100%;
+		width: 60px;
 	}
 </style>

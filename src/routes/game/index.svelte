@@ -11,7 +11,6 @@
 
 	const { session } = getStores();
 
-	// These will come from the api as 'players'
 	const players = [
 		'Freddy',
 		'Lydia',
@@ -25,7 +24,6 @@
 	let allGames: Game[];
 	let selectedGameId: string;
 
-	// session.subscribe((session: Auth) => {
 	session.subscribe(() => {
 		axios
 			.get(`${ENV.api}/games`, {
@@ -33,10 +31,6 @@
 			})
 			.then(({ data }) => {
 				allGames = data.games;
-
-				console.log({
-					allGames,
-				});
 			})
 			.catch((error) => {
 				console.error(error);
@@ -70,8 +64,6 @@
 </h1>
 <div class="game-header">
 	<Prize
-		message="some random prop is being passed in!!!"
-		showMessage={false}
 		cash={100}
 		prizeType="Gift Card"
 	/>
@@ -91,14 +83,6 @@
 		placeholder="-- SELECT GAME -- (Default to the first game the user ownes)"
 		on:change={selectGame}
 	/>
-	<!-- <select on:change={(event) => selectGame(event.currentTarget.value)}>
-		<option
-			>-- SELECT GAME -- (Default to the first game the user ownes)</option
-		>
-		{#each allGames as game}
-			<option value={game.id}>{game.name}</option>
-		{/each}
-	</select> -->
 {/if}
 
 <GameBoard {players} />
@@ -111,6 +95,5 @@
 	div.game-header {
 		display: flex;
 		justify-content: space-between;
-		margin-bottom: 0.25rem;
 	}
 </style>

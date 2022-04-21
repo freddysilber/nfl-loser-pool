@@ -8,6 +8,7 @@ export enum Routes {
 	Games = '/games',
 	Signup = '/sign-up',
 	Profile = '/profile',
+	Dashboard = '/dashboard',
 }
 
 const SHARED_ROUTES: NavTabs = [
@@ -18,11 +19,11 @@ export class RouterHelper {
 	/**
 	 * TODO: add some admin routes
 	 */
-	public getRoutes(isAuthenticated: boolean): NavTabs {
+	public static routes(isAuthenticated: boolean): NavTabs {
 		if (isAuthenticated) {
-			return this._getAuthenticatedRoutes(/* isAdmin {boolean} */);
+			return RouterHelper.getAuthenticatedRoutes()
 		} else {
-			return this._getUnAuthenticatedRoutes();
+			return RouterHelper.getUnAuthenticatedRoutes();
 		}
 	}
 
@@ -30,6 +31,7 @@ export class RouterHelper {
 		return [
 			...SHARED_ROUTES,
 			{ path: Routes.Rules, label: 'Rules' },
+			{ path: Routes.Dashboard, label: 'Dashboard' },
 			{ path: Routes.Game, label: 'Game' },
 			{ path: Routes.Games, label: 'My Games' },
 			{ path: Routes.Profile, label: 'Profile' },
@@ -42,13 +44,5 @@ export class RouterHelper {
 			{ path: Routes.Login, label: 'Log In' },
 			{ path: Routes.Signup, label: 'Sign Up' },
 		];
-	}
-
-	private _getAuthenticatedRoutes(): NavTabs {
-		return RouterHelper.getAuthenticatedRoutes();
-	}
-
-	private _getUnAuthenticatedRoutes(): NavTabs {
-		return RouterHelper.getUnAuthenticatedRoutes();
 	}
 }
