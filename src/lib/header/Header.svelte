@@ -25,9 +25,11 @@
 	// Transitions
 	import { scale } from 'svelte/transition';
 	import { elasticOut } from 'svelte/easing';
+import CreateGameModal from '$lib/create-game/CreateGameModal.svelte';
 
 	let navTabs: NavTab[] = [];
 	let confirmLogout: boolean = false;
+	let showCreateModal: boolean = false;
 
 	const { session }: any = getStores(); // TODO type this better
 
@@ -49,6 +51,7 @@
 
 	function createGame(): void {
 		console.log('create game');
+		showCreateModal = true;
 	}
 
 	function joinGame(): void {
@@ -66,6 +69,11 @@
 		<Button class="red" on:click={logout}>Yes, I'm done</Button>
 	</div>
 </Dialog>
+
+<CreateGameModal
+	{showCreateModal}
+	on:submit={() => showCreateModal = false}
+/>
 
 <header>
 	<div class="corner">
