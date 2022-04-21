@@ -6,7 +6,6 @@
 	import axios from 'axios';
 	import { setSession } from '../session';
 	import '../app.css';
-	// import Error from '$lib/errors/Error.svelte';
 	import { MaterialApp, Icon } from 'svelte-materialify';
 	import { goto } from '$app/navigation';
 	import { Routes } from '../tsbs/router-helper';
@@ -37,16 +36,11 @@
 	});
 </script>
 
-<!-- Leave this.... might make toggleing between light and dark easier... -->
-<!-- <MaterialApp theme="dark" style="height: 100%;"> -->
 <MaterialApp theme="dark">
 	<div class="app-layout">
 		<Header />
 
 		<main>
-			<!-- {#if $session.authenticated}
-				<p>{$session.profile.name} - {$session.profile.username}</p>
-				{/if} -->
 			<slot />
 		</main>
 
@@ -91,17 +85,10 @@
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
-			/* padding: 40px; */
 		}
 
 		footer a {
 			font-weight: bold;
 		}
-		/* 
-		@media (min-width: 480px) {
-			footer {
-				padding: 40px 0;
-			}
-		} */
 	}
 </style>
