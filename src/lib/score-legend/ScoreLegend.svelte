@@ -9,13 +9,15 @@
 	];
 </script>
 
-<div class="d-flex">
-	{#each legendItems as item}
-	<Tooltip top>
-		<div class="{item.class} legend-item"></div>
-		<span slot="tip">{item.content}</span>
-	</Tooltip>
-	{/each}
+<div class="d-flex flex-column justify-center">
+	<div class="d-flex">
+		{#each legendItems as item}
+		<Tooltip top>
+			<div class="{item.class} legend-item"></div>
+			<span slot="tip">{item.content}</span>
+		</Tooltip>
+		{/each}
+	</div>
 </div>
 
 <style>
@@ -32,7 +34,7 @@
 		background: lightgreen;
 	}
 	.legend-item {
-		height: 100%;
+		height: 12.5px;
 		width: 60px;
 	}
 </style>
