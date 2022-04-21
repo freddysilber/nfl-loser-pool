@@ -95,6 +95,5 @@
 	div.game-header {
 		display: flex;
 		justify-content: space-between;
-		margin-bottom: 0.25rem;
 	}
 </style>
