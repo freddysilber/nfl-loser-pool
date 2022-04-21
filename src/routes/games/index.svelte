@@ -5,11 +5,11 @@
 	import Error from '$lib/errors/Error.svelte';
 	import GameCard from '$lib/game-card/GameCard.svelte';
 	import GameList from '$lib/GameList.svelte';
-	// import { mdiDiscPlayer } from '@mdi/js';
 	import axios from 'axios';
 	import { onMount } from 'svelte';
-	import { Button, Dialog } from 'svelte-materialify';
+	import { Button, Icon } from 'svelte-materialify';
 	import type { Game } from '../../models/game.model';
+	import { mdiDelete, mdiPencil, mdiPlus } from '@mdi/js';
 
 	let ownedGames: Game[] = [];
 	let allGames: Game[] = [];
@@ -77,7 +77,7 @@
 	}
 
 	function handleSuccess(event: CustomEvent) {
-		console.log('success', event)
+		console.log('success', event);
 		const game: Game = event.detail.game;
 		allGames = [...allGames, ...[game]];
 		ownedGames = [...ownedGames, ...[game]];
@@ -94,12 +94,10 @@
 </svelte:head>
 
 <Button class="green" on:click={() => (showCreateModal = true)}>
-	New Game +
+	New Game <Icon path={mdiPlus} />
 </Button>
 
 <CreateGameModal bind:showCreateModal on:submit={handleSuccess} />
-
-<br />
 
 <div class="container">
 	<GameList games={allGames} on:select={(game) => setSelected(game.detail)} />
@@ -121,13 +119,13 @@
 							class="blue"
 							on:click={(event) => console.log(event)}
 						>
-							Edit Game
+							Edit Game <Icon path={mdiPencil} />
 						</Button>
 						<Button
 							class="red"
 							on:click={() => deleteGame(selectedGame)}
 						>
-							Delete Game
+							Delete Game <Icon path={mdiDelete} />
 						</Button>
 					{/if}
 				</div>

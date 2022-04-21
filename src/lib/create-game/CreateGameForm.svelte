@@ -4,10 +4,11 @@
 	import axios from 'axios';
 	import type { AxiosResponse } from 'axios';
 	import { createEventDispatcher } from 'svelte';
-	import { Button, Textarea, TextField } from 'svelte-materialify';
+	import { Button, Textarea, TextField, Icon } from 'svelte-materialify';
 	import { writable } from 'svelte/store';
 	import type { Writable } from 'svelte/store';
 	import type { Game } from '../models/game.model';
+	import { mdiCheckAll, mdiCancel } from '@mdi/js';
 
 	let error: any;
 
@@ -71,9 +72,11 @@
 			</div>
 			<div class="button-container">
 				<Button on:click={() => dispatch('cancel')} class="red mt-4"
-					>Cancel</Button
+					>Cancel <Icon path={mdiCancel} /></Button
 				>
-				<Button type="submit" class="green mt-4">Create Game</Button>
+				<Button type="submit" class="green mt-4"
+					>Create Game <Icon path={mdiCheckAll} /></Button
+				>
 			</div>
 		</form>
 	</div>

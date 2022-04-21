@@ -52,7 +52,7 @@
 
 		<footer>
 			<p class="blue-text">
-				created by <a
+				Created by <a
 					href="https://github.com/freddysilber"
 					target="_blank">Freddy Silber</a
 				>
@@ -61,6 +61,7 @@
 					href="https://github.com/sponsors/freddysilber"
 					style="color: dodgerblue;"
 					target="_blank"
+					class="amber-text"
 					>Support the creator <Icon path={mdiGithub} /></a
 				>
 			</p>
