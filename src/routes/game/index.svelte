@@ -58,10 +58,11 @@
 <h1
 	in:fly={{ x: 400, duration: 200 }}
 	out:fly={{ x: -400, duration: 200 }}
-	class="orange-text game-title"
+	class="orange-text text-h4"
 >
 	NFL Loser Pool {new Date().getFullYear()}
 </h1>
+
 <div class="game-header">
 	<Prize
 		cash={100}
@@ -88,10 +89,6 @@
 <GameBoard {players} />
 
 <style>
-	h1.game-title {
-		font-size: 1.75em;
-	}
-
 	div.game-header {
 		display: flex;
 		justify-content: space-between;
