@@ -1,20 +1,19 @@
 <script lang="ts">
 	import { getStores } from '$app/stores';
 	import { ENV } from '$lib/env';
-	import axios from 'axios';
-	import type { AxiosResponse } from 'axios';
+	import axios, { type AxiosError, type AxiosResponse } from 'axios';
 	import { createEventDispatcher } from 'svelte';
 	import { Button, Textarea, TextField, Icon } from 'svelte-materialify';
 	import { writable } from 'svelte/store';
 	import type { Writable } from 'svelte/store';
-	import type { Game } from '../models/game.model';
+	import type { Game } from '../../models/game.model';
 	import { mdiCheckAll, mdiCancel } from '@mdi/js';
 
-	let error: any;
+	let error: string;
 
 	const { session } = getStores();
 	const dispatch = createEventDispatcher();
-	const game: Writable<Game> = writable({
+	const game: Writable<Game> = writable<Game>({
 		name: '',
 		description: '',
 		ownerId: $session.profile ? $session.profile.id : null,
@@ -37,7 +36,7 @@
 					});
 				}
 			})
-			.catch((e) => {
+			.catch((e: AxiosError<AxiosResponse>) => {
 				console.error(e);
 				if (e.response.status === 401) {
 					error = `${e.message} - ${e.response.statusText} - Make sure you are logged in!`;

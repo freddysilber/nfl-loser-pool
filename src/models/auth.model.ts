@@ -1,5 +1,5 @@
 export interface AuthProfile {
-	id: number;
+	id: string;
 
 	name: string;
 	username: string;

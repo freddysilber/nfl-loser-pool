@@ -7,14 +7,16 @@
 	import GameList from '$lib/GameList.svelte';
 	import axios from 'axios';
 	import { onMount } from 'svelte';
-	import { Button, Icon } from 'svelte-materialify';
+	import { Alert, Button, Icon } from 'svelte-materialify';
 	import type { Game } from '../../models/game.model';
-	import { mdiDelete, mdiPencil, mdiPlus } from '@mdi/js';
+	import { mdiDelete, mdiPencil, mdiPlus, mdiAlert } from '@mdi/js';
 
 	let ownedGames: Game[] = [];
 	let allGames: Game[] = [];
 	let selectedGame: Game;
 	let showCreateModal = false;
+	let showErrorAlert = false;
+	let errorMessage: string;
 
 	const { session } = getStores();
 
@@ -48,7 +50,8 @@
 				console.log(result);
 			})
 			.catch((error) => {
-				throw new Error(error);
+				errorMessage = `${error.message} - You probably already joined this game`;
+				showErrorAlert = true;
 			});
 	}
 
@@ -90,8 +93,21 @@
 </script>
 
 <svelte:head>
-	<title>My Games</title>
+	<title>Game Dashboard</title>
 </svelte:head>
+
+<Alert
+	class="error-color"
+	border="left"
+	dismissible
+	bind:visible={showErrorAlert}
+	on:dismiss={() => (showErrorAlert = false)}
+>
+	<div slot="icon">
+		<Icon path={mdiAlert} />
+	</div>
+	{errorMessage}
+</Alert>
 
 <Button class="green" on:click={() => (showCreateModal = true)}>
 	New Game <Icon path={mdiPlus} />

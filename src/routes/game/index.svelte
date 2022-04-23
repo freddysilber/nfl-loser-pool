@@ -4,7 +4,7 @@
 	import GameBoard from '$lib/game-board/GameBoard.svelte';
 	import Prize from '$lib/prize/Prize.svelte';
 	import ScoreLegend from '$lib/score-legend/ScoreLegend.svelte';
-	import axios from 'axios';
+	import axios, { type AxiosResponse } from 'axios';
 	import type { Game } from '../../models/game.model';
 	import { Select } from 'svelte-materialify';
 	import { fly } from 'svelte/transition';
@@ -26,11 +26,11 @@
 
 	session.subscribe(() => {
 		axios
-			.get(`${ENV.api}/games`, {
+			.get<AxiosResponse<Game[], any>>(`${ENV.api}/games`, {
 				withCredentials: true,
 			})
-			.then(({ data }) => {
-				allGames = data.games;
+			.then((response) => {
+				allGames = response.data.games;
 			})
 			.catch((error) => {
 				console.error(error);
@@ -72,18 +72,20 @@
 </div>
 
 {#if allGames}
-	<Select
-		solo
-		items={allGames.map((game) => {
-			return {
-				name: game.name,
-				value: game.id,
-			};
-		})}
-		bind:selectedGameId
-		placeholder="-- SELECT GAME -- (Default to the first game the user ownes)"
-		on:change={selectGame}
-	/>
+	<div class="d-flex justify-end">
+		<Select
+			outlined
+			items={allGames.map((game) => {
+				return {
+					name: game.name,
+					value: game.id,
+				};
+			})}
+			bind:selectedGameId
+			on:change={selectGame}
+			placeholder="Select Game"
+		/>
+	</div>
 {/if}
 
 <GameBoard {players} />

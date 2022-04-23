@@ -1,5 +1,5 @@
 export interface Game {
-	ownerId: number;
+	ownerId: string;
 
 	name: string;
 	description: string;
