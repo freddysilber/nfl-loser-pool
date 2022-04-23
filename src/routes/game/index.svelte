@@ -8,21 +8,14 @@
 	import type { Game } from '../../models/game.model';
 	import { Select } from 'svelte-materialify';
 	import { fly } from 'svelte/transition';
+	import type { User } from '../../models/user.model';
 
 	const { session } = getStores();
 
-	const players = [
-		'Freddy',
-		'Lydia',
-		'Jay',
-		'Carmen',
-		'Patrick',
-		'Andrew',
-		'Chris',
-	];
+	let players: User[] = [];
 
 	let allGames: Game[];
-	let selectedGameId: string;
+	let value: string;
 
 	session.subscribe(() => {
 		axios
@@ -31,6 +24,8 @@
 			})
 			.then((response) => {
 				allGames = response.data.games;
+				value = allGames[0].id;
+				selectGame();
 			})
 			.catch((error) => {
 				console.error(error);
@@ -39,14 +34,15 @@
 
 	// TODO: Cache this stuff
 	function selectGame() {
-		console.log('change event', selectedGameId);
+		const gameId = value;
 		// Get game, players and weekly picks to build the game board
 		axios
-			.get(`${ENV.api}/games/${selectedGameId}/players`, {
+			.get(`${ENV.api}/games/${gameId}/payload`, {
 				withCredentials: true,
 			})
 			.then((response) => {
-				console.log(response);
+				console.log(response.data);
+				players = response.data.players.users;
 			});
 	}
 </script>
@@ -64,10 +60,7 @@
 </h1>
 
 <div class="game-header">
-	<Prize
-		cash={100}
-		prizeType="Gift Card"
-	/>
+	<Prize cash={100} prizeType="Gift Card" />
 	<ScoreLegend />
 </div>
 
@@ -81,7 +74,7 @@
 					value: game.id,
 				};
 			})}
-			bind:selectedGameId
+			bind:value
 			on:change={selectGame}
 			placeholder="Select Game"
 		/>
