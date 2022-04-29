@@ -4,10 +4,10 @@
 	import GameBoard from '$lib/game-board/GameBoard.svelte';
 	import Prize from '$lib/prize/Prize.svelte';
 	import ScoreLegend from '$lib/score-legend/ScoreLegend.svelte';
-	import axios, { type AxiosResponse } from 'axios';
-	import type { Game } from '../../models/game.model';
+	import axios,{ type AxiosResponse } from 'axios';
 	import { Select } from 'svelte-materialify';
 	import { fly } from 'svelte/transition';
+	import type { Game } from '../../models/game.model';
 	import type { User } from '../../models/user.model';
 
 	const { session } = getStores();
@@ -19,12 +19,18 @@
 
 	session.subscribe(() => {
 		axios
-			.get<AxiosResponse<Game[], any>>(`${ENV.api}/games`, {
+			// We need to improve the type system here
+			// This shit is wak
+			// Might get let go... who knows, this is a deadline. The start up is a failure now
+
+			// .get<AxiosResponse<Game[], any>>(`${ENV.api}/games`, {
+			.get(`${ENV.api}/games`, {
 				withCredentials: true,
 			})
 			.then((response) => {
 				allGames = response.data.games;
 				value = allGames[0].id;
+
 				selectGame();
 			})
 			.catch((error) => {
@@ -33,8 +39,8 @@
 	});
 
 	// TODO: Cache this stuff
-	function selectGame() {
-		const gameId = value;
+	function selectGame(): void {
+		const gameId: string = value;
 		// Get game, players and weekly picks to build the game board
 		axios
 			.get(`${ENV.api}/games/${gameId}/payload`, {

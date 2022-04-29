@@ -1,71 +1,79 @@
+<!-- 
+	If players skip a week, they should not be on this board
+	When player chooses a pick from the left, the then card on the right should update
+	Player card (right) should be clickable and take you to you 'season' board of all the weeks all season long
+	Game 'grid' on the right kinda acts like a leader board when we order it by winner (then by name)
+ -->
 <script lang="ts">
-	import WeekPicker from '$lib/week-picker/WeekPicker.svelte';
+	// import WeekPicker from '$lib/week-picker/WeekPicker.svelte';
 	import teams from '$lib/data/nfl-teams.json';
+	import { mdiThumbDown } from '@mdi/js';
+	import type { User } from 'src/models/user.model';
+	import { Icon, Button } from 'svelte-materialify';
 
-	export let players: string[];
+	export let players: User[]; // Todo order these by winner to looser
 
 	const weeksInSeason: number = 19;
 	// TODO: move this to a more top level component so we dont run this map everytime a board is changed when a user switches between different games
+	// console.log(teams);
 	const teamOptions = teams.map((team) => ({
 		name: team.displayName,
 		value: team.displayName,
+		logo: team.logos[0].href,
 	}));
+	// console.log(teamOptions);
 
 	const weeks = [...Array(weeksInSeason).keys()];
+
+	const playerMap: Map<string, number[]> = new Map();
+	players.forEach((player) => playerMap.set(player, weeks));
+
+	console.log(playerMap);
+
+	function selectPlayer(player: string): void {
+		console.log('select player', player);
+	}
 </script>
 
 <div>
-	<table>
-		<thead>
-			<tr>
-				<th />
-				{#each weeks as week}
-					<th>Week {week + 1}</th>
-				{/each}
-				<th>Points</th>
-			</tr>
-		</thead>
-
-		<tbody>
-			{#each players as player}
-				<tr>
-					<td style="vertical-align: middle;">
-						<!-- PLayers and the row they play on need to be important.... so make them very big -->
-						{player}
-					</td>
-					{#each weeks as week}
-						<td>
-							<WeekPicker {week} {player} {teamOptions} />
-						</td>
-					{/each}
-					<td />
-				</tr>
+	<div class="d-flex" style="overflow: scroll;">
+		<div style="width: 25%; height: 20rem;">
+			<h1 class="white-text">Get your picks in!</h1>
+			{#each teamOptions as team}
+				<div style="display: flex; justify-content: space-between; align-items: center;">
+					<img style="height: 50px;" src={team.logo} alt="placeholder"/>
+					<span class="white-text">{team.name}</span>
+					<Button icon class="pink-text">
+						<Icon path={mdiThumbDown} />
+					</Button>
+				</div>
 			{/each}
-		</tbody>
-	</table>
+		</div>
+
+		<div class="container">
+			{#each players as player}
+				<div class="player" on:click={() => selectPlayer(player)}>
+					{player}
+				</div>
+			{/each}
+		</div>
+	</div>
 </div>
 
-<style>
-	table {
-		overflow: auto;
-		border-collapse: collapse;
-		overflow: auto;
-	}
+<style lang="scss">
+	.container {
+		display: flex;
+		flex-wrap: wrap;
+		width: 100%;
+		height: 100%;
 
-	div {
-		overflow: scroll;
-	}
-
-	tr > td {
-		top: 0%;
-		position: sticky;
-	}
-
-	td:first-child,
-	th:first-child {
-		position: sticky;
-		left: 0;
-		z-index: 1;
-		/* background-color: #b9c6d2; */
+		.player {
+			width: 25%;
+			height: 150px;
+			color: black;
+			background-color: aquamarine;
+			border: 1px solid black;
+			cursor: pointer;
+		}
 	}
 </style>
