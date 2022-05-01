@@ -4,7 +4,7 @@
 	import GameBoard from '$lib/game-board/GameBoard.svelte';
 	import Prize from '$lib/prize/Prize.svelte';
 	import ScoreLegend from '$lib/score-legend/ScoreLegend.svelte';
-	import axios,{ type AxiosResponse } from 'axios';
+	import axios, { type AxiosResponse } from 'axios';
 	import { Select } from 'svelte-materialify';
 	import { fly } from 'svelte/transition';
 	import type { Game } from '../../models/game.model';
@@ -13,9 +13,11 @@
 	const { session } = getStores();
 
 	let players: User[] = [];
+	let playerMap: Map<User, number[]> = new Map();
 
 	let allGames: Game[];
 	let value: string;
+	let selectedGameId: string;
 
 	session.subscribe(() => {
 		axios
@@ -29,7 +31,7 @@
 			})
 			.then((response) => {
 				allGames = response.data.games;
-				value = allGames[0].id;
+				value = selectedGameId = allGames[0].id;
 
 				selectGame();
 			})
@@ -40,15 +42,21 @@
 
 	// TODO: Cache this stuff
 	function selectGame(): void {
-		const gameId: string = value;
+		const gameId: string = (selectedGameId = value);
 		// Get game, players and weekly picks to build the game board
 		axios
 			.get(`${ENV.api}/games/${gameId}/payload`, {
 				withCredentials: true,
 			})
 			.then((response) => {
-				console.log(response.data);
-				players = response.data.players.users;
+				console.log('Game playload response ',response.data);
+				players = !response.data.players.users ? [] : response.data.players.users;
+				const weeks = [...Array(19).keys()];
+				const map: Map<User, number[]> = new Map();
+				console.log('players: ', players);
+				players.forEach((player) => map.set(player, weeks));
+				playerMap = map;
+				// players = response.data.players.users;
 			});
 	}
 </script>
@@ -67,7 +75,6 @@
 
 <div class="game-header">
 	<Prize cash={100} prizeType="Gift Card" />
-	<p class="white-text">← Week 1 →</p>
 	<ScoreLegend />
 </div>
 
@@ -88,7 +95,7 @@
 	</div>
 {/if}
 
-<GameBoard {players} />
+<GameBoard {playerMap} {selectedGameId} />
 
 <style>
 	div.game-header {

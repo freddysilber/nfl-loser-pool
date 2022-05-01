@@ -1,10 +1,12 @@
 <script lang="ts">
+	import type { User } from 'src/models/user.model';
+
 	import { createEventDispatcher } from 'svelte';
 	import { Select } from 'svelte-materialify';
 	import type { SelectOption } from '../../models/select-option.model';
 
 	export let week: number;
-	export let player: string;
+	export let player: User;
 	export let teamOptions: SelectOption[];
 
 	let value;
