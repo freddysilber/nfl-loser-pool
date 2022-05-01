@@ -13,7 +13,7 @@
 	import type { Pick } from 'src/models/pick.model';
 	import { Icon, Button } from 'svelte-materialify';
 
-	export let playerMap: Map<User, number[]>;
+	export let playerMap: Map<User, Pick[]>;
 	export let selectedGameId: string;
 	let showCreateModal: boolean = false;
 
@@ -87,6 +87,7 @@
 					{#each weeks as week}
 						<div class="white-text" style="min-width: 20rem;">
 							<p>Select Pick</p>
+							{week === null ? '' : week.teamId}
 							<!-- <WeekPicker
 								{week}
 								{player}
