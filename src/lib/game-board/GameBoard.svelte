@@ -25,12 +25,12 @@
 
 	const weeks = [...Array(weeksInSeason).keys()];
 
-	const playerMap: Map<string, number[]> = new Map();
+	const playerMap: Map<User, number[]> = new Map();
 	players.forEach((player) => playerMap.set(player, weeks));
 
 	console.log(playerMap);
 
-	function selectPlayer(player: string): void {
+	function selectPlayer(player: User): void {
 		console.log('select player', player);
 	}
 </script>
@@ -53,7 +53,7 @@
 		<div class="container">
 			{#each players as player}
 				<div class="player" on:click={() => selectPlayer(player)}>
-					{player}
+					{player.name}
 				</div>
 			{/each}
 		</div>

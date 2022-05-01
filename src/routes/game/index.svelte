@@ -67,6 +67,7 @@
 
 <div class="game-header">
 	<Prize cash={100} prizeType="Gift Card" />
+	<p class="white-text">← Week 1 →</p>
 	<ScoreLegend />
 </div>
 
