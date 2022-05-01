@@ -49,14 +49,22 @@
 				withCredentials: true,
 			})
 			.then((response) => {
-				console.log('Game playload response ',response.data);
-				players = !response.data.players.users ? [] : response.data.players.users;
-				const weeks = [...Array(19).keys()];
+				console.log('Game playload response ', response.data);
+				players = !response.data.players.users
+					? []
+					: response.data.players.users;
+				const weeks = [...Array(19).keys()].fill(null);
 				const map: Map<User, number[]> = new Map();
 				console.log('players: ', players);
 				players.forEach((player) => map.set(player, weeks));
+				console.log(map);
+				// TODO: fix this
+				if (response.data.picks.picks) {
+					response.data.picks.picks.forEach((pick) => {
+						map.get(players.find((player) => player.id === pick.playerId))[pick.week] = pick;
+					});
+				}
 				playerMap = map;
-				// players = response.data.players.users;
 			});
 	}
 </script>
