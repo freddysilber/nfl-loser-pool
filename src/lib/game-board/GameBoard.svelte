@@ -67,7 +67,7 @@
 				{#each weeks as week}
 					<div class="white-text" style="min-width: 20rem;">
 						{#if week && week.playerId === player.id}
-							{teams.find((team) => team.id === week.teamId).name}
+							{teams.find((team) => team.id === week.teamId).displayName}
 							<Button
 								icon
 								class="yellow-text"
