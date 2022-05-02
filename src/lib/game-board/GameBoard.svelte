@@ -16,9 +16,15 @@
 	export let playerMap: Map<User, Pick[]>;
 	export let selectedGameId: string;
 
+	interface Store extends App.Session {
+		profile: any;
+		session: any;
+	}
+
 	let showCreateModal: boolean = false;
 
-	const { session } = getStores();
+	// TODO fix this
+	const { session } = getStores() as any as Store;
 
 	const teamOptions = teams.map((team) => ({
 		name: team.displayName,
