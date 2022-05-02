@@ -10,8 +10,9 @@
 	import type { Game } from '../../models/game.model';
 	import type { User } from '../../models/user.model';
 	import type { Pick } from '../../models/pick.model';
+	import { onMount } from 'svelte';
 
-	const { session } = getStores();
+	// const { session } = getStores();
 
 	let players: User[] = [];
 	let playerMap: Map<User, Pick[]> = new Map();
@@ -20,12 +21,13 @@
 	let value: string;
 	let selectedGameId: string;
 
-	session.subscribe(() => {
+	onMount(() => {
 		axios
 			.get(`${ENV.api}/games`, {
 				withCredentials: true,
 			})
 			.then((response) => {
+				// console.log('response', response)
 				allGames = response.data.games;
 				value = selectedGameId = allGames[0].id;
 
@@ -35,6 +37,23 @@
 				console.error(error);
 			});
 	});
+
+	// session.subscribe(() => {
+	// 	axios
+	// 		.get(`${ENV.api}/games`, {
+	// 			withCredentials: true,
+	// 		})
+	// 		.then((response) => {
+	// 			console.log('response', response)
+	// 			allGames = response.data.games;
+	// 			value = selectedGameId = allGames[0].id;
+
+	// 			selectGame();
+	// 		})
+	// 		.catch((error) => {
+	// 			console.error(error);
+	// 		});
+	// });
 
 	function selectGame(): void {
 		const gameId: string = (selectedGameId = value);
@@ -56,7 +75,11 @@
 				// TODO: fix this
 				if (response.data.picks.picks) {
 					response.data.picks.picks.forEach((pick) => {
-						map.get(players.find((player) => player.id === pick.playerId))[pick.week] = pick;
+						map.get(
+							players.find(
+								(player) => player.id === pick.playerId
+							)
+						)[pick.week] = pick;
 					});
 				}
 				playerMap = map;
