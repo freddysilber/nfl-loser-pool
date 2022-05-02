@@ -26,12 +26,16 @@
 	// TODO fix this
 	const { session } = getStores() as any as Store;
 
-	const teamOptions = teams.map((team) => ({
-		name: team.displayName,
-		value: team.displayName,
-		logo: team.logos[0].href,
-		id: team.id,
-	}));
+	const teamsById = new Map<string, any>();
+	teams.forEach((team) => {
+		teamsById.set(team.id, team);
+	});
+	// const teamOptions = teams.map((team) => ({
+	// 	name: team.displayName,
+	// 	value: team.displayName,
+	// 	logo: team.logos[0].href,
+	// 	id: team.id,
+	// }));
 
 	function handleSuccess(event): void {
 		console.log('here ', event, selectedGameId);
@@ -71,9 +75,10 @@
 			>
 			<div class="d-flex">
 				{#each weeks as week}
-					<div class="white-text" style="min-width: 20rem;">
+					<div class="white-text" style="min-width: 20rem; display: flex; align-items: center;">
 						{#if week && week.playerId === player.id}
-							{teams.find((team) => team.id === week.teamId).displayName}
+							<img src={teamsById.get(week.teamId).logos[0].href} style="width: 35px;" alt="logo"/>
+							{teamsById.get(week.teamId).displayName}
 							<!-- <Chip class="ma-2 green white-text"> -->
 							<Chip class="purple white-text">
 								<!-- <Avatar class="green darken-2">1</Avatar> -->
