@@ -9,11 +9,12 @@
 	import { fly } from 'svelte/transition';
 	import type { Game } from '../../models/game.model';
 	import type { User } from '../../models/user.model';
+	import type { Pick } from '../../models/pick.model';
 
 	const { session } = getStores();
 
 	let players: User[] = [];
-	let playerMap: Map<User, number[]> = new Map();
+	let playerMap: Map<User, Pick[]> = new Map();
 
 	let allGames: Game[];
 	let value: string;
@@ -21,11 +22,6 @@
 
 	session.subscribe(() => {
 		axios
-			// We need to improve the type system here
-			// This shit is wak
-			// Might get let go... who knows, this is a deadline. The start up is a failure now
-
-			// .get<AxiosResponse<Game[], any>>(`${ENV.api}/games`, {
 			.get(`${ENV.api}/games`, {
 				withCredentials: true,
 			})
@@ -40,7 +36,6 @@
 			});
 	});
 
-	// TODO: Cache this stuff
 	function selectGame(): void {
 		const gameId: string = (selectedGameId = value);
 		// Get game, players and weekly picks to build the game board
@@ -53,10 +48,10 @@
 				players = !response.data.players.users
 					? []
 					: response.data.players.users;
-				const weeks = [...Array(19).keys()].fill(null);
-				const map: Map<User, number[]> = new Map();
+				const weeks: any = [...Array(19).keys()].fill(null);
+				const map: Map<User, Pick[]> = new Map();
 				console.log('players: ', players);
-				players.forEach((player) => map.set(player, weeks));
+				players.forEach((player) => map.set(player, weeks as Pick[]));
 				console.log(map);
 				// TODO: fix this
 				if (response.data.picks.picks) {

@@ -5,6 +5,7 @@
 	Game 'grid' on the right kinda acts like a leader board when we order it by winner (then by name)
  -->
 <script lang="ts">
+	import { getStores } from '$app/stores';
 	import CreatePickModal from '$lib/create-pick/CreatePickModal.svelte';
 	import teams from '$lib/data/nfl-teams.json';
 	import type { User } from 'src/models/user.model';
@@ -14,7 +15,10 @@
 
 	export let playerMap: Map<User, Pick[]>;
 	export let selectedGameId: string;
+
 	let showCreateModal: boolean = false;
+
+	const { session } = getStores();
 
 	const teamOptions = teams.map((team) => ({
 		name: team.displayName,
@@ -38,52 +42,59 @@
 
 <CreatePickModal bind:showCreateModal on:submit={handleSuccess} />
 
-<div class="d-flex" style="height: 100%;">
-	<div class="d-flex flex-column" style="width: 100%; overflow: auto;">
-		<div class="d-flex" style="border-bottom: 1px solid white;">
-			<div
-				style="min-width: 10rem; position: sticky; left: 0; background: black;"
-			/>
-			{#each [...Array(19).keys()] as week}
-				<div class="white-text" style="min-width: 20rem;">
-					Week {week + 1}
-				</div>
-			{/each}
-		</div>
-
-		{#each [...playerMap] as [player, weeks]}
-			<div class="d-flex">
-				<span
-					class="white-text"
-					style="min-width: 10rem; position: sticky; left: 0; background: black; z-index: 9;"
-					>{player.name}</span
-				>
-				<div class="d-flex">
-					{#each weeks as week}
-						<div class="white-text" style="min-width: 20rem;">
-							{#if week !== null}
-								{teams.find((team) => team.id === week.teamId).name}
-								<Button icon class="yellow-text">
-									<Icon path={mdiPencilCircleOutline} />
-								</Button>
-							{:else}
-								<span>
-									<Button
-										icon
-										class="pink-text"
-										on:click={handleModPick}
-									>
-										<Icon path={mdiPlusCircleOutline} />
-									</Button>
-								</span>
-							{/if}
-						</div>
-					{/each}
-				</div>
+<div class="container d-flex flex-column">
+	<div class="header d-flex">
+		<div class="placeholder" />
+		{#each [...Array(19).keys()] as week}
+			<div class="weeks white-text">
+				Week {week + 1}
 			</div>
 		{/each}
 	</div>
+
+	{#each [...playerMap] as [player, weeks]}
+		<div class="d-flex">
+			<span
+				class="placeholder white-text"
+				style="min-width: 10rem; position: sticky; left: 0; background: black; z-index: 9;"
+				>{player.name}</span
+			>
+			<div class="d-flex">
+				{#each weeks as week}
+					<div class="white-text" style="min-width: 20rem;">
+						{#if week && week.playerId === player.id}
+							{teams.find((team) => team.id === week.teamId).name}
+							<Button icon class="yellow-text">
+								<Icon path={mdiPencilCircleOutline} />
+							</Button>
+						{:else if player.id === $session.profile.id}
+							<p>You can edit this</p>
+						{:else}
+							<p class="cyan-text">readonly</p>
+						{/if}
+					</div>
+				{/each}
+			</div>
+		</div>
+	{/each}
 </div>
 
 <style lang="scss">
+	.container {
+		height: 100%;
+
+		.header {
+			border-bottom: 1px solid white;
+
+			.placeholder {
+				min-width: 10rem;
+				position: sticky;
+				left: 0;
+			}
+
+			.weeks {
+				min-width: 20rem;
+			}
+		}
+	}
 </style>
