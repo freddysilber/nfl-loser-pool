@@ -25,7 +25,7 @@
 	// Transitions
 	import { scale } from 'svelte/transition';
 	import { elasticOut } from 'svelte/easing';
-import CreateGameModal from '$lib/create-game/CreateGameModal.svelte';
+	import CreateGameModal from '$lib/create-game/CreateGameModal.svelte';
 
 	let navTabs: NavTab[] = [];
 	let confirmLogout: boolean = false;
@@ -72,13 +72,13 @@ import CreateGameModal from '$lib/create-game/CreateGameModal.svelte';
 
 <CreateGameModal
 	{showCreateModal}
-	on:submit={() => showCreateModal = false}
+	on:submit={() => (showCreateModal = false)}
 />
 
 <header>
 	<div class="corner">
 		{#if $session.profile}
-			<h5 style="margin: .5rem 0 0 .5rem;">
+			<h5 style="margin: .5rem 0 0 .5rem; color: #eee">
 				Hello, {$session.profile.name}
 			</h5>
 		{/if}
@@ -93,7 +93,7 @@ import CreateGameModal from '$lib/create-game/CreateGameModal.svelte';
 				<li class:active={$page.url.pathname === tab.path}>
 					<a
 						sveltekit:prefetch
-						class="deep-orange-text"
+						class="blue-text"
 						href={tab.path}
 					>
 						{tab.label}
@@ -133,7 +133,7 @@ import CreateGameModal from '$lib/create-game/CreateGameModal.svelte';
 	header {
 		display: flex;
 		justify-content: space-between;
-		border-bottom: 1px solid white;
+		border-bottom: 1px solid #e0e0e0;
 	}
 
 	.corner {

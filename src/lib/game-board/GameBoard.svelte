@@ -10,8 +10,8 @@
 	import teams from '$lib/data/nfl-teams.json';
 	import type { User } from 'src/models/user.model';
 	import type { Pick } from 'src/models/pick.model';
-	import { Icon, Button } from 'svelte-materialify';
-	import { mdiPlusCircleOutline, mdiPencilCircleOutline } from '@mdi/js';
+	import { Icon, Button, Chip, Avatar } from 'svelte-materialify';
+	import { mdiPlusCircleOutline, mdiPencilCircleOutline, mdiAndroidMessages } from '@mdi/js';
 
 	export let playerMap: Map<User, Pick[]>;
 	export let selectedGameId: string;
@@ -74,6 +74,12 @@
 					<div class="white-text" style="min-width: 20rem;">
 						{#if week && week.playerId === player.id}
 							{teams.find((team) => team.id === week.teamId).displayName}
+							<!-- <Chip class="ma-2 green white-text"> -->
+							<Chip class="purple white-text">
+								<!-- <Avatar class="green darken-2">1</Avatar> -->
+								<span>{week.bonusPoint}</span>
+								<!-- <Icon path={mdiAndroidMessages} /> -->
+							  </Chip>
 							<Button
 								icon
 								class="yellow-text"

@@ -1,1 +1,0 @@
-<h1 class="white-text">[Dashboard]</h1>
