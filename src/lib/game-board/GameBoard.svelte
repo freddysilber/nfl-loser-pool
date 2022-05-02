@@ -35,7 +35,11 @@
 	}
 
 	// Calling this 'mod pick because we might want to do creates and edits from this'
-	function handleModPick(): void {
+	function handleCreatePick(): void {
+		showCreateModal = true;
+	}
+
+	function handleEditPick(): void {
 		showCreateModal = true;
 	}
 </script>
@@ -64,11 +68,21 @@
 					<div class="white-text" style="min-width: 20rem;">
 						{#if week && week.playerId === player.id}
 							{teams.find((team) => team.id === week.teamId).name}
-							<Button icon class="yellow-text">
+							<Button
+								icon
+								class="yellow-text"
+								on:click={handleEditPick}
+							>
 								<Icon path={mdiPencilCircleOutline} />
 							</Button>
 						{:else if player.id === $session.profile.id}
-							<p>You can edit this</p>
+							<Button
+								icon
+								class="green-text"
+								on:click={handleCreatePick}
+							>
+								<Icon path={mdiPlusCircleOutline} />
+							</Button>
 						{:else}
 							<p class="cyan-text">readonly</p>
 						{/if}
