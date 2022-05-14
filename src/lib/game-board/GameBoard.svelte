@@ -56,7 +56,7 @@
 
 <CreatePickModal bind:showCreateModal on:submit={handleSuccess} />
 
-<div class="container d-flex flex-column">
+<div class="container d-flex flex-column" style="overflow: auto;">
 	<div class="header d-flex">
 		<div class="placeholder" />
 		{#each [...Array(19).keys()] as week}
